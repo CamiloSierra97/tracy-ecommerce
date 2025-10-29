@@ -23,5 +23,8 @@ export const useProducts = () => {
       lastPage.length === 12 ? allPages.length + 1 : undefined,
 
     initialPageParam: 1,
+    // 👇 Evita reintentos infinitos
+    retry: false,
+    staleTime: 1000 * 60 * 5, // cache 5 min
   });
 };

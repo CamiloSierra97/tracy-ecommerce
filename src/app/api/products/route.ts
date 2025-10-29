@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import axios, { AxiosError } from "axios";
+import https from "https";
 
 export async function GET(request: Request) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_WOO_BASE_URL;
+    const WOO_BASE_URL = "https://shop.glowcosmeticoscol.com";
     const key = process.env.WOO_CONSUMER_KEY;
     const secret = process.env.WOO_CONSUMER_SECRET;
 
@@ -11,22 +12,32 @@ export async function GET(request: Request) {
     const page = searchParams.get("page") || "1";
     const per_page = searchParams.get("per_page") || "12";
 
-    const response = await axios.get(`${baseUrl}/wp-json/wc/v3/products`, {
+    // 👇 Ignorar certificado solo en desarrollo
+    const agent =
+      process.env.NODE_ENV === "development"
+        ? new https.Agent({ rejectUnauthorized: false })
+        : undefined;
+
+    const response = await axios.get(`${WOO_BASE_URL}/wp-json/wc/v3/products`, {
       params: { per_page, page },
       auth: {
         username: key!,
         password: secret!,
       },
+      httpsAgent: agent, //Ignora SSL en Dev
     });
 
     return NextResponse.json(response.data);
   } catch (error) {
     const err = error as AxiosError;
 
-    console.error(
-      "Error al obtener productos:",
-      err.response?.data || err.message
-    );
+    // 💡 ¡Añade este log para ver la respuesta completa de WooCommerce!
+    console.error("=====================================");
+    console.error("🔥 ERROR DE WOOCOMMERCE:");
+    console.error("STATUS:", err.response?.status);
+    console.error("HEADERS:", err.response?.headers);
+    console.error("DATA (cuerpo de la respuesta):", err.response?.data);
+    console.error("=====================================");
 
     return NextResponse.json(
       { error: "Error al obtener productos" },
