@@ -26,12 +26,17 @@ export async function GET(request: Request) {
       },
       httpsAgent: agent, //Ignora SSL en Dev
     });
+    // OBTENER LAS CABECERAS DE PAGINACIÓN
+    const totalPages = response.headers["x-wp-totalpages"];
 
-    return NextResponse.json(response.data);
+    return NextResponse.json(response.data, {
+      // AÑADIR LAS CABECERAS A LA RESPUESTA DE TU RUTA
+      headers: {
+        "X-WP-TotalPages": totalPages ? String(totalPages) : "0", // Pasamos la cabecera al Front
+      },
+    });
   } catch (error) {
     const err = error as AxiosError;
-
-    // 💡 ¡Añade este log para ver la respuesta completa de WooCommerce!
     console.error("=====================================");
     console.error("🔥 ERROR DE WOOCOMMERCE:");
     console.error("STATUS:", err.response?.status);

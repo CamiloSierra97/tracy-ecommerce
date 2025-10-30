@@ -33,7 +33,7 @@ export default function Products() {
     return () => observer.unobserve(current);
   }, [hasNextPage, fetchNextPage]);
 
-  const allProducts = data?.pages.flat() ?? [];
+  const allProducts = data?.pages.flatMap((page) => page.products) ?? [];
 
   if (isLoading)
     return <div className="text-center py-10">Cargando productos...</div>;
