@@ -2,70 +2,99 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Icon from "./Icon";
 import { playfair } from "@/lib/fonts";
-import { usePathname } from "next/navigation";
-
-// Si usas el logo como un componente, lo importarías aquí:
-// import Logo from './Logo';
 
 const Header: React.FC = () => {
-  const pathname = usePathname();
-  const isHomePage = pathname === "/";
   return (
     <header
-      className={`bg-burdeos shadow-sm text-marfil ${playfair.className}`}
+      className={`header bg-burgundy shadow-sm text-marfil ${playfair.className}`}
     >
-      <div className="max-w-7xl mx-auto sm:px-6 lg:px-3">
+      <meta
+        name="viewport"
+        content="width = device-width, inicial scale = 1.0"
+      />
+      <div className="header__content sm:px-6 lg:px-3">
         {/* Contenido del encabezado: Logo y Navegación */}
-        <div className="sm:px-6 lg:px-8 flex grid-rows-[1fr,auto,1fr] items-center gap-5 justify-center">
-          {/* Navegación (Enlaces del Ecommerce) */}
-          <nav className="hidden md:flex space-x-8 text-marfil">
-            <Link
-              href="/novedades"
-              className="font-base text-sm uppercase tracking-wider 
-                         hover:text-oro transition duration-300"
-            >
-              Novedades
-            </Link>
-            <Link
-              href="/lenceria"
-              className="font-base text-sm uppercase tracking-wider 
-                         hover:text-oro transition duration-300"
-            >
-              Lencería
-            </Link>
-            <Link
-              href="/contacto"
-              className="font-base text-sm uppercase tracking-wider 
-                         hover:text-oro transition duration-300"
-            >
-              Contacto
-            </Link>
-          </nav>
+        <div className="header__grid-layout sm:px-6 grid grid-cols-3 items-center gap-5 justify-center">
+          <div className="header__nav-main-wrapper">
+            {/* Navegación (Enlaces del Ecommerce) */}
+            <nav className="header__nav-main space-x-8 text-marfil">
+              <ul className="header__nav-list flex flex-row gap-5 justify-items-start">
+                <li className="header__nav-item mr-4">
+                  <Link
+                    href="/novedades"
+                    className="header__nav-link font-base text-sm uppercase tracking-wider 
+                    hover:text-gold
+                    transition duration-300"
+                  >
+                    Novedades
+                  </Link>
+                </li>
+                <li className="header__nav-item mr-4">
+                  <Link
+                    href="/lenceria"
+                    className="header__nav-link font-base text-sm uppercase tracking-wider 
+                    hover:text-gold transition duration-300"
+                  >
+                    Lencería
+                  </Link>
+                </li>
+                <li className="header__nav-item mr-4">
+                  <Link
+                    href="/contacto"
+                    className="header__nav-link font-base text-sm uppercase tracking-wider 
+                hover:text-gold
+                 transition duration-300"
+                  >
+                    Contacto
+                  </Link>
+                </li>
+              </ul>
+            </nav>
+          </div>
           {/* Logo */}
 
-          <div className="w-1/3 md:w-1/3 flex justify-center">
-            {/* Lógica condicional del H1 */}
-            {isHomePage ? (
-              // H1 que Google ve, pero el usuario no.
-              <h1 className="sr-only">TRACY Lencería de Lujo</h1>
-            ) : null}
-            <Link href="/" className="text-2xl">
+          <div className="header__logo-container flex justify-center">
+            <h1 className="header__title sr-only">TRACY Lencería de Lujo</h1>
+
+            <Link href="/" className="header__logo-link text-2xl">
               <Image
                 src="/LogoTracy.svg"
                 loading="eager"
                 alt="TRACY Logo Lencería de Lujo"
                 width={120}
                 height={120}
-                className="hover:opacity-60 transition duration-300"
+                className="header__logo-image hover:opacity-70 transition duration-100"
               />
             </Link>
           </div>
 
           {/* Espacio para íconos */}
-          <div className="flex items-center ml-auto space-x-4">
+          <nav className="header__nav-utility flex items-center ml-auto space-x-4">
             {/* Aquí irían los íconos tipados, como Carrito, Usuario, etc. */}
-          </div>
+            {/* <Image
+              src="Diseño sin título.svg"
+              alt="Imagen de Fondo"
+              width={1300}
+              height={1300}
+            /> */}
+            {/* Ícono de Carrito: Usamos text-burgundy para cambiar el color */}
+            <button aria-label="Ver Carrito">
+              <Icon
+                name="icon-carrito"
+                className="w-6 h-6 text-burgundy hover:text-golden transition"
+              />
+            </button>
+
+            {/* Ícono de Usuario */}
+            <button aria-label="Mi Cuenta">
+              <Icon
+                name="icon-usuario"
+                className="w-6 h-6 text-burgundy hover:text-golden transition"
+              />
+            </button>
+          </nav>
         </div>
       </div>
     </header>
