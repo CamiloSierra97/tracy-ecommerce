@@ -20,8 +20,8 @@ const Header: React.FC = () => {
         <div className="header__grid-layout sm:px-6 grid grid-cols-3 items-center justify-center">
           <div className="header__nav-main-wrapper h-header-size items-center">
             {/* Navegación (Enlaces del Ecommerce) */}
-            <nav className="header__nav-main space-x-8 w-full h-full">
-              <ul className="header__nav-list flex flex-row h-full items-center justify-around">
+            <nav className="header__nav-main space-x-8 w-full h-full flex items-center justify-around">
+              <ul className="header__nav-list flex flex-row gap-x-8">
                 {mainLinks.map((link) => (
                   <li
                     key={link.href}
