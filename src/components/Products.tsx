@@ -1,4 +1,3 @@
-// src/components/Products.tsx
 "use client";
 
 import { useRef, useEffect } from "react";

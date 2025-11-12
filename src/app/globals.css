@@ -12,6 +12,7 @@
   --color-black: #1c1c1c;
   --spacing-card-size: 25rem;
   --spacing-card-half-size: 12.5rem;
+  --spacing-header-size: 8rem;
 }
 
 @keyframes spinner-rotate {
@@ -40,7 +41,90 @@
 .loader-ring-root::after {
   border-right-color: var(--color-black);
   margin: 11%;
-
-  /* ✨ SOLUCIÓN: Definimos la animación específica aquí ✨ */
   animation-duration: 3s;
+}
+
+/* --- CONFIGURACIÓN DE LA HAMBURGUESA --- */
+
+/* Esconde el checkbox */
+#menu_checkbox {
+  display: none;
+}
+
+/* El LABEL que actúa como botón de hamburguesa */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* Los 3 Palitos (div) - Estilo inicial */
+.menu-toggle div {
+  top: 0;
+  height: 12px;
+  background-color: currentColor; /* Usa el color del texto */
+  margin-bottom: 12px;
+  width: 60px;
+  position: relative;
+  transition: 0.3s ease transform, 0.3s ease top, 0.3s ease width,
+    0.3s ease right;
+  border-radius: 2px;
+}
+
+/* Orígenes de rotación */
+.menu-toggle div:first-child {
+  transform-origin: 0;
+}
+.menu-toggle div:last-child {
+  margin-bottom: 0;
+  transform-origin: 60px;
+}
+.menu-toggle div:nth-child(2) {
+  right: 0;
+  width: 60px;
+}
+
+/* --- ESTADO :CHECKED (ANIMACIÓN DE LA HAMBURGUESA) --- */
+
+#menu_checkbox:checked + label div:first-child {
+  top: -6px; /* Ajuste para centrar */
+  transform: rotateZ(45deg);
+}
+
+#menu_checkbox:checked + label div:last-child {
+  top: 6px; /* Ajuste para centrar */
+  transform: rotateZ(45deg);
+}
+
+#menu_checkbox:checked + label div:nth-child(2) {
+  width: 85px;
+  top: 0;
+  transform: rotateZ(-45deg);
+}
+
+/* --- CONTROL DEL MENÚ MÓVIL --- */
+
+/* Ocultar el panel de menú móvil por defecto */
+#mobile-menu-panel {
+  /* Usar translate para la animación de Tailwind */
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+/* Mostrar el panel de menú móvil cuando el checkbox está checked */
+/* Usamos el selector de hermanos generales (~) para afectar a un elemento posterior */
+#menu_checkbox:checked ~ #mobile-menu-panel {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  display: visible;
 }

@@ -1,8 +1,7 @@
-import type { Metadata } from "next";
 import ReactQueryProvider from "../providers/ReactQueryProvider";
 import Header from "@/components/Header";
+import { Metadata } from "next";
 import "./globals.css";
-import Products from "@/components/Products";
 
 export const metadata: Metadata = {
   title: "Tracy E-commerce",
@@ -19,7 +18,6 @@ export default function RootLayout({
       <body>
         <ReactQueryProvider>
           <Header></Header>
-          <Products title={metadata.title as string} basePath="/"></Products>
           {children}
         </ReactQueryProvider>
       </body>

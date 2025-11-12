@@ -1,4 +1,3 @@
-"use client";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,50 +5,37 @@ import Icon from "./Icon";
 import { playfair } from "@/lib/fonts";
 
 const Header: React.FC = () => {
+  const mainLinks = [
+    { href: "/mujer", label: "Mujer" },
+    { href: "/hombre", label: "Hombre" },
+    { href: "/promociones", label: "Promociones" },
+  ];
+
   return (
     <header
-      className={`header bg-burgundy shadow-sm text-marfil ${playfair.className}`}
+      className={`header bg-burgundy shadow-sm overflow-hidden ${playfair.className}`}
     >
-      <meta
-        name="viewport"
-        content="width = device-width, inicial scale = 1.0"
-      />
-      <div className="header__content sm:px-6 lg:px-3">
+      <div className="header__content">
         {/* Contenido del encabezado: Logo y Navegación */}
-        <div className="header__grid-layout sm:px-6 grid grid-cols-3 items-center gap-5 justify-center">
-          <div className="header__nav-main-wrapper">
+        <div className="header__grid-layout sm:px-6 grid grid-cols-3 items-center justify-center">
+          <div className="header__nav-main-wrapper h-header-size items-center">
             {/* Navegación (Enlaces del Ecommerce) */}
-            <nav className="header__nav-main space-x-8 text-marfil">
-              <ul className="header__nav-list flex flex-row gap-5 justify-items-start">
-                <li className="header__nav-item mr-4">
-                  <Link
-                    href="/novedades"
-                    className="header__nav-link font-base text-sm uppercase tracking-wider 
-                    hover:text-gold
-                    transition duration-300"
+            <nav className="header__nav-main space-x-8 w-full h-full">
+              <ul className="header__nav-list flex flex-row h-full items-center justify-around">
+                {mainLinks.map((link) => (
+                  <li
+                    key={link.href}
+                    className="header__nav-list-item h-full cursor-pointer hover:text-gold text-ivory transition duration-300 text-2xl text-center"
                   >
-                    Novedades
-                  </Link>
-                </li>
-                <li className="header__nav-item mr-4">
-                  <Link
-                    href="/lenceria"
-                    className="header__nav-link font-base text-sm uppercase tracking-wider 
-                    hover:text-gold transition duration-300"
-                  >
-                    Lencería
-                  </Link>
-                </li>
-                <li className="header__nav-item mr-4">
-                  <Link
-                    href="/contacto"
-                    className="header__nav-link font-base text-sm uppercase tracking-wider 
-                hover:text-gold
-                 transition duration-300"
-                  >
-                    Contacto
-                  </Link>
-                </li>
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="header__nav-link flex justify-center h-full items-center"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
@@ -58,43 +44,48 @@ const Header: React.FC = () => {
           <div className="header__logo-container flex justify-center">
             <h1 className="header__title sr-only">TRACY Lencería de Lujo</h1>
 
-            <Link href="/" className="header__logo-link text-2xl">
+            <Link
+              href="/"
+              className="header__logo-link text-2xl w-28 h-28 relative flex justify-center items-center"
+            >
               <Image
                 src="/LogoTracy.svg"
                 loading="eager"
                 alt="TRACY Logo Lencería de Lujo"
-                width={120}
-                height={120}
-                className="header__logo-image hover:opacity-70 transition duration-100"
+                width={129}
+                height={129}
+                className="header__logo-image hover:opacity-70 transition duration-300 w-full transform scale-200 relative bottom-1/8"
               />
             </Link>
           </div>
 
           {/* Espacio para íconos */}
-          <nav className="header__nav-utility flex items-center ml-auto space-x-4">
-            {/* Aquí irían los íconos tipados, como Carrito, Usuario, etc. */}
-            {/* <Image
+          <div className="header__container-utility h-header-size">
+            <nav className="header__nav-utility flex items-center ml-auto space-x-4">
+              {/* Aquí irían los íconos tipados, como Carrito, Usuario, etc. */}
+              {/* <Image
               src="Diseño sin título.svg"
               alt="Imagen de Fondo"
               width={1300}
               height={1300}
             /> */}
-            {/* Ícono de Carrito: Usamos text-burgundy para cambiar el color */}
-            <button aria-label="Ver Carrito">
-              <Icon
-                name="icon-carrito"
-                className="w-6 h-6 text-burgundy hover:text-golden transition"
-              />
-            </button>
+              {/* Ícono de Carrito: Usamos text-burgundy para cambiar el color */}
+              <button aria-label="Ver Carrito">
+                <Icon
+                  name="icon-carrito"
+                  className="w-6 h-6 text-burgundy hover:text-golden transition"
+                />
+              </button>
 
-            {/* Ícono de Usuario */}
-            <button aria-label="Mi Cuenta">
-              <Icon
-                name="icon-usuario"
-                className="w-6 h-6 text-burgundy hover:text-golden transition"
-              />
-            </button>
-          </nav>
+              {/* Ícono de Usuario */}
+              <button aria-label="Mi Cuenta">
+                <Icon
+                  name="icon-usuario"
+                  className="w-6 h-6 text-burgundy hover:text-golden transition"
+                />
+              </button>
+            </nav>
+          </div>
         </div>
       </div>
     </header>
