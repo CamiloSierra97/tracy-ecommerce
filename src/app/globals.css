@@ -1,14 +1,15 @@
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap");
 @import "tailwindcss";
 
 /*Aquí usamos los colores de marca como paleta completa en variables de Tailwind*/
 @theme {
   --color-*: initial;
   --color-burgundy: #580a1e;
+  --color-burgundy-light: #8a505e;
   --color-gray: #5a5856;
-  --color-golden: #caa24c;
-  --color-ivory: #f4f1ec;
+  --color-golden: #ddb153;
   --color-gold: #d4af37;
+  --color-light-gold: #ffe895;
+  --color-ivory: #f4f1ec;
   --color-black: #1c1c1c;
   --spacing-card-size: 25rem;
   --spacing-card-half-size: 12.5rem;

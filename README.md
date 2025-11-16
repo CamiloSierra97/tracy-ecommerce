@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tracy Lencería: Headless E-commerce Frontend
 
-## Getting Started
+Frontend para una tienda de lencería desarrollado con Next.js y TypeScript. Este proyecto opera bajo una arquitectura headless, donde la interfaz de usuario se desacopla y consume los datos de productos y transacciones desde una instancia de WooCommerce a través de su API REST.
 
-First, run the development server:
+# Descripción
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Frontend para una tienda de lencería desarrollado con Next.js y TypeScript. Este proyecto opera bajo una arquitectura headless, donde la interfaz de usuario se desacopla y consume los datos de productos y transacciones desde una instancia de WooCommerce a través de su API REST.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Tecnologías
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Este proyecto está construido sobre una pila moderna enfocada en el rendimiento y la escalabilidad:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Framework: Next.js (App Router)
 
-## Learn More
+Lenguaje: TypeScript
 
-To learn more about Next.js, take a look at the following resources:
+Estilos: Tailwind CSS (Clases utilitarias)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Paleta de Marca: Borgoña (#580a1e), Borgoña Claro (#8a505e), Dorado (#ddb153), Oro (#d4af37), Oro Claro (#ffe895), Marfil (#f4f1ec), Gris (#5a5856), Negro (#1c1c1c).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Gestión de Datos: TanStack Query (React Query) para manejar el fetching, caching y paginación de los productos.
 
-## Deploy on Vercel
+Backend/CMS: WooCommerce REST API (como fuente de datos Headless).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+HTTP Client: Axios para las peticiones a la API de WooCommerce.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+#   Estructura del código
+
+La estructura sigue el patrón del App Router de Next.js, con una organización clara para la lógica de la aplicación:
+
+```text
+tracy-ecommerce/
+|-- public/               # Archivos estáticos (SVG Sprite, Logos, Patrones, Imágenes)
+|-- src/
+|   |-- app/              # Rutas principales (ej: /page.tsx, /layout.tsx)
+|   |-- components/       # Componentes de UI reutilizables (Header, Products, ProductsGrid)
+|   |-- hooks/            # Lógica de hooks personalizados (ej: useProducts con TanStack Query)
+|   |-- lib/              # Utilidades del lado del servidor (ej: Importación de fuentes)
+|   |-- providers/        # Componentes de contexto (ej: ReactQueryProvider)
+|   |-- types/            # Definiciones de tipos de TypeScript (WooProduct)
+|-- .env.local            # Variables de entorno secretas (API Keys en modo DEV)
+|-- next.config.ts        # Configuración de Next.js
+|-- package.json          # Dependencias y scripts
+|-- tailwind.config.js    # Configuración de Tailwind CSS
+

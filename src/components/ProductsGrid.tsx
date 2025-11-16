@@ -29,7 +29,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
 
       <ul className="products-grid__list grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <AnimatePresence>
-          {products.map((product, index) => (
+          {products.map((product) => (
             // 🛑 OPTIMIZACIÓN SEO 1: ENVOLVER LA TARJETA EN UN LINK RASTREABLE 🛑
             <li key={product.id} className="products-grid__item">
               <Link
@@ -40,9 +40,9 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                   layout
                   initial={{ opacity: 0, scale: 0.95, y: 20 }}
                   animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                  whileHover={{ scale: 1.03 }}
-                  className="products-grid__card border border-tracy-marfil rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-shadow bg-white h-full"
+                  transition={{ duration: 0.4, delay: 0.05 }}
+                  whileHover={{ scale: 1.008 }}
+                  className="products-grid__card border border-tracy-marfil rounded-lg overflow-hidden shadow-md hover:shadow-burgundy hover:shadow-md transition-shadow bg-white h-full"
                 >
                   <Image
                     src={product.images?.[0]?.src ?? "/placeholder.jpg"}

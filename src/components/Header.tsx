@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Icon from "./Icon";
-import { playfair } from "@/lib/fonts";
+import { playfair, roboto_serif } from "@/lib/fonts";
 
 const Header: React.FC = () => {
   const mainLinks = [
@@ -25,15 +25,14 @@ const Header: React.FC = () => {
                 {mainLinks.map((link) => (
                   <li
                     key={link.href}
-                    className="header__nav-list-item h-full cursor-pointer hover:text-gold text-ivory transition duration-300 text-2xl text-center"
+                    className={`header__nav-list-item h-full cursor-pointer hover:text-light-gold text-golden transition duration-300 text-lg text-center font-medium ${roboto_serif.className}`}
                   >
                     <Link
                       key={link.href}
                       href={link.href}
                       className="header__nav-link flex justify-center h-full items-center"
-                    >
-                      {link.label}
-                    </Link>
+                    ></Link>
+                    <span className="header__nav-text">{link.label}</span>
                   </li>
                 ))}
               </ul>
@@ -54,7 +53,7 @@ const Header: React.FC = () => {
                 alt="TRACY Logo Lencería de Lujo"
                 width={129}
                 height={129}
-                className="header__logo-image hover:opacity-70 transition duration-300 w-full transform scale-200 relative bottom-1/8"
+                className="header__logo-image opacity-60 hover:opacity-100 transition duration-300 w-full transform scale-200 relative bottom-1/8"
               />
             </Link>
           </div>
@@ -70,6 +69,13 @@ const Header: React.FC = () => {
               height={1300}
             /> */}
               {/* Ícono de Carrito: Usamos text-burgundy para cambiar el color */}
+              <button aria-label="Buscar">
+                <Icon
+                  name="icon-carrito"
+                  className="w-6 h-6 text-burgundy hover:text-golden transition"
+                />
+              </button>
+
               <button aria-label="Ver Carrito">
                 <Icon
                   name="icon-carrito"

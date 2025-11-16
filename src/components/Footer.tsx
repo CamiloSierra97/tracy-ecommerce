@@ -1,15 +1,17 @@
+//import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-900 text-white py-12 px-4">
+    <footer className="bg-gray-900 text-black py-12 px-4 font-(--font-roboto-serif)">
+      {/*<Image src={"/Pattern.svg"} alt="Pattern" width={1300} height={1300}/>*/}
       <div className="max-w-6xl mx-auto">
         <div className="border-t border-gray-800 pt-8"></div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="font-semibold text-lg mb-4">Glow Cosméticos</h3>
+            <h3 className="font-semibold text-lg mb-4">Tracy Lencería</h3>
             <p className="text-gray-400">
-              Tu tienda de cosméticos premium en línea.
+              Tu tienda de lencería premium en línea.
             </p>
           </div>
           <div>
@@ -75,8 +77,9 @@ export default function Footer() {
         </div>
         <div className="border-t border-gray-800 pt-8">
           <p className="text-center text-gray-400">
-            © 2025 Glow Cosméticos. Todos los derechos reservados.
+            © 2025 Tracy Lencería®. Todos los derechos reservados.
           </p>
+          <p className="text-center text-gray-400">Made with 💖 by SierraDev</p>
         </div>
       </div>
     </footer>

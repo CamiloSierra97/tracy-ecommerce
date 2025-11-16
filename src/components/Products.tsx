@@ -48,11 +48,11 @@ export default function Products({ title, basePath }: ProductsProps) {
 
   if (isLoading)
     return (
-      <div className="page-products__loader text-center py-10">
-        <span>Cargando productos...</span>
+      <div className="page-products__loader text-center py-10 flex flex-col items-center justify-center gap-3">
         <span>
           <ThreeRingLoader></ThreeRingLoader>
         </span>
+        <span>Cargando productos...</span>
       </div>
     );
   if (isError)
@@ -101,7 +101,7 @@ export default function Products({ title, basePath }: ProductsProps) {
             aria-label="Paginación de productos"
             className="py-6 flex justify-center space-x-2"
           >
-            {[...Array(totalPages)].map((_, index) => {
+            {[...Array(totalPages)].map((product, index) => {
               const pageNum = index + 1;
               const pageLink = `${basePath}?page=${pageNum}`;
 
