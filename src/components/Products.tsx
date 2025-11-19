@@ -63,7 +63,7 @@ export default function Products({ title, basePath }: ProductsProps) {
     );
 
   return (
-    <main className="page-products">
+    <article className="page-products" id="products-visual">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -128,6 +128,6 @@ export default function Products({ title, basePath }: ProductsProps) {
           </div>
         )}
       </motion.div>
-    </main>
+    </article>
   );
 }

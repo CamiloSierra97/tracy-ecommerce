@@ -4,6 +4,7 @@ import Image from "next/image";
 import Icon from "./Icon";
 import { playfair, roboto_serif } from "@/lib/fonts";
 
+
 const Header: React.FC = () => {
   const mainLinks = [
     { href: "/nina", label: "Niña" },

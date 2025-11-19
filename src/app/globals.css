@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+@layer base {
+  html,
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+}
+
 /*Aquí usamos los colores de marca como paleta completa en variables de Tailwind*/
 @theme {
   --color-*: initial;
@@ -131,8 +141,14 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-section::before {

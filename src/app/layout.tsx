@@ -1,13 +1,14 @@
 import ReactQueryProvider from "../providers/ReactQueryProvider";
-import Header from "@/components/Header";
 import { Metadata } from "next";
-import "./globals.css";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Tracy E-commerce",
   description: "Ropa interior de lujo y accesorios íntimos",
-  keywords: "",
+  keywords:
+    "lencería de lujo, ropa interior, accesorios íntimos, lencería Colombia",
   authors: [{ name: "SierraDev" }],
   robots: {
     index: true,
@@ -15,7 +16,6 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      noimageindex: true,
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
@@ -29,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es" data-scroll-behavior="smooth" className="scroll-smooth">
       <body>
         <ReactQueryProvider>
           <Header></Header>
