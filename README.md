@@ -42,4 +42,5 @@ tracy-ecommerce/
 |-- next.config.ts        # Configuración de Next.js
 |-- package.json          # Dependencias y scripts
 |-- tailwind.config.js    # Configuración de Tailwind CSS
+```
 

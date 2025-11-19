@@ -1,14 +1,14 @@
 import React from 'react';
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
-  name: string; // El ID del símbolo en el sprite (ej: 'icon-carrito')
+  name: string;
   size?: number;
 }
 
 const Icon: React.FC<IconProps> = ({ name, size = 24, className, ...props }) => {
   
-  // 💡 Importante: La ruta debe ser absoluta, apuntando a public/icons/sprite.svg
-  const spritePath = "/icons/sprite.svg"; 
+  // 💡 Importante: La ruta debe ser absoluta, apuntando a public/Sprite.svg
+  const spritePath = "/Sprite.svg"; 
 
   return (
     <svg 

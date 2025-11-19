@@ -6,6 +6,7 @@ import { playfair, roboto_serif } from "@/lib/fonts";
 
 const Header: React.FC = () => {
   const mainLinks = [
+    { href: "/nina", label: "Niña" },
     { href: "/mujer", label: "Mujer" },
     { href: "/hombre", label: "Hombre" },
     { href: "/promociones", label: "Promociones" },
@@ -41,7 +42,7 @@ const Header: React.FC = () => {
           {/* Logo */}
 
           <div className="header__logo-container flex justify-center">
-            <h1 className="header__title sr-only">TRACY Lencería de Lujo</h1>
+            <h1 className="header__title sr-only">TRACY ropa interior de Lujo</h1>
 
             <Link
               href="/"
@@ -50,7 +51,7 @@ const Header: React.FC = () => {
               <Image
                 src="/LogoTracy.svg"
                 loading="eager"
-                alt="TRACY Logo Lencería de Lujo"
+                alt="TRACY Logo Ropa Interior de Lujo"
                 width={129}
                 height={129}
                 className="header__logo-image opacity-60 hover:opacity-100 transition duration-300 w-full transform scale-200 relative bottom-1/8"

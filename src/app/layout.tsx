@@ -6,7 +6,21 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Tracy E-commerce",
-  description: "Lencería de lujo y accesorios íntimos",
+  description: "Ropa interior de lujo y accesorios íntimos",
+  keywords: "",
+  authors: [{ name: "SierraDev" }],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({

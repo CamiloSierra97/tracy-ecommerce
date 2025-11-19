@@ -9,9 +9,9 @@ export default function Footer() {
         <div className="border-t border-gray-800 pt-8"></div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
-            <h3 className="font-semibold text-lg mb-4">Tracy Lencería</h3>
+            <h3 className="font-semibold text-lg mb-4">Tracy</h3>
             <p className="text-gray-400">
-              Tu tienda de lencería premium en línea.
+              Tu tienda de ropa interior premium en línea.
             </p>
           </div>
           <div>
