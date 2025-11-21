@@ -71,14 +71,14 @@ const Header: React.FC = () => {
               height={1300}
             /> */}
               {/* Ícono de Carrito: Usamos text-burgundy para cambiar el color */}
-              <button aria-label="Buscar">
+              <button aria-label="Buscar" role="button">
                 <Icon
                   name="icon-carrito"
                   className="w-6 h-6 text-burgundy hover:text-golden transition"
                 />
               </button>
 
-              <button aria-label="Ver Carrito">
+              <button aria-label="Ver Carrito" role="button">
                 <Icon
                   name="icon-carrito"
                   className="w-6 h-6 text-burgundy hover:text-golden transition"
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
               </button>
 
               {/* Ícono de Usuario */}
-              <button aria-label="Mi Cuenta">
+              <button aria-label="Mi Cuenta" role="button">
                 <Icon
                   name="icon-usuario"
                   className="w-6 h-6 text-burgundy hover:text-golden transition"
