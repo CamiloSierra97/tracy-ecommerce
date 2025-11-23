@@ -1,47 +1,38 @@
-import type { WooProduct } from "@/types/WooProduct";
+import axios from "axios";
 
-interface GetProductsParams {
-  page?: number;
-  per_page?: number;
-  signal?: AbortSignal;
+export interface Product {
+  id: number;
+  name: string;
+  price: string;
+  short_description: string;
+  slug: string;
+  images?: { id: number; src: string; name: string }[];
 }
 
 export interface ProductsPage {
-  products: WooProduct[];
+  products: Product[];
   totalPages: number;
 }
 
-// La función asíncrona devuelve una promesa que se resuelve a un array de WooProduct
 const WooCommerceService = {
-  async getProducts({
-    page = 1,
-    per_page = 12,
-  }: GetProductsParams): Promise<ProductsPage> {
-    const res = await fetch(`/api/products?page=${page}&per_page=${per_page}`);
+  getProducts: async ({ page = 1, per_page = 12 }): Promise<ProductsPage> => {
+    // 1. Llamamos a TU ruta interna (Next.js), no a WooCommerce directo
+    // Al ser ruta relativa, Next.js sabe que es su propia API
+    const { data, headers } = await axios.get(`/api/products`, {
+      params: { page, per_page },
+    });
 
-    if (!res.ok) {
-      throw new Error("Error fetching products");
-    }
+    // 2. Tu API devuelve los productos en el body (data)
+    // y el total de páginas en los headers (x-wp-totalpages)
 
-    const data = (await res.json()) as WooProduct[];
-    const totalPagesHeader = res.headers.get("X-WP-TotalPages");
-    const totalPages = totalPagesHeader ? parseInt(totalPagesHeader, 10) : 0;
+    // OJO: Axios suele poner los headers en minúsculas
+    const totalPages =
+      headers["x-wp-totalpages"] || headers["X-WP-TotalPages"] || "0";
 
     return {
-      products: data,
-      totalPages: totalPages,
+      products: data, // El array de productos
+      totalPages: parseInt(totalPages as string, 10), // Convertimos a número para el hook
     };
-  },
-
-  async getProduct(id: number): Promise<WooProduct | null> {
-    try {
-      const res = await fetch(`/api/products/${id}`);
-      if (!res.ok) return null;
-      return (await res.json()) as WooProduct;
-    } catch (error) {
-      console.error(`Error fetching product ${id}:`, error);
-      return null;
-    }
   },
 };
 
