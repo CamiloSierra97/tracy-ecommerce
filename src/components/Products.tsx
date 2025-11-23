@@ -48,7 +48,7 @@ export default function Products({ title, basePath }: ProductsProps) {
 
   if (isLoading)
     return (
-      <div className="page-products__loader text-center py-10 flex flex-col items-center justify-center gap-3">
+      <div className="page-products__status text-center py-10 flex flex-col items-center justify-center gap-3">
         <span>
           <ThreeRingLoader></ThreeRingLoader>
         </span>
@@ -57,7 +57,7 @@ export default function Products({ title, basePath }: ProductsProps) {
     );
   if (isError)
     return (
-      <div className="page-products__error text-center py-10 text-red-500">
+      <div className="page-products__status--error text-center py-10 text-red-500">
         Error al cargar productos
       </div>
     );
@@ -75,19 +75,21 @@ export default function Products({ title, basePath }: ProductsProps) {
           {title}
         </h1>
 
-        <ProductsGrid products={allProducts} />
+        <div className="page-products__grid-container">
+          <ProductsGrid products={allProducts} />
+        </div>
 
         {/* Loader del Scroll Infinito (UX) */}
         <div
           ref={loadMoreRef}
-          className="page-products__loader-wrapper flex justify-center py-8"
+          className="page-products__infinite-loader-wrapper flex justify-center py-8"
         >
           {isFetchingNextPage && (
             <motion.div
-              /* ... spinner ... */ className="page-products__loader flex flex-col items-center text-gray-500"
+              /* ... spinner ... */ className="page-products__infinite-loader flex flex-col items-center text-gray-500"
             >
               <motion.div className="page-products__spinner w-8 h-8 border-4 border-pink-400 border-t-transparent rounded-full animate-spin" />
-              <span className="page-products__loading-message mt-2 text-sm">
+              <span className="page-products__loading-text mt-2 text-sm">
                 Cargando más productos...
               </span>
             </motion.div>
@@ -99,21 +101,28 @@ export default function Products({ title, basePath }: ProductsProps) {
         {totalPages > 1 && (
           <nav
             aria-label="Paginación de productos"
-            className="py-6 flex justify-center space-x-2"
+            className="page-products__pagination py-6 flex justify-center space-x-2"
           >
             {[...Array(totalPages)].map((product, index) => {
               const pageNum = index + 1;
               const pageLink = `${basePath}?page=${pageNum}`;
+              const isActive = pageNum === currentPage;
+
+              // 1. Definimos las clases base (Bloque + Elemento)
+              const baseClasses =
+                "px-4 py-2 border rounded-lg text-sm transition page-products__pagination-link";
+
+              // 2. Definimos las clases de estado (Modificadores BEM + Estilos Tailwind)
+              const stateClasses = isActive
+                ? "page-products__pagination-link--active bg-burdeos text-marfil font-bold border-burdeos"
+                : "bg-white text-gray-700 hover:bg-gray-100";
 
               return (
                 <Link
                   key={pageNum}
                   href={pageLink}
-                  className={`px-4 py-2 border rounded-lg text-sm transition ${
-                    pageNum === currentPage
-                      ? "bg-burdeos text-marfil font-bold border-burdeos"
-                      : "bg-white text-gray-700 hover:bg-gray-100"
-                  }`}
+                  // 3. Concatenamos de forma limpia
+                  className={`${baseClasses} ${stateClasses}`}
                 >
                   {pageNum}
                 </Link>
@@ -123,7 +132,7 @@ export default function Products({ title, basePath }: ProductsProps) {
         )}
 
         {!hasNextPage && totalPages > 1 && (
-          <div className="text-center text-gray-400 text-sm pb-10">
+          <div className="page-products__end-message text-center text-gray-400 text-sm pb-10">
             No hay más productos para mostrar en este listado.
           </div>
         )}

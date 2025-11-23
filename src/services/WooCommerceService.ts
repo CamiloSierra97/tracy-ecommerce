@@ -32,6 +32,17 @@ const WooCommerceService = {
       totalPages: totalPages,
     };
   },
+
+  async getProduct(id: number): Promise<WooProduct | null> {
+    try {
+      const res = await fetch(`/api/products/${id}`);
+      if (!res.ok) return null;
+      return (await res.json()) as WooProduct;
+    } catch (error) {
+      console.error(`Error fetching product ${id}:`, error);
+      return null;
+    }
+  },
 };
 
 export default WooCommerceService;

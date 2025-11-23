@@ -4,7 +4,6 @@ import Image from "next/image";
 import Icon from "./Icon";
 import { playfair, roboto_serif } from "@/lib/fonts";
 
-
 const Header: React.FC = () => {
   const mainLinks = [
     { href: "/nina", label: "Niña" },
@@ -43,7 +42,9 @@ const Header: React.FC = () => {
           {/* Logo */}
 
           <div className="header__logo-container flex justify-center">
-            <h1 className="header__title sr-only">TRACY ropa interior de Lujo</h1>
+            <h1 className="header__title sr-only">
+              TRACY ropa interior de Lujo
+            </h1>
 
             <Link
               href="/"
@@ -61,37 +62,38 @@ const Header: React.FC = () => {
           </div>
 
           {/* Espacio para íconos */}
-          <div className="header__container-utility h-header-size">
+          <div className="header__container-utility h-header-size p-4">
             <nav className="header__nav-utility flex items-center ml-auto space-x-4">
               {/* Aquí irían los íconos tipados, como Carrito, Usuario, etc. */}
-              {/* <Image
-              src="Diseño sin título.svg"
-              alt="Imagen de Fondo"
-              width={1300}
-              height={1300}
-            /> */}
-              {/* Ícono de Carrito: Usamos text-burgundy para cambiar el color */}
-              <button aria-label="Buscar" role="button">
-                <Icon
-                  name="icon-carrito"
-                  className="w-6 h-6 text-burgundy hover:text-golden transition"
-                />
-              </button>
+              <div className="text-gold hover:text-light-gold transition">
+                <button
+                  aria-label="Buscar"
+                  role="button"
+                  className="cursor-pointer"
+                >
+                  <Icon name="icon-search" />
+                </button>
+              </div>
 
-              <button aria-label="Ver Carrito" role="button">
-                <Icon
-                  name="icon-carrito"
-                  className="w-6 h-6 text-burgundy hover:text-golden transition"
-                />
-              </button>
+              <div className="text-gold hover:text-light-gold transition">
+                <button
+                  aria-label="Carrito"
+                  role="button"
+                  className="cursor-pointer"
+                >
+                  <Icon name="icon-bag" />
+                </button>
+              </div>
 
-              {/* Ícono de Usuario */}
-              <button aria-label="Mi Cuenta" role="button">
-                <Icon
-                  name="icon-usuario"
-                  className="w-6 h-6 text-burgundy hover:text-golden transition"
-                />
-              </button>
+              <div className="text-gold hover:text-light-gold transition">
+                <button
+                  aria-label="Mi Cuenta"
+                  role="button"
+                  className="cursor-pointer"
+                >
+                  <Icon name="icon-user" />
+                </button>
+              </div>
             </nav>
           </div>
         </div>

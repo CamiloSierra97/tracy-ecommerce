@@ -1,25 +1,36 @@
 import { NextResponse } from "next/server";
 import axios, { AxiosError } from "axios";
+import config from "@/lib/config";
+import https from "https";
 
-export async function GET() {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_WOO_BASE_URL;
-    const key = process.env.WOO_CONSUMER_KEY;
-    const secret = process.env.WOO_CONSUMER_SECRET;
+    const { id } = await params;
+    const { url, consumerKey, consumerSecret } = config.woocommerce;
 
-    const response = await axios.get(`${baseUrl}/wp-json/wc/v3/products/categories`, {
+    // 👇 Ignorar certificado solo en desarrollo
+    const agent =
+      process.env.NODE_ENV === "development"
+        ? new https.Agent({ rejectUnauthorized: false })
+        : undefined;
+
+    const response = await axios.get(`${url}/wp-json/wc/v3/products/${id}`, {
       auth: {
-        username: key!,
-        password: secret!,
+        username: consumerKey,
+        password: consumerSecret,
       },
+      httpsAgent: agent,
     });
 
     return NextResponse.json(response.data);
   } catch (error) {
     const err = error as AxiosError;
-    console.error("Error al obtener categorías:", err.response?.data || err.message);
+    console.error("Error fetching product:", err.response?.data || err.message);
     return NextResponse.json(
-      { error: "Error al obtener categorías" },
+      { error: "Error fetching product" },
       { status: err.response?.status || 500 }
     );
   }

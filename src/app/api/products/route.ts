@@ -2,11 +2,11 @@ import { NextResponse } from "next/server";
 import axios, { AxiosError } from "axios";
 import https from "https";
 
+import config from "@/lib/config";
+
 export async function GET(request: Request) {
   try {
-    const WOO_BASE_URL = "https://shop.glowcosmeticoscol.com";
-    const key = process.env.WOO_CONSUMER_KEY;
-    const secret = process.env.WOO_CONSUMER_SECRET;
+    const { url, consumerKey, consumerSecret } = config.woocommerce;
 
     const { searchParams } = new URL(request.url);
     const page = searchParams.get("page") || "1";
@@ -18,11 +18,11 @@ export async function GET(request: Request) {
         ? new https.Agent({ rejectUnauthorized: false })
         : undefined;
 
-    const response = await axios.get(`${WOO_BASE_URL}/wp-json/wc/v3/products`, {
+    const response = await axios.get(`${url}/wp-json/wc/v3/products`, {
       params: { per_page, page },
       auth: {
-        username: key!,
-        password: secret!,
+        username: consumerKey,
+        password: consumerSecret,
       },
       httpsAgent: agent, //Ignora SSL en Dev
     });
