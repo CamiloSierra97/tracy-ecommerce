@@ -76,7 +76,7 @@ const Header: React.FC = () => {
 
             <Link
               href="/"
-              className="header__logo-link text-2xl w-28 h-28 relative flex justify-center items-center"
+              className="header__logo-link text-2xl w-28 h-28 relative scale-0.7 md:scale-100 flex justify-center items-center"
             >
               <Image
                 src="/LogoTracy.svg"
@@ -90,7 +90,7 @@ const Header: React.FC = () => {
           </div>
 
           {/* Espacio para íconos */}
-          <div className="header__container-utility h-header-size p-4 md:p-8 flex items-end justify-end">
+          <div className="header__container-utility h-header-size p-4 md:p-8 flex items-center justify-center">
             <nav className="header__nav-utility flex items-center gap-3.5">
               {/* Aquí irían los íconos tipados, como Carrito, Usuario, etc. */}
               <div className="text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
