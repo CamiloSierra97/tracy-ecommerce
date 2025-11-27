@@ -8,23 +8,11 @@ export async function GET(request: Request) {
   try {
     const { url, consumerKey, consumerSecret } = config.woocommerce;
 
-    // 🕵️♂️ DEBUG: Vamos a ver si las variables existen
-    console.log("------------------------------------------------");
-    console.log("1. URL:", url); 
-    console.log("2. Key existe:", !!consumerKey); // Solo true/false por seguridad
-    console.log("3. Secret existe:", !!consumerSecret);
-    console.log("------------------------------------------------");
-
-    // Verificación rápida antes de intentar la petición
-    if (!url || !url.startsWith('http')) {
-        throw new Error(`La URL de WooCommerce no es válida: ${url}`);
-    }
-
     const { searchParams } = new URL(request.url);
     const page = searchParams.get("page") || "1";
     const per_page = searchParams.get("per_page") || "12";
 
-    // 👇 Ignorar certificado solo en desarrollo
+    // Ignorar certificado solo en desarrollo
     const agent =
       process.env.NODE_ENV === "development"
         ? new https.Agent({ rejectUnauthorized: false })
@@ -37,8 +25,7 @@ export async function GET(request: Request) {
         password: consumerSecret,
       },
       httpsAgent: agent, //Ignora SSL en Dev
-    }
-  );
+    });
     // OBTENER LAS CABECERAS DE PAGINACIÓN
     const totalPages = response.headers["x-wp-totalpages"];
     console.log(totalPages);
@@ -58,7 +45,6 @@ export async function GET(request: Request) {
     console.error("HEADERS:", err.response?.headers);
     console.error("DATA (cuerpo de la respuesta):", err.response?.data);
     console.error("=====================================");
-    
 
     return NextResponse.json(
       { error: "Error al obtener productos" },

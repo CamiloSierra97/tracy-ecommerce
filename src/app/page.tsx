@@ -6,15 +6,15 @@ import HeroSection from "@/components/HeroSection";
 export default function Page() {
   return (
     <>
-      <main className="main scroll-smooth">
+      <main className="main">
         <section
           className={`hero-section flex ${roboto_serif.className} justify-center relative overflow-hidden `}
         >
-          <div className="absolute inset-0 z-0 bg-[url(/Patron.svg)] blur-xs scale-110 sm:hidden"></div>
+          <div className="absolute inset-0 z-0 bg-[url(/Patron.svg)] blur-xs scale-110 max-md:hidden"></div>
           <HeroSection></HeroSection>
         </section>
         <section>
-         <Products title={metadata.title as string} basePath="/"></Products>*
+         <Products title={metadata.title as string} basePath="/"></Products>
           {/* Ejemplo de cómo hacer un background paralelo con scroll */}
           {/*<div className="w-full flex justify-center">
               <div className="text-ivory bg-fixed bg-[url(/FondoTinto.svg)] bg-cover w-full">

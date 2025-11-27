@@ -36,7 +36,7 @@ export const useProducts = () => {
     },
 
     initialPageParam: 1,
-    // 👇 Evita reintentos infinitos
+    // Evita reintentos infinitos
     retry: false,
     staleTime: 1000 * 60 * 5, // cache 5 min
   });

@@ -1,16 +1,15 @@
 import { playfair_italic, roboto_serif } from "@/lib/fonts";
 import Image from "next/image";
 import React from "react";
-import Icon from "./Icon";
 import ScrollButton from "./ScrollButton";
 
 const BRAND_SLOGAN = "Libera tu cuerpo, abraza tu verdad.";
 
 const HeroSection: React.FC = () => {
   return (
-    <section className="hero w-full h-1/4 flex flex-row">
+    <section className="hero w-full h-1/4 md:h-1/12 flex flex-row justify-center">
       {/* <aside> para contenido tangencial: la imagen de fondo */}
-      <aside className="hero__image-container w-1/2 relative bg-burgundy">
+      <aside className="hero__image-container w-1/2 md:w-3/12 relative bg-burgundy">
         <Image
           src="/Background1.svg"
           alt="Fondo de lencería"
@@ -22,7 +21,7 @@ const HeroSection: React.FC = () => {
         />
       </aside>
       {/* <article> para el contenido autocontenido (el mensaje y el CTA) */}
-      <article className="hero__content w-full pb-8 pt-4 px-6 z-10 bg-burgundy-light flex flex-col justify-center items-center text-center relative rounded-lgs">
+      <article className="hero__content w-2/3 md:w-1/2 pb-8 pt-4 px-6 md:pt-6 md:px-8 z-10 bg-burgundy-light flex flex-col justify-center items-center text-center relative">
         <div
           className={`${roboto_serif.className} hero__title inline-block text-5xl md:text-6xl text-light-gold mx-0 my-5`}
         >
@@ -35,7 +34,7 @@ const HeroSection: React.FC = () => {
         >
           {BRAND_SLOGAN}
         </p>
-        <p className="hero__description text-ivory mb-8 max-w-md opacity-90 text-base md:text-lg leading-relaxed">
+        <p className="hero__description text-ivory mb-8 opacity-90 text-base md:text-lg leading-relaxed">
           Creemos que nuestra marca es el primer paso hacia la autenticidad.
           Nuestras colecciones están diseñadas para celebrar cada silueta,
           combinando seducción con un bienestar que se siente como una segunda
@@ -44,14 +43,6 @@ const HeroSection: React.FC = () => {
 
         <div className="hero__scroll-container flex flex-col items-center gap-4">
           <ScrollButton />
-        </div>
-
-        {/* Decorative Icon - Positioned absolutely or integrated nicely */}
-        <div className="hero__icon-container absolute bottom-4 right-4 opacity-20 pointer-events-none">
-          <Icon
-            name="Background1"
-            className="hero__icon w-24 h-24"
-          />
         </div>
       </article>
     </section>

@@ -6,8 +6,8 @@ const ScrollButton: React.FC = () => {
   return (
     <ScrollLink
       role="button"
-      to="products-visual" // ID del elemento (asegúrate de que existe en page.tsx)
-      spy={true} // Activa el resaltado si lo usas en el menú
+      to="products-visual" // ID del elemento (asegurarse de que existe en page.tsx)
+      spy={true} // Activa el resaltado si lo usamos en el menú
       smooth="easeOutQuart"
       duration={900}
       delay={0}
