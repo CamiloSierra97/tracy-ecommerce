@@ -31,7 +31,7 @@ const Header: React.FC = () => {
             <label
               htmlFor="menu__checkbox"
               className="menu__backdrop"
-              aria-hidden="true"
+              aria-label="Cerrar menú"
             ></label>
 
             {/* 2. BOTÓN (Label) 
