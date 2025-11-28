@@ -66,7 +66,7 @@
   width: 50px;
   height: 50px;
   cursor: pointer;
-  z-index: 60; /* Encima del menú */
+  z-index: 110; /* Encima del menú */
 }
 
 /* 2. LAS BARRAS (Estilo Base) */
@@ -82,23 +82,36 @@
 }
 
 /* 2.5 EL BACKDROP (Fondo oscuro semitransparente) */
-/* Usamos el ::before del label para crear la sombra en el 20% restante */
-.menu__toggle::before {
-  content: "";
+#menu__checkbox:checked ~ .menu__toggle {
+  position: fixed; /* Mantener el botón fijo en la esquina */
+}
+
+.menu__backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5); /* Sombra negra al 50% */
-
-  /* Estado inicial: Oculto */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.4s ease-in-out;
-  z-index: -1; /* Detrás del botón */
+  transition: opacity 0.4s ease-in-out, backdrop-filter 0.4s ease-in-out;
   pointer-events: none;
+  backdrop-filter: blur(0);
+  -webkit-backdrop-filter: blur(0);
 }
+
+#menu__checkbox:checked ~ .menu__backdrop {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* 2.6 ACTIVACIÓN DEL BACKDROP AL MARCAR EL CHECKBOX */
+/* El selector #menu__checkbox:checked + .menu__toggle dispara el efecto */
 
 /* 3. POSICIONES INICIALES */
 .menu__toggle div:nth-child(1) {
@@ -112,18 +125,18 @@
 }
 
 /* 4. ESTADO ACTIVO (La "X" Perfecta) */
-#menu__checkbox:checked + .menu__toggle div:nth-child(1) {
+#menu__checkbox:checked ~ .menu__toggle div:nth-child(1) {
   top: 23px;
   transform: rotate(45deg);
   background-color: #d4af37;
 }
 
-#menu__checkbox:checked + .menu__toggle div:nth-child(2) {
+#menu__checkbox:checked ~ .menu__toggle div:nth-child(2) {
   opacity: 0;
   transform: translateX(20px); /* Se va un poco a la derecha al desaparecer */
 }
 
-#menu__checkbox:checked + .menu__toggle div:nth-child(3) {
+#menu__checkbox:checked ~ .menu__toggle div:nth-child(3) {
   top: 23px;
   transform: rotate(-45deg);
   background-color: #d4af37;
@@ -135,16 +148,15 @@
   top: 0;
   left: 0; /* 👈 CAMBIO: Anclado a la izquierda */
   bottom: 0;
-  width: 20rem;
+  width: 16rem;
   background-color: var(--color-burgundy);
-  padding-top: 120px;
+  padding-top: 100px;
 
   /* 👈 CAMBIO: Empieza oculto a la izquierda (-100%) */
   transform: translateX(-100%);
 
   transition: transform 0.4s cubic-bezier(0.77, 0, 0.18, 1);
-  z-index: 50;
-  
+  z-index: 100;
 }
 
 @media (min-width: 768px) {

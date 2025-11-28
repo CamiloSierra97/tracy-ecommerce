@@ -28,13 +28,18 @@ const Header: React.FC = () => {
               className="hidden"
               aria-label="menu"
             />
+            <label
+              htmlFor="menu__checkbox"
+              className="menu__backdrop"
+              aria-hidden="true"
+            ></label>
 
             {/* 2. BOTÓN (Label) 
                 Al tener 'fixed' cuando se abre (vía CSS), se mantendrá visible.
                 La clase .menu-toggle del CSS global maneja el z-index.
             */}
             <label
-              htmlFor="menu__checkbox fixed"
+              htmlFor="menu__checkbox"
               className="menu__toggle w-[50px] h-[50px] cursor-pointer md:hidden"
               aria-label="Alternar menú principal"
             >
