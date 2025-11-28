@@ -34,8 +34,8 @@ const Header: React.FC = () => {
                 La clase .menu-toggle del CSS global maneja el z-index.
             */}
             <label
-              htmlFor="menu__checkbox"
-              className="menu__toggle w-[50px] h-[50px] cursor-pointer fixed md:hidden"
+              htmlFor="menu__checkbox fixed"
+              className="menu__toggle w-[50px] h-[50px] cursor-pointer md:hidden"
               aria-label="Alternar menú principal"
             >
               <div></div>
@@ -69,14 +69,14 @@ const Header: React.FC = () => {
           </div>
           {/* Logo */}
 
-          <div className="header__logo-container flex justify-center overflow-hidden">
+          <div className="header__logo-container flex justify-center">
             <h1 className="header__title sr-only">
               TRACY ropa interior de Lujo
             </h1>
 
             <Link
               href="/"
-              className="header__logo-link text-2xl w-28 h-28 relative scale-0.7 md:scale-100 flex justify-center items-center"
+              className="header__logo-link text-2xl w-28 h-28 relative scale-0.5 sm:scale-0.7 md:scale-100 flex justify-center items-center"
             >
               <Image
                 src="/LogoTracy.svg"
@@ -90,7 +90,7 @@ const Header: React.FC = () => {
           </div>
 
           {/* Espacio para íconos */}
-          <div className="header__container-utility h-header-size p-4 md:p-8 flex items-center justify-center">
+          <div className="header__container-utility h-header-size p-4 md:p-8 flex items-center justify-center z-10">
             <nav className="header__nav-utility flex items-center gap-3.5">
               {/* Aquí irían los íconos tipados, como Carrito, Usuario, etc. */}
               <div className="text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">

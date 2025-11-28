@@ -1,5 +1,5 @@
 import ReactQueryProvider from "../providers/ReactQueryProvider";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
@@ -21,6 +21,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1.0,
+  maximumScale: 1.0,
+  userScalable: false,
 };
 
 export default function RootLayout({

@@ -23,14 +23,14 @@ const HeroSection: React.FC = () => {
       {/* <article> para el contenido autocontenido (el mensaje y el CTA) */}
       <article className="hero__content w-2/3 md:w-1/2 pb-8 pt-4 px-6 md:pt-6 md:px-8 z-10 bg-burgundy-light flex flex-col justify-center items-center text-center relative">
         <div
-          className={`${roboto_serif.className} hero__title inline-block text-5xl md:text-6xl text-light-gold mx-0 my-5`}
+          className={`hero__title inline-block ${roboto_serif.className} text-5xl leading-20 md:text-4xl text-light-gold mx-0 my-2`}
         >
           <span className="">Tracy</span>
         </div>
 
         {/* 🌟 Aplicación del Lema 🌟 */}
         <p
-          className={`hero__slogan text-xl md:text-2xl ${playfair_italic.className} mb-6 text-ivory drop-shadow-black`}
+          className={`hero__slogan text-xl md:text-2xl ${playfair_italic.className} pb-2 text-ivory drop-shadow-black`}
         >
           {BRAND_SLOGAN}
         </p>
