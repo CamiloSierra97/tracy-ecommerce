@@ -159,7 +159,7 @@
   z-index: 100;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .menu__nav {
     transform: translateX(0%);
     padding-top: 0;

@@ -40,7 +40,7 @@ const Header: React.FC = () => {
             */}
             <label
               htmlFor="menu__checkbox"
-              className="menu__toggle w-[50px] h-[50px] cursor-pointer md:hidden"
+              className="menu__toggle w-[50px] h-[50px] cursor-pointer lg:hidden"
               aria-label="Alternar menú principal"
             >
               <div></div>
@@ -49,16 +49,16 @@ const Header: React.FC = () => {
             </label>
 
             {/* 3. DRAWER (Panel Lateral) */}
-            <nav className="menu__nav flex flex-col md:flex-row items-center border-r border-gold md:border-r-0 md:border-r-transparent">
-              <ul className="flex flex-col md:flex-row items-center gap-8 w-full px-6">
+            <nav className="menu__nav flex flex-col lg:flex-row items-center border-r border-gold lg:border-r-0 lg:border-r-transparent">
+              <ul className="flex flex-col lg:flex-row items-center gap-8 w-full px-6">
                 {mainLinks.map((link) => (
                   <li
                     key={link.href}
-                    className="menu-item w-full text-center border-b border-gold md:border-0 last:border-0"
+                    className="menu-item w-full text-center border-b border-gold lg:border-0"
                   >
                     <Link
                       href={link.href}
-                      className={`text-3xl text-gold hover:text-light-gold transition duration-300 block md:text-sm ${roboto_serif.className}`}
+                      className={`text-3xl text-gold hover:text-light-gold transition duration-300 block lg:text-sm ${roboto_serif.className}`}
                     >
                       {link.label}
                     </Link>
@@ -67,7 +67,7 @@ const Header: React.FC = () => {
               </ul>
 
               {/* Opcional: Info extra en el menú */}
-              <div className="mt-auto pb-10 text-golden text-sm md:hidden">
+              <div className="mt-auto pb-10 text-golden text-sm lg:hidden">
                 <p>© Tracy Lencería</p>
               </div>
             </nav>
@@ -81,7 +81,7 @@ const Header: React.FC = () => {
 
             <Link
               href="/"
-              className="header__logo-link text-2xl w-28 h-28 relative scale-0.5 sm:scale-0.7 md:scale-100 flex justify-center items-center"
+              className="header__logo-link w-28 h-28 relative flex justify-center items-center"
             >
               <Image
                 src="/LogoTracy.svg"
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
                 alt="TRACY Logo Ropa Interior de Lujo"
                 width={129}
                 height={129}
-                className="header__logo-image opacity-60 hover:opacity-100 transition duration-300 w-full transform scale-200 relative bottom-1/8"
+                className="header__logo-image opacity-60 hover:opacity-100 transition duration-300 w-full transform sm:scale-150 md:scale-200 relative bottom-1/8"
               />
             </Link>
           </div>
