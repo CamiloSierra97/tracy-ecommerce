@@ -9,7 +9,7 @@ const HeroSection: React.FC = () => {
   return (
     <section className="hero w-full h-full md:h-1/12 flex flex-col md:flex-row justify-center">
       {/* <aside> para contenido tangencial: la imagen de fondo */}
-      <figure className="hero__image-container w-full h-[90vh] md:w-1/3 md:h-[150vh] lg:w-3/12 lg:h-[70vh] relative bg-burgundy">
+      <figure className="hero__image-container w-full h-[90vh] md:w-1/3 md:h-screen lg:w-3/12 relative bg-burgundy">
         <Image
           src="/Background1.svg"
           alt="Fondo de lencería"

@@ -89,7 +89,7 @@ const Header: React.FC = () => {
                 alt="TRACY Logo Ropa Interior de Lujo"
                 width={129}
                 height={129}
-                className="header__logo-image opacity-60 hover:opacity-100 transition duration-300 w-full transform sm:scale-150 md:scale-200 relative bottom-1/8"
+                className="header__logo-image opacity-60 hover:opacity-100 transition duration-300 w-full transform scale-150 md:scale-200 relative bottom-1/8"
               />
             </Link>
           </div>
