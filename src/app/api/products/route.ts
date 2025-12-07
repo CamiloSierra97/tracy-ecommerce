@@ -12,6 +12,14 @@ export async function GET(request: Request) {
     const page = searchParams.get("page") || "1";
     const per_page = searchParams.get("per_page") || "12";
 
+    if (!url || !consumerKey || !consumerSecret) {
+      console.error("❌ ERROR: Faltan variables de entorno de WooCommerce");
+      return NextResponse.json(
+        { error: "Configuración del servidor incompleta (Faltan credenciales)" },
+        { status: 500 }
+      );
+    }
+
     // Ignorar certificado solo en desarrollo
     const agent =
       process.env.NODE_ENV === "development"

@@ -2,6 +2,8 @@ import ReactQueryProvider from "../providers/ReactQueryProvider";
 import { Metadata, Viewport } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { CartProvider } from "@/context/CartContext";
+import CartDrawer from "@/components/cart/CartDrawer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -38,9 +40,12 @@ export default function RootLayout({
       <body>
 
         <ReactQueryProvider>
-          <Header></Header>
-          {children}
-          <Footer></Footer>
+          <CartProvider>
+            <Header></Header>
+            {children}
+            <Footer></Footer>
+            <CartDrawer />
+          </CartProvider>
         </ReactQueryProvider>
       </body>
     </html>

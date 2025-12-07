@@ -1,14 +1,13 @@
-"use client";
 import React from "react";
+import { twMerge } from "tailwind-merge";
 
 interface ThreeRingLoaderProps {
     className?: string; // For passing CSS variables and additional classes
 }
 
-const ThreeRingLoader: React.FC<ThreeRingLoaderProps> = () => {
-    // NOTE: Dynamic values should be passed via className or CSS variables.
+const ThreeRingLoader: React.FC<ThreeRingLoaderProps> = ({ className = "" }) => {
     return (
-        <div className="w-card-half-size h-card-half-size rounded-full grid loader-ring-root border-[0.625rem] border-transparent border-r-burgundy animate-[spinner-rotate_1s_infinite_linear]"></div>
+        <div className={twMerge("rounded-full grid loader-ring-root border-[0.625rem] border-transparent border-r-burgundy animate-[spinner-rotate_1s_infinite_linear] w-card-half-size h-card-half-size", className)}></div>
     );
 };
 

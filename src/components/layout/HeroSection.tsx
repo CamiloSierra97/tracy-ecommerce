@@ -3,6 +3,7 @@ import Image from "next/image";
 import React from "react";
 import ScrollButton from "@/components/ui/ScrollButton";
 
+
 const BRAND_SLOGAN = "Libera tu cuerpo, abraza tu verdad.";
 
 const HeroSection: React.FC = () => {
@@ -13,9 +14,7 @@ const HeroSection: React.FC = () => {
                 <Image
                     src="/Background1.svg"
                     alt="Fondo de lencería"
-                    className="hero__image relative"
-                    objectFit="cover"
-                    objectPosition="center top"
+                    className="hero__image relative object-cover object-top"
                     fill // La imagen llenará todo el espacio del contenedor padre
                     sizes="(max-width: 768px) 100vw, 50vw"
                     quality={85}

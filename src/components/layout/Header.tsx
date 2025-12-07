@@ -3,7 +3,9 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Icon from "@/components/ui/Icon";
+import CartTrigger from "@/components/cart/CartTrigger";
 import { playfair, roboto_serif } from "@/lib/fonts";
+
 
 const Header: React.FC = () => {
     const mainLinks = [
@@ -96,9 +98,7 @@ const Header: React.FC = () => {
                             </div>
 
                             <div className="text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
-                                <button aria-label="Carrito" role="button" className="cursor-pointer">
-                                    <Icon name="icon-bag" />
-                                </button>
+                                <CartTrigger />
                             </div>
 
                             <div className="text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
