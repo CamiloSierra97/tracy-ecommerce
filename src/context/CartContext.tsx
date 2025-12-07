@@ -1,13 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { Product } from "@/services/WooCommerceService";
+import Toast from "@/components/ui/Toast";
 
 // Extend Product to include quantity for CartItem
 export interface CartItem extends Product {
     quantity: number;
 }
-
 interface CartContextType {
     isOpen: boolean;
     cartItems: CartItem[];
@@ -26,6 +26,30 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
+    const [toastMessage, setToastMessage] = useState<string | null>(null);
+    const [showToast, setShowToast] = useState(false);
+
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    // Load cart from localStorage on mount
+    useEffect(() => {
+        const savedCart = localStorage.getItem("tracy_cart");
+        if (savedCart) {
+            try {
+                setCartItems(JSON.parse(savedCart));
+            } catch (error) {
+                console.error("Failed to parse cart from localStorage", error);
+            }
+        }
+        setIsLoaded(true);
+    }, []);
+
+    // Save cart to localStorage whenever it changes
+    useEffect(() => {
+        if (isLoaded) {
+            localStorage.setItem("tracy_cart", JSON.stringify(cartItems));
+        }
+    }, [cartItems, isLoaded]);
 
     const openCart = () => setIsOpen(true);
     const closeCart = () => setIsOpen(false);
@@ -43,7 +67,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             }
             return [...prevItems, { ...product, quantity: 1 }];
         });
-        setIsOpen(true); // Open cart when adding item
+
+        setToastMessage(`¡${product.name} agregado a tu bolsa!`);
+        setShowToast(true);
     };
 
     const removeFromCart = (productId: number) => {
@@ -73,6 +99,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             }}
         >
             {children}
+            <Toast
+                message={toastMessage}
+                isVisible={showToast}
+                onClose={() => setShowToast(false)}
+            />
         </CartContext.Provider>
     );
 };

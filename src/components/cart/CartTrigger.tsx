@@ -13,9 +13,9 @@ export default function CartTrigger() {
             className="cursor-pointer relative"
             onClick={openCart}
         >
-            <Icon name="icon-bag" />
+            <Icon name="icon-bag" size={24} />
             {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-tracy-burdeos text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold shadow-sm">
+                <span className="absolute -top-1 -right-2 text-white font-extrabold text-sm drop-shadow-md">
                     {cartCount}
                 </span>
             )}

@@ -21,6 +21,11 @@
   --color-light-gold: #ffe895;
   --color-ivory: #f4f1ec;
   --color-black: #1c1c1c;
+
+  /* Aliases for Codebase Compatibility */
+  --color-tracy-burdeos: #580a1e;
+  --color-tracy-gris-humo: #5a5856;
+
   --spacing-card-size: 25rem;
   --spacing-card-half-size: 12.5rem;
   --spacing-header-size: 7rem;
