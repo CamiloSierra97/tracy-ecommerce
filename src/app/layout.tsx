@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import CookieBanner from "@/components/layout/CookieBanner";
+import { playfair, playfair_italic, roboto_serif } from "@/lib/fonts";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -39,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <body>
+      <body className={`${playfair.variable} ${playfair_italic.variable} ${roboto_serif.variable} font-sans`}>
         <ReactQueryProvider>
           <CartProvider>
             <div className="relative flex flex-col min-h-screen w-full">

@@ -40,6 +40,14 @@
   --spacing-card-size: 25rem;
   --spacing-card-half-size: 12.5rem;
   --spacing-header-size: 7rem;
+
+  --font-playfair: var(--font-Playfair), serif;
+  --font-playfair-italic: var(--font-Playfair-italic), serif;
+  --font-roboto-serif: var(--font-Roboto-Serif), serif;
+
+  /* Map default sans/serif to our fonts */
+  --font-sans: var(--font-Roboto-Serif), sans-serif;
+  --font-serif: var(--font-Playfair), serif;
 }
 
 @keyframes spinner-rotate {

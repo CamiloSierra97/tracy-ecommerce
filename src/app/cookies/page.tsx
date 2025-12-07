@@ -7,17 +7,17 @@ export const metadata: Metadata = {
 
 export default function CookiesPage() {
     return (
-        <div className="container mx-auto px-4 py-8 max-w-4xl">
-            <h1 className="text-3xl font-bold mb-6 text-gray-900">Política de Cookies</h1>
+        <article className="container mx-auto px-4 py-12 max-w-4xl">
+            <h1 className="text-4xl font-serif font-bold mb-10 text-tracy-burdeos text-center">Política de Cookies</h1>
 
-            <div className="space-y-6 text-gray-700 leading-relaxed">
+            <div className="space-y-8 text-gray-700 leading-relaxed text-lg">
                 <p>
                     Este sitio web utiliza cookies para mejorar tu experiencia de navegación y ofrecerte servicios personalizados.
                     A continuación, explicamos qué son las cookies y cómo las utilizamos.
                 </p>
 
                 <section>
-                    <h2 className="text-lg font-bold text-gray-900 mb-2">¿Qué son las cookies?</h2>
+                    <h2 className="text-xl font-bold text-tracy-burdeos mb-3">¿Qué son las cookies?</h2>
                     <p>
                         Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo cuando visitas un sitio web.
                         Permiten que el sitio recuerde tus acciones y preferencias (como inicio de sesión, idioma, tamaño de letra)
@@ -26,7 +26,7 @@ export default function CookiesPage() {
                 </section>
 
                 <section>
-                    <h2 className="text-lg font-bold text-gray-900 mb-2">Tipos de cookies que utilizamos</h2>
+                    <h2 className="text-xl font-bold text-tracy-burdeos mb-3">Tipos de cookies que utilizamos</h2>
                     <ul className="list-disc pl-5 space-y-2 mt-2">
                         <li>
                             <strong>Cookies esenciales:</strong> Necesarias para el funcionamiento básico del sitio, como recordar los artículos en tu carrito de compras.
@@ -41,7 +41,7 @@ export default function CookiesPage() {
                 </section>
 
                 <section>
-                    <h2 className="text-lg font-bold text-gray-900 mb-2">Control de cookies</h2>
+                    <h2 className="text-xl font-bold text-tracy-burdeos mb-3">Control de cookies</h2>
                     <p>
                         Puedes controlar y/o eliminar las cookies según desees. Puedes eliminar todas las cookies que ya están en tu computadora
                         y puedes configurar la mayoría de los navegadores para evitar que se coloquen. Sin embargo, si lo haces, es posible
@@ -50,6 +50,6 @@ export default function CookiesPage() {
                     </p>
                 </section>
             </div>
-        </div>
+        </article>
     );
 }

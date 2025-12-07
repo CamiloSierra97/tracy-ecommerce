@@ -36,7 +36,6 @@ export async function GET(request: Request) {
     });
     // OBTENER LAS CABECERAS DE PAGINACIÓN
     const totalPages = response.headers["x-wp-totalpages"];
-    console.log(totalPages);
 
     return NextResponse.json(response.data, {
       // AÑADIR LAS CABECERAS A LA RESPUESTA DE TU RUTA

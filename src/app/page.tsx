@@ -15,12 +15,7 @@ export default function Page() {
         </section>
         <section>
           <Products title={metadata.title as string} basePath="/"></Products>
-          {/* Ejemplo de cómo hacer un background paralelo con scroll */}
-          {/*<div className="w-full flex justify-center">
-              <div className="text-ivory bg-fixed bg-[url(/FondoTinto.svg)] bg-cover w-full">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Et molestiae quae, obcaecati aliquam corrupti explicabo alias laborum consequatur facilis aliquid non eligendi labore excepturi ea eveniet veniam eaque ex nisi.
-              </div>
-            </div>*/}
+
         </section>
       </main>
     </>

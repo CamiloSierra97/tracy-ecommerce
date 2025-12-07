@@ -71,9 +71,17 @@ export default function Products({ title, basePath }: ProductsProps) {
                 className="page-products__content min-h-screen bg-gray-50"
             >
                 {/* 🛑 OPTIMIZACIÓN SEO 1: H1 DINÁMICO. Único y relevante para la página. */}
-                <h1 className="page-products__title text-3xl font-bold text-center py-8">
-                    {title}
-                </h1>
+                <div className="flex flex-col items-center py-8 px-4">
+                    <h1 className="page-products__title text-2xl lg:text-4xl font-serif font-semibold lg:font-bold text-tracy-burdeos text-center mb-3 tracking-wide drop-shadow-sm">
+                        {title}
+                    </h1>
+                    <motion.div
+                        initial={{ scaleX: 0, opacity: 0 }}
+                        animate={{ scaleX: 1, opacity: 0.6 }}
+                        transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+                        className="w-24 h-1 bg-golden rounded-full origin-center"
+                    ></motion.div>
+                </div>
 
                 <div className="page-products__grid-container">
                     <ProductsGrid products={allProducts} />
