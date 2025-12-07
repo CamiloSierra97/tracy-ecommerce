@@ -1,7 +1,4 @@
 import { NextResponse } from "next/server";
-import axios, { AxiosError } from "axios";
-import https from "https";
-
 import config from "@/lib/config";
 
 export async function GET(request: Request) {
@@ -20,42 +17,45 @@ export async function GET(request: Request) {
       );
     }
 
-    // Ignorar certificado solo en desarrollo
-    const agent =
-      process.env.NODE_ENV === "development"
-        ? new https.Agent({ rejectUnauthorized: false })
-        : undefined;
+    // Auth Header
+    const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
 
-    const response = await axios.get(`${url}/wp-json/wc/v3/products`, {
-      params: { per_page, page },
-      auth: {
-        username: consumerKey,
-        password: consumerSecret,
-      },
-      httpsAgent: agent, //Ignora SSL en Dev
-    });
-    // OBTENER LAS CABECERAS DE PAGINACIÓN
-    const totalPages = response.headers["x-wp-totalpages"];
+    const apiUrl = `${url}/wp-json/wc/v3/products?per_page=${per_page}&page=${page}`;
 
-    return NextResponse.json(response.data, {
-      // AÑADIR LAS CABECERAS A LA RESPUESTA DE TU RUTA
+    // Configurar opciones de fetch
+    const options: RequestInit = {
       headers: {
-        "X-WP-TotalPages": totalPages ? String(totalPages) : "0", // Pasamos la cabecera al Front
+        Authorization: `Basic ${auth}`,
+      },
+      // En desarrollo, si hay problemas de certificado auto-firmado,
+      // Node.js nativo (v18+) requiere un dispatcher personalizado o
+      // simplemente configurar NODE_TLS_REJECT_UNAUTHORIZED=0 en .env.local si es crítico.
+      // Por ahora usamos fetch estándar.
+    };
+
+    const response = await fetch(apiUrl, options);
+
+    if (!response.ok) {
+      throw new Error(`WooCommerce API Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    const totalPages = response.headers.get("x-wp-totalpages");
+
+    return NextResponse.json(data, {
+      headers: {
+        "X-WP-TotalPages": totalPages || "0",
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
       },
     });
   } catch (error) {
-    const err = error as AxiosError;
     console.error("=====================================");
-    console.error("🔥 ERROR DE WOOCOMMERCE:");
-    console.error("STATUS:", err.response?.status);
-    console.error("HEADERS:", err.response?.headers);
-    console.error("DATA (cuerpo de la respuesta):", err.response?.data);
+    console.error("🔥 ERROR DE WOOCOMMERCE:", error);
     console.error("=====================================");
 
     return NextResponse.json(
       { error: "Error al obtener productos" },
-      { status: err.response?.status || 500 }
+      { status: 500 }
     );
   }
 }

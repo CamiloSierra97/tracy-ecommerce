@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import axios, { AxiosError } from "axios";
 import config from "@/lib/config";
-import https from "https";
 
 export async function GET(
   request: Request,
@@ -11,27 +9,26 @@ export async function GET(
     const { id } = await params;
     const { url, consumerKey, consumerSecret } = config.woocommerce;
 
-    // 👇 Ignorar certificado solo en desarrollo
-    const agent =
-      process.env.NODE_ENV === "development"
-        ? new https.Agent({ rejectUnauthorized: false })
-        : undefined;
+    const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
 
-    const response = await axios.get(`${url}/wp-json/wc/v3/products/${id}`, {
-      auth: {
-        username: consumerKey,
-        password: consumerSecret,
+    const response = await fetch(`${url}/wp-json/wc/v3/products/${id}`, {
+      headers: {
+        Authorization: `Basic ${auth}`,
       },
-      httpsAgent: agent,
     });
 
-    return NextResponse.json(response.data);
+    if (!response.ok) {
+      throw new Error(`WooCommerce API Error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+
+    return NextResponse.json(data);
   } catch (error) {
-    const err = error as AxiosError;
-    console.error("Error fetching product:", err.response?.data || err.message);
+    console.error("Error fetching product:", error);
     return NextResponse.json(
       { error: "Error fetching product" },
-      { status: err.response?.status || 500 }
+      { status: 500 }
     );
   }
 }
