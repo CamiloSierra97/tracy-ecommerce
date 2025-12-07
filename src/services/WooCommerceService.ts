@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export interface Product {
   id: number;
   name: string;
@@ -16,22 +14,24 @@ export interface ProductsPage {
 
 const WooCommerceService = {
   getProducts: async ({ page = 1, per_page = 12 }): Promise<ProductsPage> => {
-    // 1. Llamamos a TU ruta interna (Next.js), no a WooCommerce directo
-    // Al ser ruta relativa, Next.js sabe que es su propia API
-    const { data, headers } = await axios.get(`/api/products`, {
-      params: { page, per_page },
+    // 1. Usa fetch nativo para reducir bundle size
+    const params = new URLSearchParams({
+      page: String(page),
+      per_page: String(per_page),
     });
 
-    // 2. Tu API devuelve los productos en el body (data)
-    // y el total de páginas en los headers (x-wp-totalpages)
+    const response = await fetch(`/api/products?${params.toString()}`);
 
-    // OJO: Axios suele poner los headers en minúsculas
-    const totalPages =
-      headers["x-wp-totalpages"] || headers["X-WP-TotalPages"] || "0";
+    if (!response.ok) {
+      throw new Error(`Error fetching products: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    const totalPagesHeader = response.headers.get("x-wp-totalpages") || "0";
 
     return {
-      products: data, // El array de productos
-      totalPages: parseInt(totalPages as string, 10), // Convertimos a número para el hook
+      products: data,
+      totalPages: parseInt(totalPagesHeader, 10),
     };
   },
 };

@@ -3,8 +3,15 @@
 
 const nextConfig = {
   images: {
+    formats: ["image/avif", "image/webp"],
     qualities: [75, 85],
-    remotePatterns: [new URL('https://shop.glowcosmeticoscol.com/**')],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "shop.glowcosmeticoscol.com",
+        pathname: "/**",
+      },
+    ],
   },
   async rewrites() {
     return process.env.NODE_ENV === "development"
