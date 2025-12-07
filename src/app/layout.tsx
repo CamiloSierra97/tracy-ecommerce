@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
+import CookieBanner from "@/components/layout/CookieBanner";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -50,6 +51,7 @@ export default function RootLayout({
             <Analytics />
             <Footer />
             <CartDrawer />
+            <CookieBanner />
           </CartProvider>
         </ReactQueryProvider>
       </body>

@@ -15,24 +15,24 @@ export default function Footer() {
                         <h4 className="font-semibold mb-4">Enlaces Rápidos</h4>
                         <ul className="space-y-2 text-gray-400">
                             <li><Link href="/" className="hover:text-white transition-colors">Inicio</Link></li>
-                            <li><a href="/shop" className="hover:text-white transition-colors">Tienda</a></li>
-                            <li><a href="/about" className="hover:text-white transition-colors">Acerca de</a></li>
+                            <li><Link href="/shop" className="hover:text-white transition-colors">Tienda</Link></li>
+                            <li><Link href="/acerca-de" className="hover:text-white transition-colors">Acerca de</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h4 className="font-semibold mb-4">Atención al Cliente</h4>
                         <ul className="space-y-2 text-gray-400">
-                            <li><a href="#" className="hover:text-white transition-colors">Contacto</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">FAQ</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Envíos</a></li>
+                            <li><Link href="/contact" className="hover:text-white transition-colors">Contacto</Link></li>
+                            <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
+                            <li><Link href="/shipping" className="hover:text-white transition-colors">Envíos</Link></li>
                         </ul>
                     </div>
                     <div>
                         <h4 className="font-semibold mb-4">Información Legal</h4>
                         <ul className="space-y-2 text-gray-400">
-                            <li><a href="#" className="hover:text-white transition-colors">Términos</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Privacidad</a></li>
-                            <li><a href="#" className="hover:text-white transition-colors">Cookies</a></li>
+                            <li><Link href="/terminos" className="hover:text-white transition-colors">Términos</Link></li>
+                            <li><Link href="/privacidad" className="hover:text-white transition-colors">Privacidad</Link></li>
+                            <li><Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link></li>
                         </ul>
                     </div>
                 </div>
