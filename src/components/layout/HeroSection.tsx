@@ -12,7 +12,7 @@ const HeroSection: React.FC = () => {
             {/* <aside> para contenido tangencial: la imagen de fondo */}
             <figure className="hero__image-container w-full h-[90vh] md:w-1/3 md:h-screen lg:w-1/3 lg:h-[90vh] relative bg-burgundy">
                 <Image
-                    src="/Background1.svg"
+                    src="/Background1.png"
                     alt="Fondo de lencería"
                     className="hero__image relative object-cover object-top"
                     fill // La imagen llenará todo el espacio del contenedor padre
