@@ -4,8 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Icon from "@/components/ui/Icon";
 import CartTrigger from "@/components/cart/CartTrigger";
+import AnimatedSearch from "./AnimatedSearch";
 import { playfair, roboto_serif } from "@/lib/fonts";
-
 
 const Header: React.FC = () => {
     const mainLinks = [
@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     ];
 
     return (
-        <header className={`header h-header-size bg-burgundy shadow-sm overflow-hidden ${playfair.className}`}>
+        <header className={`header h-header-size bg-burgundy overflow-hidden shadow-sm sticky top-0 z-50 ${playfair.className}`}>
             <div className="header__content">
                 {/* Contenido del encabezado: Logo y Navegación */}
                 <div className="header__grid-layout grid grid-cols-3 items-center justify-center">
@@ -90,12 +90,8 @@ const Header: React.FC = () => {
                     {/* Espacio para íconos */}
                     <div className="header__container-utility h-header-size p-4 md:p-8 flex items-center justify-center z-10">
                         <nav className="header__nav-utility flex items-center gap-3.5">
-                            {/* Aquí irían los íconos tipados, como Carrito, Usuario, etc. */}
-                            <div className="text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
-                                <button aria-label="Buscar" role="button" className="cursor-pointer">
-                                    <Icon name="icon-search" />
-                                </button>
-                            </div>
+                            {/* Búsqueda Animada (Client Component Island) */}
+                            <AnimatedSearch />
 
                             <div className="text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
                                 <CartTrigger />

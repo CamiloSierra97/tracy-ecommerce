@@ -39,13 +39,16 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body>
-
         <ReactQueryProvider>
           <CartProvider>
-            <Header></Header>
-            {children}
+            <div className="relative flex flex-col min-h-screen w-full">
+              <Header />
+              <main className="flex-grow">
+                {children}
+              </main>
+            </div>
             <Analytics />
-            <Footer></Footer>
+            <Footer />
             <CartDrawer />
           </CartProvider>
         </ReactQueryProvider>

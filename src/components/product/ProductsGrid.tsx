@@ -1,9 +1,10 @@
 "use client";
 
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Product } from "@/services/WooCommerceService";
 import Icon from "@/components/ui/Icon";
 import { useCart } from "@/context/CartContext";
@@ -13,8 +14,45 @@ interface ProductsGridProps {
     title?: string;
 }
 
+type SortOption = 'date' | 'price_asc' | 'price_desc';
+
 export default function ProductsGrid({ products, title }: ProductsGridProps) {
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+    const [gridCols, setGridCols] = useState<2 | 4>(4);
+    const [sortBy, setSortBy] = useState<SortOption>('date');
+    const [isFilterOpen, setIsFilterOpen] = useState(false);
+    const [isSortOpen, setIsSortOpen] = useState(false);
+
+    const searchParams = useSearchParams();
+    const searchTerm = searchParams.get('search')?.toLowerCase() || "";
+
+    // 🌟 Client-Side Filtering & Sorting Logic
+    const sortedProducts = useMemo(() => {
+        let items = [...products];
+
+        // 1. Filter by Search Term
+        if (searchTerm) {
+            items = items.filter(p =>
+                p.name.toLowerCase().includes(searchTerm) ||
+                (p.short_description && p.short_description.toLowerCase().includes(searchTerm))
+            );
+        }
+
+        // 2. Sort
+        if (sortBy === 'price_asc') {
+            return items.sort((a, b) => (Number(a.price) || 0) - (Number(b.price) || 0));
+        } else if (sortBy === 'price_desc') {
+            return items.sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0));
+        }
+
+        return items;
+    }, [products, sortBy, searchTerm]);
+
+    const sortOptions: { label: string; value: SortOption }[] = [
+        { label: 'Fecha de Release', value: 'date' },
+        { label: 'Precio: Menor a Mayor', value: 'price_asc' },
+        { label: 'Precio: Mayor a Menor', value: 'price_desc' },
+    ];
 
     if (!products.length)
         return (
@@ -24,16 +62,136 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
         );
 
     return (
-        <section className="products-grid p-6">
+        <section className="products-grid p-6 max-w-[1920px] mx-auto">
             {title && (
-                <h2 className="products-grid__title text-2xl font-serif font-semibold mb-6 text-tracy-burdeos">
-                    {title}
-                </h2>
+                <div className="flex flex-col items-center mb-6">
+                    <h2 className="products-grid__title text-3xl font-serif font-medium text-tracy-burdeos relative inline-block">
+                        {title}
+                    </h2>
+                    <div className="w-24 h-1 bg-gradient-to-r from-transparent via-golden to-transparent mt-3 rounded-full opacity-60"></div>
+                </div>
             )}
 
-            <ul className="products-grid__list grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <AnimatePresence>
-                    {products.map((product, index) => (
+            {/* Toolbar inspired by reference image */}
+            <div className="flex flex-col md:flex-row justify-between items-center border-b border-gray-200 pb-4 mb-8 text-sm text-gray-600 font-medium relative z-20">
+                <div className="flex items-center gap-4 mb-4 md:mb-0 w-full md:w-auto">
+                    <span className="text-gray-400 text-xs tracking-wide">
+                        {sortedProducts.length} PRODUCTOS
+                    </span>
+                </div>
+
+                <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
+                    {/* Column Switcher */}
+                    <div className="flex items-center gap-2">
+                        <button
+                            onClick={() => setGridCols(2)}
+                            className={`hover:text-tracy-burdeos transition-colors ${gridCols === 2 ? 'text-tracy-burdeos font-bold' : ''}`}
+                        >
+                            2
+                        </button>
+                        <span className="text-gray-300">|</span>
+                        <button
+                            onClick={() => setGridCols(4)}
+                            className={`hover:text-tracy-burdeos transition-colors ${gridCols === 4 ? 'text-tracy-burdeos font-bold' : ''}`}
+                        >
+                            4
+                        </button>
+                    </div>
+
+                    {/* Sort Dropdown */}
+                    <div className="relative">
+                        <div
+                            className="flex items-center gap-2 cursor-pointer hover:text-tracy-burdeos transition-colors group select-none"
+                            onClick={() => setIsSortOpen(!isSortOpen)}
+                        >
+                            <span>Ordenar Por {sortOptions.find(o => o.value === sortBy)?.label.replace('Fecha de Release', '')}</span>
+                            <Icon name="icon-chevron-down" size={14} className={`group-hover:translate-y-0.5 transition-transform ${isSortOpen ? 'rotate-180' : ''}`} />
+                        </div>
+
+                        {/* Dropdown Menu */}
+                        <AnimatePresence>
+                            {isSortOpen && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: 10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: 10 }}
+                                    className="absolute right-0 top-full mt-2 w-48 bg-white shadow-xl border border-gray-100 rounded-lg p-2 z-50 overflow-hidden"
+                                >
+                                    {sortOptions.map((option) => (
+                                        <button
+                                            key={option.value}
+                                            onClick={() => {
+                                                setSortBy(option.value);
+                                                setIsSortOpen(false);
+                                            }}
+                                            className={`block w-full text-left px-4 py-2 text-sm rounded-md transition-colors ${sortBy === option.value ? 'bg-burgundy/10 text-tracy-burdeos font-bold' : 'hover:bg-gray-50'
+                                                }`}
+                                        >
+                                            {option.label}
+                                        </button>
+                                    ))}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+
+                    {/* Filter Button */}
+                    <button
+                        onClick={() => setIsFilterOpen(!isFilterOpen)}
+                        className={`uppercase tracking-wider hover:text-tracy-burdeos transition-colors font-semibold flex items-center gap-1 ${isFilterOpen ? 'text-tracy-burdeos' : ''}`}
+                    >
+                        Filtrar
+                        {isFilterOpen && <span className="w-1.5 h-1.5 bg-golden rounded-full inline-block mb-1"></span>}
+                    </button>
+                </div>
+            </div>
+
+            {/* Filter Panel (Expandable) */}
+            <AnimatePresence>
+                {isFilterOpen && (
+                    <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden mb-8 bg-white/50 backdrop-blur-sm border border-gold/10 rounded-xl"
+                    >
+                        <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+                            {/* Placeholder Filters */}
+                            <div>
+                                <h4 className="font-serif text-tracy-burdeos mb-3">Categoría</h4>
+                                <ul className="space-y-2 text-sm text-gray-600">
+                                    <li className="cursor-pointer hover:text-golden">Brasieres</li>
+                                    <li className="cursor-pointer hover:text-golden">Panties</li>
+                                    <li className="cursor-pointer hover:text-golden">Sets Completos</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 className="font-serif text-tracy-burdeos mb-3">Talla</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {['XS', 'S', 'M', 'L', 'XL'].map(size => (
+                                        <span key={size} className="w-8 h-8 flex items-center justify-center border border-gray-200 rounded-full text-xs cursor-pointer hover:border-golden hover:text-golden transition-colors">{size}</span>
+                                    ))}
+                                </div>
+                            </div>
+                            <div>
+                                <h4 className="font-serif text-tracy-burdeos mb-3">Color</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {['bg-black', 'bg-white', 'bg-red-700', 'bg-stone-200'].map((color, i) => (
+                                        <span key={i} className={`w-6 h-6 rounded-full border border-gray-100 shadow-sm cursor-pointer hover:scale-110 transition-transform ${color}`}></span>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            <ul className={`products-grid__list grid gap-6 xl:gap-8 transition-all duration-500 ease-in-out ${gridCols === 4
+                ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
+                : 'grid-cols-2'
+                }`}>
+                <AnimatePresence mode="popLayout">
+                    {sortedProducts.map((product, index) => (
                         <ProductCard
                             key={product.id}
                             product={product}
@@ -44,7 +202,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                 </AnimatePresence>
             </ul>
 
-            {/* Quick View Modal - Rendered outside grid to avoid layout issues */}
+            {/* Quick View Modal */}
             <QuickViewModal
                 product={selectedProduct}
                 isOpen={!!selectedProduct}
@@ -68,7 +226,7 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
                 className="h-full flex flex-col relative"
             >
                 {/* Image Area */}
-                <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-gray-100 shadow-sm transition-all duration-300 group-hover:shadow-xl">
+                <div className="relative aspect-[3/4] overflow-hidden rounded-3xl bg-gray-100 shadow-sm transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:border-golden/30 border border-transparent group-hover:scale-[1.02] transform">
                     <Link href={`/productos/${product.slug ?? product.id}`} className="block w-full h-full relative">
                         {/* Skeleton Loader */}
                         {isImageLoading && (
@@ -170,9 +328,6 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
         if (isOpen) {
             document.body.style.overflow = "hidden";
             document.documentElement.style.overflow = "hidden";
-            // Optional: for iOS/mobile to prevent rubberbanding
-            // document.body.style.position = "fixed"; 
-            // but this resets scroll position, so stick to overflow hidden for now
         } else {
             document.body.style.overflow = "";
             document.documentElement.style.overflow = "";
@@ -191,12 +346,7 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
     };
 
     const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-        // Prevent event from bubbling up to document
         e.stopPropagation();
-
-        // We can't preventDefault() on passive listeners like 'wheel' easily in React synthetic events
-        // without some hacks, but stopPropagation + the body overflow:hidden above should do it.
-
         const delta = -Math.sign(e.deltaY) * 0.5; // Zoom step
         setZoomStyle(prev => ({
             ...prev,
@@ -222,68 +372,81 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
                         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
                     />
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.95 }}
-                        className="relative bg-white p-2 rounded-2xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-hidden flex flex-col"
+                        initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                        transition={{ type: "spring", duration: 0.5 }}
+                        className="relative bg-white rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden grid grid-cols-1 md:grid-cols-2 max-h-[90vh]"
                         onClick={(e) => e.stopPropagation()}
                     >
                         <button
                             onClick={onClose}
-                            className="absolute top-4 right-4 z-20 bg-white/50 hover:bg-white text-gray-800 rounded-full p-2 transition-colors"
+                            className="absolute top-4 right-4 z-50 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 transition-all shadow-sm hover:shadow-md"
                             aria-label="Cerrar"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                         </button>
 
-                        {/* Zoomable Image Container */}
+                        {/* Left Side: Zoomable Image */}
                         <div
-                            className="relative w-full h-[60vh] md:h-[70vh] overflow-hidden cursor-crosshair bg-gray-50"
+                            className="relative h-[400px] md:h-full overflow-hidden bg-gray-50 cursor-zoom-in group"
                             onMouseMove={handleMouseMove}
                             onMouseLeave={handleMouseLeave}
                             onWheel={handleWheel}
                         >
                             <motion.div
-                                className="w-full h-full relative"
-                                animate={{
-                                    scale: zoomStyle.scale,
-                                    transformOrigin: zoomStyle.origin
+                                className="w-full h-full flex items-center justify-center p-4"
+                                style={{
+                                    transformOrigin: zoomStyle.origin,
                                 }}
-                                transition={{ type: "tween", ease: "easeOut", duration: 0.1 }}
+                                animate={{ scale: zoomStyle.scale }}
+                                transition={{ type: "tween", ease: "linear", duration: 0.1 }}
                             >
-                                <Image
-                                    src={product.images?.[0]?.src ?? "/placeholder.jpg"}
-                                    alt={product.name}
-                                    fill
-                                    className="object-contain pointer-events-none"
-                                    quality={100}
-                                    priority
-                                />
+                                <div className="relative w-full h-full">
+                                    <Image
+                                        src={product.images?.[0]?.src ?? "/placeholder.jpg"}
+                                        alt={product.name}
+                                        fill
+                                        className="object-contain"
+                                        priority
+                                    />
+                                </div>
                             </motion.div>
+
+                            {/* Zoom Hint Overlay */}
+                            <div className="absolute bottom-6 left-0 right-0 text-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <span className="bg-black/40 text-white text-xs px-4 py-2 rounded-full backdrop-blur-sm tracking-wide">
+                                    Rueda del mouse para zoom
+                                </span>
+                            </div>
                         </div>
 
-                        <div className="p-4 text-center z-10 bg-white relative flex flex-col items-center">
-                            <h3 className="text-xl font-serif text-gray-900">{product.name}</h3>
-                            <p className="text-lg font-bold text-tracy-burdeos mt-2">
+                        {/* Right Side: Product Details */}
+                        <div className="p-8 md:p-12 flex flex-col justify-center bg-white">
+                            <h2 className="text-3xl font-serif text-gray-900 mb-2 leading-tight">{product.name}</h2>
+                            <div className="w-20 h-1 bg-tracy-burdeos mb-6 opacity-20"></div>
+
+                            <p className="text-3xl font-bold text-tracy-burdeos mb-6">
                                 ${new Intl.NumberFormat('es-CO').format(parseInt(product.price) || 0)}
                             </p>
 
-                            <div className="mt-6 w-full max-w-[280px] space-y-3">
+                            <div className="prose prose-sm text-gray-600 mb-8 line-clamp-3">
+                                <div dangerouslySetInnerHTML={{ __html: product.short_description || "Descubre la elegancia y confort de esta pieza exclusiva." }} />
+                            </div>
+
+                            <div className="flex flex-col gap-4 mt-auto">
                                 <button
-                                    onClick={() => {
-                                        addToCart(product);
-                                        onClose();
-                                    }}
-                                    className="w-full bg-tracy-burdeos text-white py-3 rounded-full font-medium hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl active:scale-95 flex items-center justify-center gap-2"
+                                    onClick={() => addToCart(product)}
+                                    className="w-full bg-tracy-burdeos text-white py-4 rounded-xl font-bold tracking-wide hover:bg-opacity-90 transition-all flex items-center justify-center gap-3 shadow-xl shadow-tracy-burdeos/20 hover:scale-[1.01] active:scale-[0.98]"
                                 >
-                                    <Icon name="icon-bag" size={18} className="text-white" />
-                                    Agregar a la Bolsa
+                                    <Icon name="icon-bag" size={22} />
+                                    AGREGAR AL CARRITO
                                 </button>
                                 <Link
                                     href={`/productos/${product.slug ?? product.id}`}
-                                    className="block text-gray-500 text-sm hover:text-tracy-burdeos underline transition-colors"
+                                    className="w-full py-4 border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-tracy-burdeos/30 transition-all text-gray-600 font-medium text-center uppercase tracking-wider text-sm hover:text-tracy-burdeos"
                                 >
-                                    Ver Detalles Completos
+                                    Ver Detalle Completo
                                 </Link>
                             </div>
                         </div>

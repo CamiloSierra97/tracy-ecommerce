@@ -1,12 +1,23 @@
 @import "tailwindcss";
 
 @layer base {
+
   html,
   body {
     overflow-x: hidden;
     width: 100%;
     margin: 0;
     padding: 0;
+    /* Fondo sofisticado: Gradiente radial profundo + Sutil patrón de cuadrícula dorada */
+    background-color: #f4f1ec;
+    background-image:
+      linear-gradient(to right, rgba(217, 179, 56, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(217, 179, 56, 0.05) 1px, transparent 1px),
+      radial-gradient(circle at 50% 0%, #ffffff 0%, #f4f1ec 45%, #e8e4dc 100%);
+    background-size: 4rem 4rem, 4rem 4rem, 100% 100%;
+    background-attachment: fixed;
+    color: #1c1c1c;
+    min-height: 100vh;
   }
 }
 
@@ -71,7 +82,8 @@
   width: 50px;
   height: 50px;
   cursor: pointer;
-  z-index: 110; /* Encima del menú */
+  z-index: 110;
+  /* Encima del menú */
 }
 
 /* 2. LAS BARRAS (Estilo Base) */
@@ -87,8 +99,9 @@
 }
 
 /* 2.5 EL BACKDROP (Fondo oscuro semitransparente) */
-#menu__checkbox:checked ~ .menu__toggle {
-  position: fixed; /* Mantener el botón fijo en la esquina */
+#menu__checkbox:checked~.menu__toggle {
+  position: fixed;
+  /* Mantener el botón fijo en la esquina */
 }
 
 .menu__backdrop {
@@ -107,7 +120,7 @@
   -webkit-backdrop-filter: blur(0);
 }
 
-#menu__checkbox:checked ~ .menu__backdrop {
+#menu__checkbox:checked~.menu__backdrop {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -122,26 +135,29 @@
 .menu__toggle div:nth-child(1) {
   top: 12px;
 }
+
 .menu__toggle div:nth-child(2) {
   top: 23px;
 }
+
 .menu__toggle div:nth-child(3) {
   top: 34px;
 }
 
 /* 4. ESTADO ACTIVO (La "X" Perfecta) */
-#menu__checkbox:checked ~ .menu__toggle div:nth-child(1) {
+#menu__checkbox:checked~.menu__toggle div:nth-child(1) {
   top: 23px;
   transform: rotate(45deg);
   background-color: #d4af37;
 }
 
-#menu__checkbox:checked ~ .menu__toggle div:nth-child(2) {
+#menu__checkbox:checked~.menu__toggle div:nth-child(2) {
   opacity: 0;
-  transform: translateX(20px); /* Se va un poco a la derecha al desaparecer */
+  transform: translateX(20px);
+  /* Se va un poco a la derecha al desaparecer */
 }
 
-#menu__checkbox:checked ~ .menu__toggle div:nth-child(3) {
+#menu__checkbox:checked~.menu__toggle div:nth-child(3) {
   top: 23px;
   transform: rotate(-45deg);
   background-color: #d4af37;
@@ -151,7 +167,8 @@
 .menu__nav {
   position: fixed;
   top: 0;
-  left: 0; /* 👈 CAMBIO: Anclado a la izquierda */
+  left: 0;
+  /* 👈 CAMBIO: Anclado a la izquierda */
   bottom: 0;
   width: 16rem;
   background-color: var(--color-burgundy);
@@ -174,6 +191,6 @@
 }
 
 /* MOSTRAR MENÚ (Vuelve a posición 0) */
-#menu__checkbox:checked ~ .menu__nav {
+#menu__checkbox:checked~.menu__nav {
   transform: translateX(0);
 }
