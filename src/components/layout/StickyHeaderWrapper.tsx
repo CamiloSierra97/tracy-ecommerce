@@ -8,7 +8,7 @@ interface StickyHeaderWrapperProps {
 }
 
 // Umbral: Puedes bajarlo a 100px para que el cambio de color sea rápido.
-const SCROLL_THRESHOLD = 100; 
+const SCROLL_THRESHOLD = 100;
 
 const StickyHeaderWrapper: React.FC<StickyHeaderWrapperProps> = ({ children }) => {
     const [isScrolled, setIsScrolled] = useState(false); // Cambié el nombre del estado a isScrolled
@@ -21,16 +21,16 @@ const StickyHeaderWrapper: React.FC<StickyHeaderWrapperProps> = ({ children }) =
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-    
+
     // La posición es SIEMPRE FIXED. La lógica condicional solo cambia el fondo y el padding/sombra.
     const headerClasses = isScrolled
         ? // ESTADO SCROLLED (Fondo sólido, menos padding, sombra)
-          'bg-burgundy shadow-lg' // Más compacto al scrollear
+        'bg-burgundy shadow-lg' // Más compacto al scrollear
         : // ESTADO INICIAL (Fondo semi-transparente, más padding, sin sombra)
-          'bg-burgundy/80'; // Fondo con 80% de opacidad para ver el hero
+        'bg-burgundy/80'; // Fondo con 80% de opacidad para ver el hero
 
     return (
-        <header 
+        <header
             // Posición fija desde el inicio
             className={`fixed top-0 w-full z-50 transition-all duration-300 ${headerClasses}`}
         >

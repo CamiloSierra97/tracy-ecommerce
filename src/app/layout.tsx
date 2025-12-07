@@ -1,7 +1,7 @@
 import ReactQueryProvider from "../providers/ReactQueryProvider";
 import { Metadata, Viewport } from "next";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {

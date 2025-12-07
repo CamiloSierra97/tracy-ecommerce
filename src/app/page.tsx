@@ -1,7 +1,7 @@
-import Products from "@/components/Products";
+import Products from "@/components/product/Products";
 import { metadata } from "./layout";
 import { roboto_serif } from "@/lib/fonts";
-import HeroSection from "@/components/HeroSection";
+import HeroSection from "@/components/layout/HeroSection";
 
 export default function Page() {
   return (
@@ -14,7 +14,7 @@ export default function Page() {
           <HeroSection></HeroSection>
         </section>
         <section>
-         <Products title={metadata.title as string} basePath="/"></Products>
+          <Products title={metadata.title as string} basePath="/"></Products>
           {/* Ejemplo de cómo hacer un background paralelo con scroll */}
           {/*<div className="w-full flex justify-center">
               <div className="text-ivory bg-fixed bg-[url(/FondoTinto.svg)] bg-cover w-full">
