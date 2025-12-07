@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "Tracy E-commerce",
@@ -43,6 +44,7 @@ export default function RootLayout({
           <CartProvider>
             <Header></Header>
             {children}
+            <Analytics />
             <Footer></Footer>
             <CartDrawer />
           </CartProvider>
