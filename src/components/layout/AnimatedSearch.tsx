@@ -27,7 +27,7 @@ export default function AnimatedSearch() {
     };
 
     return (
-        <div className="relative flex items-center text-gold border-b border-b-transparent transition-all">
+        <div className="search-bar relative flex items-center h-full text-gold border-b-2 border-b-transparent transition-all hover:border-b-gold">
             <AnimatePresence>
                 {isSearchOpen && (
                     <motion.input
@@ -40,7 +40,8 @@ export default function AnimatedSearch() {
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
                         onKeyDown={handleKeyDown}
-                        className="bg-transparent border-b border-gold text-sm text-ivory placeholder-gold/70 focus:outline-none mr-2 font-sans"
+                        className="search-bar__input bg-transparent border-b border-gold text-sm text-ivory placeholder-gold/70 focus:outline-none mr-2 font-sans"
+                        aria-label="Buscar productos"
                         autoFocus
                         onBlur={() => {
                             // Only close if empty to allow typing
@@ -58,9 +59,9 @@ export default function AnimatedSearch() {
                     }
                 }}
                 aria-label="Buscar"
-                className="cursor-pointer hover:text-light-gold"
+                className="search-bar__button cursor-pointer hover:text-light-gold"
             >
-                <Icon name="icon-search" />
+                <Icon name="icon-search" className="search-bar__icon" />
             </button>
         </div>
     );

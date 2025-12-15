@@ -40,9 +40,18 @@ export async function GET(request: Request) {
     }
 
     const data = await response.json();
+
+    // 🛑 SANITIZACIÓN DE IMÁGENES: Filtrar URLs rotas de IA
+    const sanitizedData = Array.isArray(data) ? data.map((product: any) => ({
+      ...product,
+      images: product.images?.filter((img: any) =>
+        img.src && !img.src.includes("Gemini_Generated_Image")
+      ) || []
+    })) : data;
+
     const totalPages = response.headers.get("x-wp-totalpages");
 
-    return NextResponse.json(data, {
+    return NextResponse.json(sanitizedData, {
       headers: {
         "X-WP-TotalPages": totalPages || "0",
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",

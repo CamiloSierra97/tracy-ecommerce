@@ -91,14 +91,16 @@ const Header: React.FC = () => {
                     <div className="header__container-utility h-header-size p-4 md:p-8 flex items-center justify-center z-10">
                         <nav className="header__nav-utility flex items-center gap-3.5">
                             {/* Búsqueda Animada (Client Component Island) */}
-                            <AnimatedSearch />
+                            <div className="header__utility-item">
+                                <AnimatedSearch />
+                            </div>
 
-                            <div className="text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
+                            <div className="header__utility-item text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
                                 <CartTrigger />
                             </div>
 
-                            <div className="text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
-                                <button aria-label="Mi Cuenta" role="button" className="cursor-pointer">
+                            <div className="header__utility-item text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
+                                <button aria-label="Mi Cuenta" role="button" className="header__utility-button cursor-pointer">
                                     <Icon name="icon-user" />
                                 </button>
                             </div>

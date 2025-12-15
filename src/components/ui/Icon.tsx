@@ -9,7 +9,7 @@ const Icon: React.FC<IconProps> = ({ name, size = 24, className, ...props }) => 
     const spritePath = "/Sprite.svg";
     return (
         <svg
-            className={className}
+            className={`icon ${className || ''}`.trim()}
             width={size}
             height={size}
             aria-hidden="true"
