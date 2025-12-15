@@ -8,6 +8,7 @@ import CookieBanner from "@/components/layout/CookieBanner";
 import { playfair, playfair_italic, roboto_serif } from "@/lib/fonts";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
   title: "Tracy E-commerce",
@@ -45,11 +46,12 @@ export default function RootLayout({
           <CartProvider>
             <div className="relative flex flex-col min-h-screen w-full">
               <Header />
-              <main className="flex-grow">
+              <main className="grow">
                 {children}
               </main>
             </div>
             <Analytics />
+            <SpeedInsights />
             <Footer />
             <CartDrawer />
             <CookieBanner />
