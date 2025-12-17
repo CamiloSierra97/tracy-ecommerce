@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
@@ -323,25 +323,34 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
     const [zoomStyle, setZoomStyle] = useState({ scale: 1, origin: "50% 50%" });
     const { addToCart } = useCart();
 
-    // Lock both body and html scroll when modal is open
+    // Start of Optimization: Cache element bounds to avoid forced reflows on every mouse move
+    const boundsRef = useRef<DOMRect | null>(null);
+
+    // Invalidate bounds on window resize to ensure accuracy
     useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = "hidden";
-            document.documentElement.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "";
-            document.documentElement.style.overflow = "";
-        }
-        return () => {
-            document.body.style.overflow = "";
-            document.documentElement.style.overflow = "";
+        const handleResize = () => {
+            boundsRef.current = null;
         };
-    }, [isOpen]);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+        // READ: Measure layout once when entering
+        boundsRef.current = e.currentTarget.getBoundingClientRect();
+    };
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+        // Fallback: If for some reason bounds are missing, read them (rare case)
+        if (!boundsRef.current) {
+            boundsRef.current = e.currentTarget.getBoundingClientRect();
+        }
+
+        const { left, top, width, height } = boundsRef.current;
         const x = ((e.clientX - left) / width) * 100;
         const y = ((e.clientY - top) / height) * 100;
+
+        // WRITE: Update state (triggers render/style change)
         setZoomStyle(prev => ({ ...prev, origin: `${x}% ${y}%` }));
     };
 
@@ -356,6 +365,7 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
 
     const handleMouseLeave = () => {
         setZoomStyle({ scale: 1, origin: "50% 50%" });
+        boundsRef.current = null; // Clear cache
     };
 
     if (!product) return null;
@@ -390,6 +400,7 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
                         {/* Left Side: Zoomable Image */}
                         <div
                             className="relative h-[400px] md:h-full overflow-hidden bg-gray-50 cursor-zoom-in group"
+                            onMouseEnter={handleMouseEnter}
                             onMouseMove={handleMouseMove}
                             onMouseLeave={handleMouseLeave}
                             onWheel={handleWheel}

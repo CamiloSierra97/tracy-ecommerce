@@ -8,6 +8,12 @@
     "start": "next start",
     "lint": "eslint"
   },
+  "browserslist": [
+    "chrome >= 87",
+    "firefox >= 78",
+    "edge >= 88",
+    "safari >= 14"
+  ],
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.16",
     "@tanstack/react-query": "^5.90.5",

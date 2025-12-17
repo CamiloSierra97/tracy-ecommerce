@@ -1,13 +1,13 @@
-import ReactQueryProvider from "../providers/ReactQueryProvider";
 import { Metadata, Viewport } from "next";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import { CartProvider } from "@/context/CartContext";
-import CartDrawer from "@/components/cart/CartDrawer";
-import CookieBanner from "@/components/layout/CookieBanner";
 import { playfair, playfair_italic, roboto_serif } from "@/lib/fonts";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import ReactQueryProvider from "../providers/ReactQueryProvider";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import CartDrawer from "@/components/cart/CartDrawer";
+import CookieBanner from "@/components/layout/CookieBanner";
 import "./globals.css";
 
 export const metadata: Metadata = {
