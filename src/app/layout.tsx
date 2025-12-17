@@ -50,13 +50,13 @@ export default function RootLayout({
                 {children}
               </main>
             </div>
-            <Analytics />
-            <SpeedInsights />
             <Footer />
             <CartDrawer />
             <CookieBanner />
           </CartProvider>
         </ReactQueryProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
