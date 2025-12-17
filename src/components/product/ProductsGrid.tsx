@@ -239,6 +239,7 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
                             width={500}
                             height={667}
                             priority={priority}
+                            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                             onLoad={() => setIsImageLoading(false)}
                             className={`product-card__image w-full h-full object-cover transform transition-transform duration-700 ease-out ${isImageLoading ? "opacity-0" : "opacity-100"
                                 }`}
@@ -251,6 +252,7 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
                                 alt={`${product.name} - Vista alternativa`}
                                 width={500}
                                 height={667}
+                                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
                                 className="product-card__image-hover absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-10"
                             />
                         )}
