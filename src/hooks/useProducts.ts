@@ -9,7 +9,11 @@ interface ProductsQueryResult {
   pageParams: number[];
 }
 
-export const useProducts = () => {
+interface UseProductsOptions {
+  initialData?: ProductsQueryResult;
+}
+
+export const useProducts = (options?: UseProductsOptions) => {
   return useInfiniteQuery<
     ProductsPage,
     Error,
@@ -25,7 +29,7 @@ export const useProducts = () => {
         per_page: 12,
       });
     },
-
+    initialData: options?.initialData,
     // Lógica de paginación robusta basada en la cabecera
     getNextPageParam: (lastPage, allPages) => {
       const currentTotalPages = lastPage.totalPages;

@@ -11,6 +11,11 @@ const nextConfig = {
         hostname: "shop.glowcosmeticoscol.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "*.googleusercontent.com",
+        pathname: "/**",
+      },
     ],
   },
   async rewrites() {

@@ -6,9 +6,9 @@ import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/cart/CartDrawer";
 import CookieBanner from "@/components/layout/CookieBanner";
 import { playfair, playfair_italic, roboto_serif } from "@/lib/fonts";
-import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Tracy E-commerce",

@@ -4,6 +4,7 @@ export interface Product {
   price: string;
   short_description: string;
   slug: string;
+  description?: string;
   images?: { id: number; src: string; name: string }[];
 }
 
@@ -11,6 +12,12 @@ export interface ProductsPage {
   products: Product[];
   totalPages: number;
 }
+
+const getBaseUrl = () => {
+  if (typeof window !== "undefined") return ""; // Browser: relative URL is fine
+  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
+  return "http://localhost:3000"; // Default fallback for server-side
+};
 
 const WooCommerceService = {
   getProducts: async ({ page = 1, per_page = 12 }): Promise<ProductsPage> => {
@@ -20,7 +27,7 @@ const WooCommerceService = {
       per_page: String(per_page),
     });
 
-    const response = await fetch(`/api/products?${params.toString()}`);
+    const response = await fetch(`${getBaseUrl()}/api/products?${params.toString()}`);
 
     if (!response.ok) {
       throw new Error(`Error fetching products: ${response.statusText}`);
@@ -34,6 +41,16 @@ const WooCommerceService = {
       totalPages: parseInt(totalPagesHeader, 10),
     };
   },
+
+  getProductBySlug: async (slug: string): Promise<Product | null> => {
+    const params = new URLSearchParams({ slug });
+    const response = await fetch(`${getBaseUrl()}/api/products?${params.toString()}`);
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    return data && data.length > 0 ? data[0] : null;
+  }
 };
 
 export default WooCommerceService;

@@ -8,6 +8,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const page = searchParams.get("page") || "1";
     const per_page = searchParams.get("per_page") || "12";
+    const slug = searchParams.get("slug");
 
     if (!url || !consumerKey || !consumerSecret) {
       console.error("❌ ERROR: Faltan variables de entorno de WooCommerce");
@@ -20,7 +21,10 @@ export async function GET(request: Request) {
     // Auth Header
     const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
 
-    const apiUrl = `${url}/wp-json/wc/v3/products?per_page=${per_page}&page=${page}`;
+    let apiUrl = `${url}/wp-json/wc/v3/products?per_page=${per_page}&page=${page}`;
+    if (slug) {
+      apiUrl += `&slug=${slug}`;
+    }
 
     // Configurar opciones de fetch
     const options: RequestInit = {

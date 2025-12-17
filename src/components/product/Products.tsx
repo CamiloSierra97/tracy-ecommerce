@@ -7,14 +7,23 @@ import { useProducts } from "@/hooks/useProducts";
 import ProductsGrid from "./ProductsGrid";
 import ThreeRingLoader from "@/components/ui/ThreeRingLoader";
 
+import { ProductsPage } from "@/services/WooCommerceService";
+
 // 🛑 TS CORRECCIÓN: Definimos las props requeridas para la reutilización.
 interface ProductsProps {
     title: string; // Título dinámico para el H1
     basePath: string; // La ruta base para los enlaces de paginación (ej: '/lenceria')
+    initialData?: ProductsPage;
 }
 
 // Nota: Asumo que useProducts devuelve la estructura necesaria (pages, totalPages).
-export default function Products({ title, basePath }: ProductsProps) {
+export default function Products({ title, basePath, initialData }: ProductsProps) {
+    // Construct the initial infinite query structure if initialData is provided
+    const infiniteInitialData = initialData ? {
+        pages: [initialData],
+        pageParams: [1]
+    } : undefined;
+
     const {
         data,
         isLoading,
@@ -22,7 +31,7 @@ export default function Products({ title, basePath }: ProductsProps) {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-    } = useProducts();
+    } = useProducts({ initialData: infiniteInitialData });
 
     const loadMoreRef = useRef<HTMLDivElement | null>(null);
 

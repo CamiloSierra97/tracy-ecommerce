@@ -25,16 +25,16 @@ export default function CookieBanner() {
     if (!isVisible) return null;
 
     return (
-        <div className="cookie-banner fixed bottom-0 left-0 right-0 z-50 bg-black text-white p-4 shadow-lg border-t border-gray-800 md:m-4 md:rounded-lg animate-in slide-in-from-bottom-full duration-500">
+        <div className="cookie-banner fixed bottom-0 left-0 right-0 z-100 bg-zinc-900 text-white p-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] border-t border-zinc-800 md:m-4 md:rounded-xl">
             <div className="cookie-banner__container container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="cookie-banner__content flex-1 text-sm text-gray-300">
+                <div className="cookie-banner__content flex-1 text-sm text-zinc-300 leading-relaxed">
                     <p className="cookie-banner__text">
                         Utilizamos cookies para mejorar tu experiencia. Al continuar navegando, aceptas nuestra{" "}
-                        <Link href="/cookies" className="cookie-banner__link text-white underline hover:text-gray-200">
+                        <Link href="/cookies" className="cookie-banner__link text-white font-medium underline decoration-zinc-500 underline-offset-4 hover:text-golden hover:decoration-golden transition-all">
                             Política de Cookies
                         </Link>{" "}
                         y{" "}
-                        <Link href="/privacidad" className="cookie-banner__link text-white underline hover:text-gray-200">
+                        <Link href="/privacidad" className="cookie-banner__link text-white font-medium underline decoration-zinc-500 underline-offset-4 hover:text-golden hover:decoration-golden transition-all">
                             Política de Privacidad
                         </Link>.
                     </p>

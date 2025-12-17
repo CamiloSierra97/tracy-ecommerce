@@ -27,7 +27,7 @@ export default function AnimatedSearch() {
     };
 
     return (
-        <div className="search-bar relative flex items-center h-full text-gold border-b-2 border-b-transparent transition-all hover:border-b-gold">
+        <div className="search-bar relative flex items-center h-full text-gold transition-all">
             <AnimatePresence>
                 {isSearchOpen && (
                     <motion.input

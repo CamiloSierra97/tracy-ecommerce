@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSearchParams } from "next/navigation";
+import { useCart } from "@/context/CartContext";
+import { Product } from "@/services/WooCommerceService";
 import Image from "next/image";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { Product } from "@/services/WooCommerceService";
 import Icon from "@/components/ui/Icon";
-import { useCart } from "@/context/CartContext";
 
 interface ProductsGridProps {
     products: Product[];
@@ -65,7 +65,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
         <section className="products-grid p-6 max-w-[1920px] mx-auto">
             {title && (
                 <div className="products-grid__header flex flex-col items-center mb-6">
-                    <h2 className="products-grid__title text-3xl font-serif font-medium text-tracy-burdeos relative inline-block">
+                    <h2 className="products-grid__title text-3xl font-serif font-medium text-burgundy relative inline-block">
                         {title}
                     </h2>
                     <div className="products-grid__divider w-24 h-1 bg-linear-to-r from-transparent via-golden to-transparent mt-3 rounded-full opacity-60"></div>
@@ -85,14 +85,14 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                     <div className="products-grid__layout-switch flex items-center gap-2">
                         <button
                             onClick={() => setGridCols(2)}
-                            className={`products-grid__layout-btn hover:text-tracy-burdeos transition-colors ${gridCols === 2 ? 'text-tracy-burdeos font-bold' : ''}`}
+                            className={`products-grid__layout-btn hover:text-burgundy hover:cursor-pointer transition-colors ${gridCols === 2 ? 'text-burgundy font-bold' : ''}`}
                         >
                             2
                         </button>
                         <span className="text-gray-300">|</span>
                         <button
                             onClick={() => setGridCols(4)}
-                            className={`products-grid__layout-btn hover:text-tracy-burdeos transition-colors ${gridCols === 4 ? 'text-tracy-burdeos font-bold' : ''}`}
+                            className={`products-grid__layout-btn hover:text-burgundy hover:cursor-pointer transition-colors ${gridCols === 4 ? 'text-burgundy font-bold' : ''}`}
                         >
                             4
                         </button>
@@ -101,7 +101,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                     {/* Sort Dropdown */}
                     <div className="products-grid__sort relative">
                         <div
-                            className="products-grid__sort-trigger flex items-center gap-2 cursor-pointer hover:text-tracy-burdeos transition-colors group select-none"
+                            className="products-grid__sort-trigger flex items-center gap-2 cursor-pointer hover:text-burgundy transition-colors group select-none"
                             onClick={() => setIsSortOpen(!isSortOpen)}
                         >
                             <span>Ordenar Por {sortOptions.find(o => o.value === sortBy)?.label.replace('Fecha de Release', '')}</span>
@@ -124,7 +124,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                                                 setSortBy(option.value);
                                                 setIsSortOpen(false);
                                             }}
-                                            className={`products-grid__sort-item block w-full text-left px-4 py-2 text-sm rounded-md transition-colors ${sortBy === option.value ? 'bg-burgundy/10 text-tracy-burdeos font-bold' : 'hover:bg-gray-50'
+                                            className={`products-grid__sort-item block w-full text-left px-4 py-2 text-sm rounded-md transition-colors ${sortBy === option.value ? 'bg-burgundy/10 text-burgundy font-bold' : 'hover:bg-gray-50'
                                                 }`}
                                         >
                                             {option.label}
@@ -138,7 +138,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                     {/* Filter Button */}
                     <button
                         onClick={() => setIsFilterOpen(!isFilterOpen)}
-                        className={`products-grid__filter-btn uppercase tracking-wider hover:text-tracy-burdeos transition-colors font-semibold flex items-center gap-1 ${isFilterOpen ? 'text-tracy-burdeos' : ''}`}
+                        className={`products-grid__filter-btn uppercase tracking-wider hover:text-burgundy hover:cursor-pointer transition-colors font-semibold flex items-center gap-1 ${isFilterOpen ? 'text-burgundy' : ''}`}
                     >
                         Filtrar
                         {isFilterOpen && <span className="w-1.5 h-1.5 bg-golden rounded-full inline-block mb-1"></span>}
@@ -158,7 +158,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                         <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-8">
                             {/* Placeholder Filters */}
                             <div className="filter-group">
-                                <h4 className="filter-group__title font-serif text-tracy-burdeos mb-3">Categoría</h4>
+                                <h4 className="filter-group__title font-serif text-burgundy mb-3">Categoría</h4>
                                 <ul className="filter-group__list space-y-2 text-sm text-gray-600">
                                     <li className="filter-group__item cursor-pointer hover:text-golden">Brasieres</li>
                                     <li className="filter-group__item cursor-pointer hover:text-golden">Panties</li>
@@ -166,7 +166,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                                 </ul>
                             </div>
                             <div className="filter-group">
-                                <h4 className="filter-group__title font-serif text-tracy-burdeos mb-3">Talla</h4>
+                                <h4 className="filter-group__title font-serif text-burgundy mb-3">Talla</h4>
                                 <div className="filter-group__chips flex flex-wrap gap-2">
                                     {['XS', 'S', 'M', 'L', 'XL'].map(size => (
                                         <span key={size} className="filter-group__chip w-8 h-8 flex items-center justify-center border border-gray-200 rounded-full text-xs cursor-pointer hover:border-golden hover:text-golden transition-colors">{size}</span>
@@ -174,7 +174,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                                 </div>
                             </div>
                             <div className="filter-group">
-                                <h4 className="filter-group__title font-serif text-tracy-burdeos mb-3">Color</h4>
+                                <h4 className="filter-group__title font-serif text-burgundy mb-3">Color</h4>
                                 <div className="filter-group__colors flex flex-wrap gap-2">
                                     {['bg-black', 'bg-white', 'bg-red-700', 'bg-stone-200'].map((color, i) => (
                                         <span key={i} className={`filter-group__color-swatch w-6 h-6 rounded-full border border-gray-100 shadow-sm cursor-pointer hover:scale-110 transition-transform ${color}`}></span>
@@ -234,7 +234,7 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
                         )}
                         {/* Main Image */}
                         <Image
-                            src={product.images?.[0]?.src ?? "/placeholder-v3.png"}
+                            src={product.images?.[0]?.src ?? "/placeholder.png"}
                             alt={product.name}
                             width={500}
                             height={667}
@@ -260,14 +260,14 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
                     </Link>
 
                     {/* Hover Zoom Button - Top Right Corner */}
-                    <div className="product-card__action-zoom absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 z-30">
+                    <div className="product-card__action-zoom absolute top-4 right-4 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 z-30">
                         <button
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 onOpenQuickView();
                             }}
-                            className="product-card__btn-icon cursor-pointer bg-white/95 backdrop-blur-sm text-tracy-burdeos p-3 rounded-full shadow-lg hover:bg-tracy-burdeos hover:text-white transition-colors duration-300 hover:scale-110 transform"
+                            className="product-card__btn-icon cursor-pointer bg-white/95 backdrop-blur-sm text-black p-3 rounded-full shadow-lg hover:text-burgundy duration-300 hover:scale-105 transition"
                             aria-label="Vista rápida"
                             type="button"
                         >
@@ -276,14 +276,14 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
                     </div>
 
                     {/* Hover Add to Cart Button - Top Right Corner (Below Zoom) */}
-                    <div className="product-card__action-cart absolute top-16 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 z-30 delay-75">
+                    <div className="product-card__action-cart absolute top-16 right-4 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 z-30 delay-75">
                         <button
                             onClick={(e) => {
                                 e.preventDefault();
                                 e.stopPropagation();
                                 addToCart(product);
                             }}
-                            className="product-card__btn-icon cursor-pointer bg-white/95 backdrop-blur-sm text-tracy-burdeos p-3 rounded-full shadow-lg hover:bg-tracy-burdeos hover:text-white transition-colors duration-300 hover:scale-110 transform"
+                            className="product-card__btn-icon cursor-pointer bg-white/95 backdrop-blur-sm text-black p-3 rounded-full shadow-lg hover:text-burgundy hover:text-white duration-300 hover:scale-105 transition"
                             aria-label="Agregar al carrito"
                             type="button"
                         >
@@ -293,8 +293,8 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
 
                     {/* Ver Detalles Button - Bottom */}
                     <Link href={`/productos/${product.slug ?? product.id}`} className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 pointer-events-none px-4">
-                        <div className="flex justify-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 pointer-events-auto">
-                            <span className="product-card__btn-text w-full bg-white/95 backdrop-blur-sm text-tracy-burdeos font-medium py-3 px-6 rounded-xl shadow-lg text-center text-sm tracking-wide hover:bg-white transform active:scale-95 transition-all">
+                        <div className="flex justify-center opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300 pointer-events-auto">
+                            <span className="product-card__btn-text w-full bg-white/95 backdrop-blur-sm text-burgundy font-medium py-3 px-6 rounded-xl shadow-lg text-center text-sm tracking-wide hover:bg-white transform active:scale-95 transition-all">
                                 Ver Detalles
                             </span>
                         </div>
@@ -304,11 +304,11 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
                 {/* Product Info */}
                 <div className="product-card__info mt-4 px-1 space-y-1">
                     <Link href={`/productos/${product.slug ?? product.id}`} className="block">
-                        <h3 className="product-card__title text-base font-serif font-medium text-gray-900 leading-snug group-hover:text-tracy-burdeos transition-colors">
+                        <h3 className="product-card__title text-base font-serif font-medium text-gray-900 leading-snug group-hover:text-burgundy transition-colors">
                             {product.name}
                         </h3>
                         <div className="flex items-center justify-between">
-                            <p className="product-card__price text-lg font-bold text-tracy-burdeos tracking-wide">
+                            <p className="product-card__price text-lg font-bold text-burgundy tracking-wide">
                                 ${new Intl.NumberFormat('es-CO').format(parseInt(product.price) || 0)}
                             </p>
                         </div>
@@ -404,7 +404,7 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
                             >
                                 <div className="relative w-full h-full">
                                     <Image
-                                        src={product.images?.[0]?.src ?? "/placeholder-v3.png"}
+                                        src={product.images?.[0]?.src ?? "/placeholder.png"}
                                         alt={product.name}
                                         fill
                                         className="object-contain"
@@ -426,7 +426,7 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
                             <h2 className="text-3xl font-serif text-gray-900 mb-2 leading-tight">{product.name}</h2>
                             <div className="w-20 h-1 bg-tracy-burdeos mb-6 opacity-20"></div>
 
-                            <p className="text-3xl font-bold text-tracy-burdeos mb-6">
+                            <p className="text-3xl font-bold text-burgundy mb-6">
                                 ${new Intl.NumberFormat('es-CO').format(parseInt(product.price) || 0)}
                             </p>
 
@@ -444,7 +444,7 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
                                 </button>
                                 <Link
                                     href={`/productos/${product.slug ?? product.id}`}
-                                    className="w-full py-4 border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-tracy-burdeos/30 transition-all text-gray-600 font-medium text-center uppercase tracking-wider text-sm hover:text-tracy-burdeos"
+                                    className="w-full py-4 border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-tracy-burdeos/30 transition-all text-gray-600 font-medium text-center uppercase tracking-wider text-sm hover:text-burgundy"
                                 >
                                     Ver Detalle Completo
                                 </Link>
