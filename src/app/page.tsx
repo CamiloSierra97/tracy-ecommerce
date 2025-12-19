@@ -33,7 +33,7 @@ export default async function Page() {
         <section
           className={`hero-section flex ${roboto_serif.className} justify-center relative overflow-hidden `}
         >
-          <div className="absolute inset-0 z-0 max-md:hidden md:bg-[url('/Patron.svg')] md:bg-cover md:bg-center blur-xs scale-110 opacity-60"></div>
+          <div className="absolute inset-0 z-0 max-md:hidden md:bg-[url('/Patron.svg')] md:bg-cover md:bg-center blur-xs scale-110"></div>
           <HeroSection></HeroSection>
         </section>
         <section>
