@@ -5,73 +5,77 @@ export const dynamic = 'force-dynamic';
 export default async function TestConnectionPage() {
   const { url, consumerKey, consumerSecret } = config.woocommerce;
   
-  const debugInfo = {
-    urlLength: url ? url.length : 0,
-    hasKey: !!consumerKey,
-    hasSecret: !!consumerSecret,
-    nodeEnv: process.env.NODE_ENV,
-    urlValue: url // Safely showing the URL as it's not a secret
-  };
-
-  let connectionResult = {
+  let result = {
     status: "Pending",
     message: "",
-    data: null as any
+    products: [] as any[]
   };
 
   try {
-    if (!url || !consumerKey || !consumerSecret) {
-      throw new Error("Missing Credentials in Config");
-    }
-
     const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
-    const endpoint = `${url}/wp-json/wc/v3/products?per_page=1`;
+    // Fetch 5 products to see slugs
+    const endpoint = `${url}/wp-json/wc/v3/products?per_page=5`;
     
     console.log("Testing connection to:", endpoint);
 
     const response = await fetch(endpoint, {
-      headers: {
-        Authorization: `Basic ${auth}`
-      },
+      headers: { Authorization: `Basic ${auth}` },
       cache: 'no-store'
     });
 
-    connectionResult.status = response.ok ? "Success" : "Error";
-    connectionResult.message = `${response.status} ${response.statusText}`;
+    result.status = response.ok ? "Success" : "Error";
+    result.message = `${response.status} ${response.statusText}`;
     
     if (response.ok) {
         const data = await response.json();
-        connectionResult.data = Array.isArray(data) ? `Found ${data.length} products` : "Invalid data format";
-    } else {
-        const text = await response.text();
-        connectionResult.data = text.slice(0, 500); // Show first 500 chars of error
+        result.products = Array.isArray(data) ? data.map(p => ({
+            id: p.id,
+            name: p.name,
+            slug: p.slug, // CRITICAL: Check this
+            status: p.status,
+            price: p.price
+        })) : [];
     }
 
   } catch (error: any) {
-    connectionResult.status = "Exception";
-    connectionResult.message = error.message;
-    connectionResult.data = JSON.stringify(error, Object.getOwnPropertyNames(error));
+    result.status = "Exception";
+    result.message = error.message;
   }
 
   return (
-    <div className="p-8 max-w-2xl mx-auto font-mono text-sm">
-      <h1 className="text-2xl font-bold mb-4">WooCommerce Connection Test</h1>
+    <div className="p-8 max-w-4xl mx-auto font-mono text-sm">
+      <h1 className="text-2xl font-bold mb-4 bg-yellow-100 inline-block px-2">WooCommerce Slug Debugger</h1>
       
-      <div className="bg-gray-100 p-4 rounded mb-6">
-        <h2 className="font-bold mb-2">Configuration Check</h2>
-        <pre>{JSON.stringify(debugInfo, null, 2)}</pre>
+      <div className={`p-4 rounded border mb-6 ${result.status === "Success" ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}`}>
+        <h2 className="font-bold">Connection: {result.status}</h2>
+        <p>{result.message}</p>
       </div>
 
-      <div className={`p-4 rounded border ${connectionResult.status === "Success" ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}`}>
-        <h2 className="font-bold mb-2">Connection Result: {connectionResult.status}</h2>
-        <p className="font-bold">{connectionResult.message}</p>
-        <pre className="mt-2 whitespace-pre-wrap break-all text-xs">
-            {typeof connectionResult.data === 'string' ? connectionResult.data : JSON.stringify(connectionResult.data, null, 2)}
-        </pre>
-      </div>
-      
-      <div className="mt-8 text-xs text-gray-500">
-        <p>This is a temporary debugging page. Delete after use.</p>
+      <h2 className="text-xl font-bold mb-2">Latest 5 Products Slugs</h2>
+      <div className="overflow-x-auto bg-gray-50 p-4 rounded border">
+        <table className="w-full text-left border-collapse">
+            <thead>
+                <tr className="border-b-2 border-gray-200">
+                    <th className="p-2">ID</th>
+                    <th className="p-2">Name</th>
+                    <th className="p-2 bg-blue-100">Slug (Use this in URL)</th>
+                    <th className="p-2">Status</th>
+                    <th className="p-2">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                {result.products.map(p => (
+                    <tr key={p.id} className="border-b border-gray-200 hover:bg-gray-100">
+                        <td className="p-2">{p.id}</td>
+                        <td className="p-2">{p.name}</td>
+                        <td className="p-2 font-bold text-blue-700">{p.slug}</td>
+                        <td className="p-2">{p.status}</td>
+                        <td className="p-2">{p.price}</td>
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+        {result.products.length === 0 && <p className="p-4 text-center text-gray-500">No products found.</p>}
       </div>
     </div>
   );
