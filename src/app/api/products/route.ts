@@ -63,7 +63,11 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error("=====================================");
+    console.error("=====================================");
     console.error("🔥 ERROR DE WOOCOMMERCE:", error);
+    // Log intent for debugging
+    console.error("Intento de conexión a:", config.woocommerce.url ? config.woocommerce.url : "URL NO DEFINIDA");
+    console.error("=====================================");
     console.error("=====================================");
 
     return NextResponse.json(
