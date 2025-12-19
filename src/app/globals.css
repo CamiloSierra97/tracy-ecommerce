@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 @layer base {
-
   html,
   body {
     overflow-x: hidden;
@@ -10,8 +9,11 @@
     padding: 0;
     /* Fondo sofisticado: Gradiente radial profundo + Sutil patrón de cuadrícula dorada */
     background-color: #f4f1ec;
-    background-image:
-      linear-gradient(to right, rgba(217, 179, 56, 0.05) 1px, transparent 1px),
+    background-image: linear-gradient(
+        to right,
+        rgba(217, 179, 56, 0.05) 1px,
+        transparent 1px
+      ),
       linear-gradient(to bottom, rgba(217, 179, 56, 0.05) 1px, transparent 1px),
       radial-gradient(circle at 50% 0%, #ffffff 0%, #f4f1ec 45%, #e8e4dc 100%);
     background-size: 4rem 4rem, 4rem 4rem, 100% 100%;
@@ -27,7 +29,7 @@
   --color-burgundy: #580a1e;
   --color-burgundy-light: #8a505e;
   --color-gray: #5a5856;
-  --color-golden: #ddb153;
+  --color-golden: #b89f46;
   --color-gold: #d9b338;
   --color-light-gold: #ffe895;
   --color-ivory: #f4f1ec;
@@ -100,7 +102,7 @@
 }
 
 /* 2.5 EL BACKDROP (Fondo oscuro semitransparente) */
-#menu__checkbox:checked~.menu__toggle {
+#menu__checkbox:checked ~ .menu__toggle {
   position: fixed;
   /* Mantener el botón fijo en la esquina */
 }
@@ -121,7 +123,7 @@
   -webkit-backdrop-filter: blur(0);
 }
 
-#menu__checkbox:checked~.menu__backdrop {
+#menu__checkbox:checked ~ .menu__backdrop {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -146,19 +148,19 @@
 }
 
 /* 4. ESTADO ACTIVO (La "X" Perfecta) */
-#menu__checkbox:checked~.menu__toggle div:nth-child(1) {
+#menu__checkbox:checked ~ .menu__toggle div:nth-child(1) {
   top: 23px;
   transform: rotate(45deg);
   background-color: #d4af37;
 }
 
-#menu__checkbox:checked~.menu__toggle div:nth-child(2) {
+#menu__checkbox:checked ~ .menu__toggle div:nth-child(2) {
   opacity: 0;
   transform: translateX(20px);
   /* Se va un poco a la derecha al desaparecer */
 }
 
-#menu__checkbox:checked~.menu__toggle div:nth-child(3) {
+#menu__checkbox:checked ~ .menu__toggle div:nth-child(3) {
   top: 23px;
   transform: rotate(-45deg);
   background-color: #d4af37;
@@ -192,6 +194,6 @@
 }
 
 /* MOSTRAR MENÚ (Vuelve a posición 0) */
-#menu__checkbox:checked~.menu__nav {
+#menu__checkbox:checked ~ .menu__nav {
   transform: translateX(0);
 }
