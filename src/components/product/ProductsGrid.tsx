@@ -357,7 +357,16 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
     };
 
     const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+        // Prevent background scrolling
+        // Note: This works because React onWheel is not passive by default, 
+        // or we rely on the body lock. But explicit preventDefault helps.
+        // However, React events might raise a warning if we try to preventDefault on a passive event.
+        // Ideally, body style overflow='hidden' handles this, but some browsers propagate.
+        
+        // Actually, just stopping propagation is often enough if body is hidden.
         e.stopPropagation();
+        // e.preventDefault(); // React synthetic event wrapper might not support this for wheel depending on React version/browser.
+
         const delta = -Math.sign(e.deltaY) * 0.5; // Zoom step
         setZoomStyle(prev => ({
             ...prev,

@@ -16,7 +16,8 @@ export interface ProductsPage {
 const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // Browser: relative URL is fine
   if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
-  return "http://localhost:3000"; // Default fallback for server-side
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // Vercel Serverless
+  return "http://localhost:3000"; // Default fallback for local server-side
 };
 
 const WooCommerceService = {
