@@ -80,9 +80,9 @@ export default function Products({ title, basePath, initialData }: ProductsProps
             >
                 {/* 🛑 OPTIMIZACIÓN SEO 1: H1 DINÁMICO. Único y relevante para la página. */}
                 <div className="page-products__header flex flex-col items-center py-8 px-4">
-                    <h1 className="page-products__title text-2xl lg:text-4xl font-serif font-semibold lg:font-bold text-tracy-burdeos text-center mb-3 tracking-wide drop-shadow-sm">
+                    <h2 className="page-products__title text-2xl lg:text-4xl font-serif font-semibold lg:font-bold text-tracy-burdeos text-center mb-3 tracking-wide drop-shadow-sm">
                         {title}
-                    </h1>
+                    </h2>
                     <motion.div
                         initial={{ scaleX: 0, opacity: 0 }}
                         animate={{ scaleX: 1, opacity: 0.6 }}

@@ -11,10 +11,10 @@ import CookieBanner from "@/components/layout/CookieBanner";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Tracy E-commerce",
-  description: "Ropa interior de lujo y accesorios íntimos",
+  title: "Tracy Lencería | Ropa Interior de Lujo y Batas en Colombia",
+  description: "Descubre la colección exclusiva de Tracy Lencería. Ropa interior, batas de seda y accesorios íntimos diseñados para resaltar tu elegancia. Envíos a toda Colombia.",
   keywords:
-    "lencería de lujo, ropa interior, accesorios íntimos, lencería Colombia",
+    "lencería de lujo, ropa interior colombia, batas de seda, accesorios íntimos, tracy lencería, ropa interior femenina",
   authors: [{ name: "SierraDev" }],
   robots: {
     index: true,

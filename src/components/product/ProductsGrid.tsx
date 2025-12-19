@@ -138,7 +138,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                     {/* Filter Button */}
                     <button
                         onClick={() => setIsFilterOpen(!isFilterOpen)}
-                        className={`products-grid__filter-btn uppercase tracking-wider hover:text-burgundy hover:cursor-pointer transition-colors font-semibold flex items-center gap-1 ${isFilterOpen ? 'text-burgundy' : ''}`}
+                        className={`products-grid__filter-btn uppercase tracking-wider hover:text-burgundy focus:ring-2 focus:ring-burgundy/50 focus:outline-none rounded-sm px-1 hover:cursor-pointer transition-colors font-semibold flex items-center gap-1 ${isFilterOpen ? 'text-burgundy' : ''}`}
                     >
                         Filtrar
                         {isFilterOpen && <span className="w-1.5 h-1.5 bg-golden rounded-full inline-block mb-1"></span>}
@@ -160,16 +160,16 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                             <div className="filter-group">
                                 <h4 className="filter-group__title font-serif text-burgundy mb-3">Categoría</h4>
                                 <ul className="filter-group__list space-y-2 text-sm text-gray-600">
-                                    <li className="filter-group__item cursor-pointer hover:text-golden">Brasieres</li>
-                                    <li className="filter-group__item cursor-pointer hover:text-golden">Panties</li>
-                                    <li className="filter-group__item cursor-pointer hover:text-golden">Sets Completos</li>
+                                    <li className="filter-group__item cursor-pointer hover:text-burgundy transition-colors">Brasieres</li>
+                                    <li className="filter-group__item cursor-pointer hover:text-burgundy transition-colors">Panties</li>
+                                    <li className="filter-group__item cursor-pointer hover:text-burgundy transition-colors">Sets Completos</li>
                                 </ul>
                             </div>
                             <div className="filter-group">
                                 <h4 className="filter-group__title font-serif text-burgundy mb-3">Talla</h4>
                                 <div className="filter-group__chips flex flex-wrap gap-2">
                                     {['XS', 'S', 'M', 'L', 'XL'].map(size => (
-                                        <span key={size} className="filter-group__chip w-8 h-8 flex items-center justify-center border border-gray-200 rounded-full text-xs cursor-pointer hover:border-golden hover:text-golden transition-colors">{size}</span>
+                                        <span key={size} className="filter-group__chip w-8 h-8 flex items-center justify-center border border-gray-200 rounded-full text-xs cursor-pointer hover:border-burgundy hover:text-burgundy transition-colors">{size}</span>
                                     ))}
                                 </div>
                             </div>
@@ -239,7 +239,7 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
                             width={500}
                             height={667}
                             priority={priority}
-                            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             onLoad={() => setIsImageLoading(false)}
                             className={`product-card__image w-full h-full object-cover transform transition-transform duration-700 ease-out ${isImageLoading ? "opacity-0" : "opacity-100"
                                 }`}
@@ -252,7 +252,7 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
                                 alt={`${product.name} - Vista alternativa`}
                                 width={500}
                                 height={667}
-                                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 className="product-card__image-hover absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-10"
                             />
                         )}
@@ -430,6 +430,7 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
                                         alt={product.name}
                                         fill
                                         className="object-contain"
+                                        sizes="(max-width: 768px) 100vw, 50vw"
                                         priority
                                     />
                                 </div>

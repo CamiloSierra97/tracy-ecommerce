@@ -32,6 +32,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
                                 src={img.src}
                                 alt={img.name}
                                 fill
+                                sizes="20vw"
                                 className="product-details__thumbnail-image object-cover"
                             />
                         </button>
@@ -59,6 +60,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
                                 alt={productName}
                                 fill
                                 priority
+                                sizes="(max-width: 768px) 100vw, 60vw"
                                 className={`product-details__main-image object-cover transition-transform duration-500 ${isZoomed ? 'scale-150' : 'scale-100'}`}
                             />
                         </motion.div>

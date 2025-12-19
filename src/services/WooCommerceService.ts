@@ -6,6 +6,7 @@ export interface Product {
   slug: string;
   description?: string;
   images?: { id: number; src: string; name: string }[];
+  status?: string;
 }
 
 export interface ProductsPage {

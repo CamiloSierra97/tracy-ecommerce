@@ -39,8 +39,28 @@ export default async function ProductPage({ params }: Props) {
         notFound();
     }
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: product.name,
+        image: product.images?.map(img => img.src) || [],
+        description: (product.short_description || product.description || "").replace(/<[^>]*>?/gm, ""),
+        sku: product.id.toString(),
+        offers: {
+            "@type": "Offer",
+            priceCurrency: "COP",
+            price: product.price,
+            availability: product.status === "publish" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+            url: `https://app.glowcosmeticoscol.com/productos/${slug}`, // Update with actual domain
+        },
+    };
+
     return (
         <main className="main-product bg-white min-h-screen">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             <ProductDetails product={product} />
         </main>
     );

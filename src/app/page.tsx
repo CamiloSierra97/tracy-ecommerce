@@ -45,7 +45,7 @@ export default async function Page() {
           <HeroSection></HeroSection>
         </section>
         <section>
-          <Products title={metadata.title as string} basePath="/"></Products>
+          <Products title="Nuestra Colección" basePath="/"></Products>
 
         </section>
       </main>
