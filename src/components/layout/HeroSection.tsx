@@ -8,7 +8,7 @@ const BRAND_SLOGAN = "Libera tu cuerpo, abraza tu verdad.";
 
 const HeroSection: React.FC = () => {
     return (
-        <section className="hero w-full h-full md:h-1/12 flex flex-col md:flex-row justify-center">
+        <section className="hero w-full h-full flex flex-col md:flex-row justify-center">
             {/* <aside> para contenido tangencial: la imagen de fondo */}
             <figure className="hero__image-container w-full h-screen md:w-1/3 md:h-screen lg:w-1/3 lg:h-[90vh] relative bg-burgundy">
                 <Image
