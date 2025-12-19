@@ -76,14 +76,15 @@ const Header: React.FC = () => {
                     <div className="header__logo-container flex justify-center">
                         <h1 className="header__title sr-only">TRACY ropa interior de Lujo</h1>
 
-                        <Link href="/" className="header__logo-link w-28 h-28 relative flex justify-center items-center">
+                        <Link href="/" className="header__logo-link w-28 h-28 pt-5 relative flex justify-center items-center">
                             <Image
                                 src="/WhatsApp Image 2025-12-19 at 9.09.47 AM.jpeg"
                                 loading="eager"
                                 alt="TRACY Logo Ropa Interior de Lujo"
                                 width={129}
                                 height={129}
-                                className="header__logo-image opacity-60 hover:opacity-100 transition duration-300 w-full transform scale-150 md:scale-200 relative bottom-1/8"
+                                objectPosition="center"
+                                className="header__logo-image opacity-80 hover:opacity-100 transition duration-300 w-full transform scale-150 md:scale-200 relative bottom-1/8"
                             />
                         </Link>
                     </div>
