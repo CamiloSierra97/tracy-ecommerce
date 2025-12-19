@@ -3,7 +3,7 @@ import { metadata } from "./layout";
 import { roboto_serif } from "@/lib/fonts";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import HeroSection from "@/components/layout/HeroSection";
-import Image from "next/image";
+
 import WooCommerceService from "@/services/WooCommerceService";
 
 export default async function Page() {
@@ -33,15 +33,7 @@ export default async function Page() {
         <section
           className={`hero-section flex ${roboto_serif.className} justify-center relative overflow-hidden `}
         >
-          <div className="absolute inset-0 z-0 max-md:hidden">
-            <Image
-              src="/Patron.svg"
-              alt="Background Pattern"
-              fill
-              priority
-              className="object-cover blur-xs scale-110"
-            />
-          </div>
+          <div className="absolute inset-0 z-0 max-md:hidden md:bg-[url('/Patron.svg')] md:bg-cover md:bg-center blur-xs scale-110 opacity-60"></div>
           <HeroSection></HeroSection>
         </section>
         <section>
