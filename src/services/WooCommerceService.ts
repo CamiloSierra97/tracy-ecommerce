@@ -13,22 +13,47 @@ export interface ProductsPage {
   totalPages: number;
 }
 
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // Browser: relative URL is fine
-  if (process.env.NEXT_PUBLIC_API_URL) return process.env.NEXT_PUBLIC_API_URL;
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // Vercel Serverless
-  return "http://localhost:3000"; // Default fallback for local server-side
-};
+import config from "@/lib/config";
 
 const WooCommerceService = {
   getProducts: async ({ page = 1, per_page = 12 }): Promise<ProductsPage> => {
-    // 1. Usa fetch nativo para reducir bundle size
+    // SERVER-SIDE: Direct Fetch to WooCommerce (Faster, fixes internal routing issues)
+    if (typeof window === "undefined") {
+      const { url, consumerKey, consumerSecret } = config.woocommerce;
+      if (url && consumerKey && consumerSecret) {
+        try {
+          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
+          const params = new URLSearchParams({
+            page: String(page),
+            per_page: String(per_page),
+          });
+          
+          const response = await fetch(`${url}/wp-json/wc/v3/products?${params.toString()}`, {
+            headers: { Authorization: `Basic ${auth}` },
+            next: { revalidate: 60 } // Optional: Add caching for server calls
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            const totalPagesHeader = response.headers.get("x-wp-totalpages") || "0";
+            return {
+              products: data,
+              totalPages: parseInt(totalPagesHeader, 10),
+            };
+          }
+        } catch (error) {
+          console.error("WooCommerce Direct Fetch Error:", error);
+        }
+      }
+    }
+
+    // CLIENT-SIDE (or fallback): Fetch via Internal API
     const params = new URLSearchParams({
       page: String(page),
       per_page: String(per_page),
     });
 
-    const response = await fetch(`${getBaseUrl()}/api/products?${params.toString()}`);
+    const response = await fetch(`/api/products?${params.toString()}`);
 
     if (!response.ok) {
       throw new Error(`Error fetching products: ${response.statusText}`);
@@ -44,8 +69,30 @@ const WooCommerceService = {
   },
 
   getProductBySlug: async (slug: string): Promise<Product | null> => {
+    // SERVER-SIDE: Direct Fetch to WooCommerce
+    if (typeof window === "undefined") {
+      const { url, consumerKey, consumerSecret } = config.woocommerce;
+      if (url && consumerKey && consumerSecret) {
+        try {
+          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
+          const response = await fetch(`${url}/wp-json/wc/v3/products?slug=${slug}`, {
+            headers: { Authorization: `Basic ${auth}` },
+            next: { revalidate: 60 }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            return data && data.length > 0 ? data[0] : null;
+          }
+        } catch (error) {
+          console.error("WooCommerce Direct Fetch Error (Slug):", error);
+        }
+      }
+    }
+
+    // CLIENT-SIDE (or fallback): Fetch via Internal API
     const params = new URLSearchParams({ slug });
-    const response = await fetch(`${getBaseUrl()}/api/products?${params.toString()}`);
+    const response = await fetch(`/api/products?${params.toString()}`);
 
     if (!response.ok) return null;
 
