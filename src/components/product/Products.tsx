@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { useProducts } from "@/hooks/useProducts";
 import ProductsGrid from "./ProductsGrid";
 import ThreeRingLoader from "@/components/ui/ThreeRingLoader";
-
 import { ProductsPage } from "@/services/WooCommerceService";
 
 // 🛑 TS CORRECCIÓN: Definimos las props requeridas para la reutilización.

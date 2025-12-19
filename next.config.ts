@@ -8,7 +8,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "shop.glowcosmeticos.com",
+        hostname: "shop.glowcosmeticoscol.com",
         pathname: "/**",
       },
       {
@@ -23,7 +23,7 @@ const nextConfig = {
       ? [
         {
           source: "/api/:path*",
-          destination: "https://shop.glowcosmeticos.com/wp-json/:path*",
+          destination: "https://shop.glowcosmeticoscol.com/wp-json/:path*",
         },
       ]
       : [];
