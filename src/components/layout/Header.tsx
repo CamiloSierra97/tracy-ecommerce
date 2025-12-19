@@ -76,9 +76,9 @@ const Header: React.FC = () => {
                     <div className="header__logo-container flex justify-center">
                         <h1 className="header__title sr-only">TRACY ropa interior de Lujo</h1>
 
-                        <Link href="/" className="header__logo-link w-28 h-28 relative flex justify-center items-center">
+                        <Link href="/" className="header__logo-link w-28 h-28 pt-5 relative flex justify-center items-center">
                             <Image
-                                src="/LogoTracy.svg"
+                                src="/WhatsApp Image 2025-12-19 at 9.09.47 AM.jpeg"
                                 loading="eager"
                                 alt="TRACY Logo Ropa Interior de Lujo"
                                 width={129}
