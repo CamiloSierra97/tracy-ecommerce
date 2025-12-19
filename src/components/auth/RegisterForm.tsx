@@ -29,64 +29,64 @@ export default function RegisterForm() {
     }
 
     return (
-        <div className="flex flex-col gap-4">
+        <div className="register-form flex flex-col gap-4">
             {error && (
-                <div className="bg-red-50 text-red-600 p-3 text-sm rounded-sm border border-red-100">
+                <div className="register-form__alert register-form__alert--error bg-red-50 text-red-600 p-3 text-sm rounded-sm border border-red-100">
                     {error}
                 </div>
             )}
             {success && (
-                <div className="bg-green-50 text-green-600 p-3 text-sm rounded-sm border border-green-100">
+                <div className="register-form__alert register-form__alert--success bg-green-50 text-green-600 p-3 text-sm rounded-sm border border-green-100">
                     {success}
                 </div>
             )}
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+            <form onSubmit={handleSubmit} className="register-form__form flex flex-col gap-4">
+                <div className="register-form__field">
+                    <label className="register-form__label block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
                     <input
                         name="email"
                         type="email"
                         required
-                        className="w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
+                        className="register-form__input w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
                         placeholder="tu@email.com"
                     />
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
+                <div className="register-form__field-group grid grid-cols-2 gap-4">
+                    <div className="register-form__field">
+                        <label className="register-form__label block text-sm font-medium text-gray-700 mb-1">Nombre</label>
                         <input
                             name="firstName"
                             type="text"
                             required
-                            className="w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
+                            className="register-form__input w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
                         />
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Apellido</label>
+                    <div className="register-form__field">
+                        <label className="register-form__label block text-sm font-medium text-gray-700 mb-1">Apellido</label>
                         <input
                             name="lastName"
                             type="text"
                             required
-                            className="w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
+                            className="register-form__input w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
                         />
                     </div>
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Usuario</label>
+                <div className="register-form__field">
+                    <label className="register-form__label block text-sm font-medium text-gray-700 mb-1">Usuario</label>
                     <input
                         name="username"
                         type="text"
                         required
-                        className="w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
+                        className="register-form__input w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
                     />
                 </div>
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
+                <div className="register-form__field">
+                    <label className="register-form__label block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
                     <input
                         name="password"
                         type="password"
                         required
-                        className="w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
+                        className="register-form__input w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
                         placeholder="********"
                     />
                 </div>
@@ -94,7 +94,7 @@ export default function RegisterForm() {
                 <button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50"
+                    className="register-form__submit-btn w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50"
                 >
                     {isLoading ? "Registrarse" : "Crear Cuenta"}
                 </button>

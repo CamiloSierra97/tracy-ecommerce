@@ -27,37 +27,37 @@ const Header: React.FC = () => {
                         <input
                             type="checkbox"
                             id="menu__checkbox"
-                            className="hidden"
+                            className="header__menu-checkbox hidden"
                             aria-label="menu"
                         />
                         <label
                             htmlFor="menu__checkbox"
-                            className="menu__backdrop"
+                            className="header__menu-backdrop menu__backdrop"
                             aria-label="Cerrar menú"
                         ></label>
 
                         {/* 2. BOTÓN (Label) */}
                         <label
                             htmlFor="menu__checkbox"
-                            className="menu__toggle w-[50px] h-[50px] cursor-pointer lg:hidden"
+                            className="header__menu-toggle menu__toggle w-[50px] h-[50px] cursor-pointer lg:hidden"
                             aria-label="Alternar menú principal"
                         >
-                            <div></div>
-                            <div></div>
-                            <div></div>
+                            <div className="header__menu-bar"></div>
+                            <div className="header__menu-bar"></div>
+                            <div className="header__menu-bar"></div>
                         </label>
 
                         {/* 3. DRAWER (Panel Lateral) */}
-                        <nav className="menu__nav flex flex-col lg:flex-row items-center border-r border-gold lg:border-r-0 lg:border-r-transparent">
-                            <ul className="flex flex-col lg:flex-row items-center gap-8 w-full px-6">
+                        <nav className="header__nav menu__nav flex flex-col lg:flex-row items-center border-r border-gold lg:border-r-0 lg:border-r-transparent">
+                            <ul className="header__nav-list flex flex-col lg:flex-row items-center gap-8 w-full px-6">
                                 {mainLinks.map((link) => (
                                     <li
                                         key={link.href}
-                                        className="menu-item w-full text-center border-b border-gold lg:border-0"
+                                        className="header__nav-item w-full text-center border-b border-gold lg:border-0"
                                     >
                                         <Link
                                             href={link.href}
-                                            className={`text-3xl text-gold hover:text-light-gold transition duration-300 block lg:text-sm ${roboto_serif.className}`}
+                                            className={`header__nav-link text-3xl text-gold hover:text-light-gold transition duration-300 block lg:text-sm ${roboto_serif.className}`}
                                         >
                                             {link.label}
                                         </Link>
@@ -66,7 +66,7 @@ const Header: React.FC = () => {
                             </ul>
 
                             {/* Opcional: Info extra en el menú */}
-                            <div className="mt-auto pb-10 text-golden text-sm lg:hidden">
+                            <div className="header__nav-footer mt-auto pb-10 text-golden text-sm lg:hidden">
                                 <p>© Tracy Lencería</p>
                             </div>
                         </nav>
@@ -90,18 +90,18 @@ const Header: React.FC = () => {
                     </div>
 
                     {/* Espacio para íconos */}
-                    <div className="header__container-utility h-header-size p-4 md:p-8 flex items-center justify-center z-10">
-                        <nav className="header__nav-utility flex items-center gap-3.5">
+                    <div className="header__utility-container h-header-size p-4 md:p-8 flex items-center justify-center z-10">
+                        <nav className="header__utility-nav flex items-center gap-3.5">
                             {/* Búsqueda Animada (Client Component Island) */}
-                            <div className="header__utility-item h-10 flex items-center text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
+                            <div className="header__utility-item header__utility-item--search h-10 flex items-center text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
                                 <AnimatedSearch />
                             </div>
 
-                            <div className="header__utility-item h-10 flex items-center text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
+                            <div className="header__utility-item header__utility-item--cart h-10 flex items-center text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
                                 <CartTrigger />
                             </div>
 
-                            <div className="header__utility-item h-10 flex items-center text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
+                            <div className="header__utility-item header__utility-item--user h-10 flex items-center text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
                                 <UserMenu />
                             </div>
                         </nav>

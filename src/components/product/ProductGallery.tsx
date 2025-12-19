@@ -23,7 +23,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
                         <button
                             key={img.id}
                             onClick={() => setSelectedImageIndex(idx)}
-                            className={`relative w-20 h-24 lg:w-24 lg:h-32 shrink-0 border-2 transition-all rounded-lg overflow-hidden ${selectedImageIndex === idx
+                            className={`product-details__thumbnail-btn relative w-20 h-24 lg:w-24 lg:h-32 shrink-0 border-2 transition-all rounded-lg overflow-hidden ${selectedImageIndex === idx
                                 ? "border-burgundy opacity-100"
                                 : "border-transparent opacity-60 hover:opacity-100"
                                 }`}
@@ -32,7 +32,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
                                 src={img.src}
                                 alt={img.name}
                                 fill
-                                className="object-cover"
+                                className="product-details__thumbnail-image object-cover"
                             />
                         </button>
                     ))}
@@ -40,9 +40,9 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
             )}
 
             {/* Main Image */}
-            <div className="product-details__main-image relative grow bg-gray-50 rounded-2xl overflow-hidden aspect-3/4 lg:h-[700px] shadow-sm border border-gray-100 group">
+            <div className="product-details__main-image-container relative grow bg-gray-50 rounded-2xl overflow-hidden aspect-3/4 lg:h-[700px] shadow-sm border border-gray-100 group">
                 <div
-                    className={`w-full h-full relative cursor-zoom-in ${isZoomed ? 'cursor-zoom-out' : ''}`}
+                    className={`product-details__zoom-area w-full h-full relative cursor-zoom-in ${isZoomed ? 'cursor-zoom-out' : ''}`}
                     onClick={() => setIsZoomed(!isZoomed)}
                 >
                     <AnimatePresence mode="wait">
@@ -59,12 +59,12 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
                                 alt={productName}
                                 fill
                                 priority
-                                className={`object-cover transition-transform duration-500 ${isZoomed ? 'scale-150' : 'scale-100'}`}
+                                className={`product-details__main-image object-cover transition-transform duration-500 ${isZoomed ? 'scale-150' : 'scale-100'}`}
                             />
                         </motion.div>
                     </AnimatePresence>
                 </div>
-                <div className="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full text-burgundy opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                <div className="product-details__zoom-icon absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full text-burgundy opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                     <Icon name="icon-zoom" size={20} />
                 </div>
             </div>
