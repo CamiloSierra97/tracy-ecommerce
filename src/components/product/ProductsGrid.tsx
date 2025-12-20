@@ -5,10 +5,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { Product } from "@/services/WooCommerceService";
+import { formatPrice } from "@/lib/utils/currency";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "@/components/ui/Icon";
-import { formatPrice } from "@/lib/utils/currency";
 
 interface ProductsGridProps {
     products: Product[];
