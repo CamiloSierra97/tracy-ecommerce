@@ -24,7 +24,7 @@ Backend/CMS: WooCommerce REST API (como fuente de datos Headless).
 
 HTTP Client: Axios para las peticiones a la API de WooCommerce.
 
-#   Estructura del código
+# Estructura del código
 
 La estructura sigue el patrón del App Router de Next.js, con una organización clara para la lógica de la aplicación:
 
@@ -43,4 +43,3 @@ tracy-ecommerce/
 |-- package.json          # Dependencias y scripts
 |-- tailwind.config.js    # Configuración de Tailwind CSS
 ```
-

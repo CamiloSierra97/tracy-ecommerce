@@ -1,4 +1,10 @@
-import { Inter, Meow_Script, Playfair_Display, Roboto, Roboto_Serif } from "next/font/google";
+import {
+  Inter,
+  Meow_Script,
+  Playfair_Display,
+  Roboto,
+  Roboto_Serif,
+} from "next/font/google";
 
 // 1. Fuente Serif Principal (Regular y Bold)
 export const playfair = Playfair_Display({
@@ -15,7 +21,7 @@ export const playfair_italic = Playfair_Display({
   style: "italic",
   variable: "--font-Playfair-italic",
   display: "swap",
-})
+});
 
 // 3. Fuente Sans-serif Principal
 export const inter = Inter({
@@ -44,8 +50,4 @@ export const meow_script = Meow_Script({
   weight: "400",
   variable: "--font-Meow-Script",
   display: "swap",
-})
-
-
-
-
+});

@@ -23,20 +23,26 @@ const WooCommerceService = {
       const { url, consumerKey, consumerSecret } = config.woocommerce;
       if (url && consumerKey && consumerSecret) {
         try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
+          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
+            "base64"
+          );
           const params = new URLSearchParams({
             page: String(page),
             per_page: String(per_page),
           });
-          
-          const response = await fetch(`${url}/wp-json/wc/v3/products?${params.toString()}`, {
-            headers: { Authorization: `Basic ${auth}` },
-            next: { revalidate: 60 } // Optional: Add caching for server calls
-          });
+
+          const response = await fetch(
+            `${url}/wp-json/wc/v3/products?${params.toString()}`,
+            {
+              headers: { Authorization: `Basic ${auth}` },
+              next: { revalidate: 60 }, // Optional: Add caching for server calls
+            }
+          );
 
           if (response.ok) {
             const data = await response.json();
-            const totalPagesHeader = response.headers.get("x-wp-totalpages") || "0";
+            const totalPagesHeader =
+              response.headers.get("x-wp-totalpages") || "0";
             return {
               products: data,
               totalPages: parseInt(totalPagesHeader, 10),
@@ -75,11 +81,16 @@ const WooCommerceService = {
       const { url, consumerKey, consumerSecret } = config.woocommerce;
       if (url && consumerKey && consumerSecret) {
         try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
-          const response = await fetch(`${url}/wp-json/wc/v3/products?slug=${slug}`, {
-            headers: { Authorization: `Basic ${auth}` },
-            next: { revalidate: 60 }
-          });
+          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
+            "base64"
+          );
+          const response = await fetch(
+            `${url}/wp-json/wc/v3/products?slug=${slug}`,
+            {
+              headers: { Authorization: `Basic ${auth}` },
+              next: { revalidate: 60 },
+            }
+          );
 
           if (response.ok) {
             const data = await response.json();
@@ -99,7 +110,7 @@ const WooCommerceService = {
 
     const data = await response.json();
     return data && data.length > 0 ? data[0] : null;
-  }
+  },
 };
 
 export default WooCommerceService;
