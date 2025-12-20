@@ -20,7 +20,7 @@ export default async function ShopPage() {
         <main className="main-shop">
             <Products
                 title="Tienda"
-                basePath="/shop"
+                basePath="/tienda"
                 initialData={initialData}
             />
         </main>

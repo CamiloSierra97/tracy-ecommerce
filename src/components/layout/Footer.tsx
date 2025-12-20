@@ -15,16 +15,16 @@ export default function Footer() {
                         <h4 className="footer__title font-semibold mb-4">Enlaces Rápidos</h4>
                         <ul className="footer__list space-y-2 text-gray-400">
                             <li><Link href="/" className="footer__link hover:text-white transition-colors">Inicio</Link></li>
-                            <li><Link href="/shop" className="footer__link hover:text-white transition-colors">Tienda</Link></li>
+                            <li><Link href="/tienda" className="footer__link hover:text-white transition-colors">Tienda</Link></li>
                             <li><Link href="/acerca-de" className="footer__link hover:text-white transition-colors">Acerca de</Link></li>
                         </ul>
                     </div>
                     <div className="footer__section">
                         <h4 className="footer__title font-semibold mb-4">Atención al Cliente</h4>
                         <ul className="footer__list space-y-2 text-gray-400">
-                            <li><Link href="/contact" className="footer__link hover:text-white transition-colors">Contacto</Link></li>
+                            <li><Link href="/contacto" className="footer__link hover:text-white transition-colors">Contacto</Link></li>
                             <li><Link href="/faq" className="footer__link hover:text-white transition-colors">FAQ</Link></li>
-                            <li><Link href="/shipping" className="footer__link hover:text-white transition-colors">Envíos</Link></li>
+                            <li><Link href="/envios" className="footer__link hover:text-white transition-colors">Envíos</Link></li>
                         </ul>
                     </div>
                     <div className="footer__section">
