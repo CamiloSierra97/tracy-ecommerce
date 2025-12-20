@@ -1,8 +1,8 @@
 import { Product } from "@/services/WooCommerceService";
+import { formatPrice } from "@/lib/utils/currency";
 import Icon from "@/components/ui/Icon";
 import ProductGallery from "./ProductGallery";
 import AddToCartBtn from "./AddToCartBtn";
-import { formatPrice } from "@/lib/utils/currency";
 
 interface ProductDetailsProps {
     product: Product;
