@@ -2,9 +2,10 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
+import { useEffect } from "react";
+import { formatPrice } from "@/lib/utils/currency";
 import Image from "next/image";
 import Icon from "@/components/ui/Icon";
-import { useEffect } from "react";
 
 export default function CartDrawer() {
     const { isOpen, closeCart, cartItems, removeFromCart, cartTotal } = useCart();
@@ -95,7 +96,7 @@ export default function CartDrawer() {
                                             </div>
                                             <p className="cart-item__quantity text-sm text-gray-500 mt-1">Cantidad: {item.quantity}</p>
                                             <p className="cart-item__price text-tracy-burdeos font-bold mt-2">
-                                                ${new Intl.NumberFormat('es-CO').format(parseInt(item.price) || 0)}
+                                                {formatPrice(item.price)}
                                             </p>
                                         </div>
                                     </div>
@@ -109,7 +110,7 @@ export default function CartDrawer() {
                                 <div className="cart-drawer__total-row flex justify-between items-center mb-4">
                                     <span className="cart-drawer__total-label text-gray-600">Subtotal</span>
                                     <span className="cart-drawer__total-amount text-xl font-bold text-gray-900">
-                                        ${new Intl.NumberFormat('es-CO').format(cartTotal)}
+                                        {formatPrice(cartTotal)}
                                     </span>
                                 </div>
                                 <p className="cart-drawer__tax-note text-xs text-gray-400 mb-4 text-center">

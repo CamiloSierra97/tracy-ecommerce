@@ -22,7 +22,7 @@ export default function LoginForm() {
             if (result?.error) {
                 // Handle error (next-auth v5 returns undefined on success if redirect:false, or error object)
                 // Actually in v5 client signIn returns nothing on success ? wait.
-                // console.log(result)
+
             } else {
                 // success, modal should act accordingly (maybe close, but page will refresh if session updates)
                 // For now let's just refresh page

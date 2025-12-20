@@ -2,6 +2,7 @@ import { Product } from "@/services/WooCommerceService";
 import Icon from "@/components/ui/Icon";
 import ProductGallery from "./ProductGallery";
 import AddToCartBtn from "./AddToCartBtn";
+import { formatPrice } from "@/lib/utils/currency";
 
 interface ProductDetailsProps {
     product: Product;
@@ -27,7 +28,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
                     <h1 className="product-details__title text-3xl md:text-5xl font-serif text-burgundy mb-4 leading-tight">{product.name}</h1>
 
                     <div className="product-details__price text-2xl md:text-3xl font-bold text-gray-900 mb-8 font-secondary">
-                        ${new Intl.NumberFormat('es-CO').format(parseInt(product.price) || 0)}
+                        {formatPrice(product.price)}
                     </div>
 
                     <div className="product-details__description prose prose-stone mb-10 text-gray-600 leading-relaxed max-w-none">

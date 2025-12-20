@@ -8,6 +8,7 @@ import { Product } from "@/services/WooCommerceService";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "@/components/ui/Icon";
+import { formatPrice } from "@/lib/utils/currency";
 
 interface ProductsGridProps {
     products: Product[];
@@ -311,7 +312,7 @@ function ProductCard({ product, priority = false, onOpenQuickView }: { product: 
                         </h3>
                         <div className="flex items-center justify-between">
                             <p className="product-card__price text-lg font-bold text-burgundy tracking-wide">
-                                ${new Intl.NumberFormat('es-CO').format(parseInt(product.price) || 0)}
+                                {formatPrice(product.price)}
                             </p>
                         </div>
                     </Link>
@@ -450,7 +451,7 @@ function QuickViewModal({ product, isOpen, onClose }: { product: Product | null;
                             <div className="w-20 h-1 bg-tracy-burdeos mb-6 opacity-20"></div>
 
                             <p className="text-3xl font-bold text-burgundy mb-6">
-                                ${new Intl.NumberFormat('es-CO').format(parseInt(product.price) || 0)}
+                                {formatPrice(product.price)}
                             </p>
 
                             <div className="prose prose-sm text-gray-600 mb-8 line-clamp-3">
