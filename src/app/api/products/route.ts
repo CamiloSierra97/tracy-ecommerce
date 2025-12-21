@@ -13,13 +13,17 @@ export async function GET(request: Request) {
     if (!url || !consumerKey || !consumerSecret) {
       console.error("❌ ERROR: Faltan variables de entorno de WooCommerce");
       return NextResponse.json(
-        { error: "Configuración del servidor incompleta (Faltan credenciales)" },
+        {
+          error: "Configuración del servidor incompleta (Faltan credenciales)",
+        },
         { status: 500 }
       );
     }
 
     // Auth Header
-    const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
+    const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
+      "base64"
+    );
 
     let apiUrl = `${url}/wp-json/wc/v3/products?per_page=${per_page}&page=${page}`;
     if (slug) {
@@ -40,18 +44,24 @@ export async function GET(request: Request) {
     const response = await fetch(apiUrl, options);
 
     if (!response.ok) {
-      throw new Error(`WooCommerce API Error: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `WooCommerce API Error: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();
 
     // 🛑 SANITIZACIÓN DE IMÁGENES: Filtrar URLs rotas de IA
-    const sanitizedData = Array.isArray(data) ? data.map((product: any) => ({
-      ...product,
-      images: product.images?.filter((img: any) =>
-        img.src && !img.src.includes("Gemini_Generated_Image")
-      ) || []
-    })) : data;
+    const sanitizedData = Array.isArray(data)
+      ? data.map((product: any) => ({
+          ...product,
+          images:
+            product.images?.filter(
+              (img: any) =>
+                img.src && !img.src.includes("Gemini_Generated_Image")
+            ) || [],
+        }))
+      : data;
 
     const totalPages = response.headers.get("x-wp-totalpages");
 
@@ -66,7 +76,10 @@ export async function GET(request: Request) {
     console.error("=====================================");
     console.error("🔥 ERROR DE WOOCOMMERCE:", error);
     // Log intent for debugging
-    console.error("Intento de conexión a:", config.woocommerce.url ? config.woocommerce.url : "URL NO DEFINIDA");
+    console.error(
+      "Intento de conexión a:",
+      config.woocommerce.url ? config.woocommerce.url : "URL NO DEFINIDA"
+    );
     console.error("=====================================");
     console.error("=====================================");
 

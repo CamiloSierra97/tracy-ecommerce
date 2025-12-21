@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server";
 import config from "@/lib/config";
 
-export async function GET(
-  request: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET({ params }: { params: Promise<{ id: string }> }) {
   try {
     const { id } = await params;
     const { url, consumerKey, consumerSecret } = config.woocommerce;
 
-    const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
+    const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
+      "base64"
+    );
 
     const response = await fetch(`${url}/wp-json/wc/v3/products/${id}`, {
       headers: {
@@ -18,7 +17,9 @@ export async function GET(
     });
 
     if (!response.ok) {
-      throw new Error(`WooCommerce API Error: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `WooCommerce API Error: ${response.status} ${response.statusText}`
+      );
     }
 
     const data = await response.json();

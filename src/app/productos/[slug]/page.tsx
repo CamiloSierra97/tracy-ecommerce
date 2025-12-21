@@ -4,64 +4,75 @@ import WooCommerceService from "@/services/WooCommerceService";
 import ProductDetails from "@/components/product/ProductDetails";
 
 type Props = {
-    params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-    const { slug } = await params;
-    const product = await WooCommerceService.getProductBySlug(slug);
+  const { slug } = await params;
+  const product = await WooCommerceService.getProductBySlug(slug);
 
-    if (!product) {
-        return {
-            title: "Producto no encontrado",
-        };
-    }
-
-    // Strip HTML from description for meta description
-    const cleanDescription = (product.short_description || product.description || "")
-        .replace(/<[^>]*>?/gm, "")
-        .slice(0, 160);
-
+  if (!product) {
     return {
-        title: `${product.name} - Tracy Lencería`,
-        description: cleanDescription,
-        openGraph: {
-            images: product.images?.[0]?.src ? [product.images[0].src] : [],
-        },
+      title: "Producto no encontrado",
     };
+  }
+
+  // Strip HTML from description for meta description
+  const cleanDescription = (
+    product.short_description ||
+    product.description ||
+    ""
+  )
+    .replace(/<[^>]*>?/gm, "")
+    .slice(0, 160);
+
+  return {
+    title: `${product.name} - Tracy Lencería`,
+    description: cleanDescription,
+    openGraph: {
+      images: product.images?.[0]?.src ? [product.images[0].src] : [],
+    },
+  };
 }
 
 export default async function ProductPage({ params }: Props) {
-    const { slug } = await params;
-    const product = await WooCommerceService.getProductBySlug(slug);
+  const { slug } = await params;
+  const product = await WooCommerceService.getProductBySlug(slug);
 
-    if (!product) {
-        notFound();
-    }
+  if (!product) {
+    notFound();
+  }
 
-    const jsonLd = {
-        "@context": "https://schema.org",
-        "@type": "Product",
-        name: product.name,
-        image: product.images?.map(img => img.src) || [],
-        description: (product.short_description || product.description || "").replace(/<[^>]*>?/gm, ""),
-        sku: product.id.toString(),
-        offers: {
-            "@type": "Offer",
-            priceCurrency: "COP",
-            price: product.price,
-            availability: product.status === "publish" ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
-            url: `https://app.glowcosmeticoscol.com/productos/${slug}`, // Update with actual domain
-        },
-    };
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.images?.map((img) => img.src) || [],
+    description: (
+      product.short_description ||
+      product.description ||
+      ""
+    ).replace(/<[^>]*>?/gm, ""),
+    sku: product.id.toString(),
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "COP",
+      price: product.price,
+      availability:
+        product.status === "publish"
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+      url: `https://app.glowcosmeticoscol.com/productos/${slug}`, // Update with actual domain
+    },
+  };
 
-    return (
-        <main className="main-product bg-white min-h-screen">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-            />
-            <ProductDetails product={product} />
-        </main>
-    );
+  return (
+    <main className="main-product bg-white min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <ProductDetails product={product} />
+    </main>
+  );
 }
