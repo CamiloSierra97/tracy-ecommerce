@@ -1,4 +1,3 @@
-import { playfair, roboto_serif } from "@/lib/fonts";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,17 +11,13 @@ export default function EnviosPage() {
     <main className="min-h-screen pt-24 pb-16 px-4 md:px-8 bg-ivory">
       <div className="max-w-4xl mx-auto">
         <header className="mb-12 text-center">
-          <h1
-            className={`text-4xl md:text-5xl text-burgundy mb-4 ${playfair.className}`}
-          >
+          <h1 className="text-4xl md:text-5xl text-burgundy mb-4 font-serif">
             Envíos y Devoluciones
           </h1>
           <div className="w-24 h-1 bg-golden mx-auto rounded-full opacity-60"></div>
         </header>
 
-        <section
-          className={`space-y-12 ${roboto_serif.className} text-gray-700`}
-        >
+        <section className={`space-y-12 font-roboto-serif text-gray-700`}>
           {/* Policy Section 1 */}
           <article className="bg-white p-8 rounded-2xl shadow-sm border border-gold/10">
             <h2 className="text-2xl font-bold text-burgundy mb-4 flex items-center gap-2">

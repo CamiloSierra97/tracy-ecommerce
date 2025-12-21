@@ -1,17 +1,16 @@
+import WooCommerceService from "@/services/WooCommerceService";
+import HeroSection from "@/components/layout/HeroSection";
+
 import dynamic from "next/dynamic";
 const Products = dynamic(() => import("@/components/product/Products"), {
   loading: () => <div className="min-h-screen"></div>,
 });
 
-import { roboto_serif } from "@/lib/fonts";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import HeroSection from "@/components/layout/HeroSection";
-
-import WooCommerceService from "@/services/WooCommerceService";
 
 export default async function Page() {
   const queryClient = new QueryClient();
@@ -36,9 +35,9 @@ export default async function Page() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <main className="main">
+      <div className="home-page">
         <section
-          className={`hero-section flex ${roboto_serif.className} justify-center relative overflow-hidden `}
+          className={`hero-section flex font-roboto-serif justify-center relative overflow-hidden `}
         >
           <div className="absolute inset-0 z-0 max-md:hidden md:bg-[url('/Patron.svg')] md:bg-cover md:bg-center blur-xs scale-110"></div>
           <HeroSection></HeroSection>
@@ -46,7 +45,7 @@ export default async function Page() {
         <section>
           <Products title="Nuestra Colección" basePath="/"></Products>
         </section>
-      </main>
+      </div>
     </HydrationBoundary>
   );
 }

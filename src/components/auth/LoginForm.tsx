@@ -72,7 +72,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="login-form__submit-btn w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50"
+          className="login-form__submit-btn w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50 cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
         >
           {isLoading ? "Cargando..." : "Ingresar"}
         </button>
@@ -89,7 +89,7 @@ export default function LoginForm() {
 
       <button
         onClick={handleGoogleLogin}
-        className="login-form__social-btn w-full border border-gray-300 py-2 flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors"
+        className="login-form__social-btn w-full border border-gray-300 py-2 flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
       >
         <span className="font-medium">Google</span>
       </button>

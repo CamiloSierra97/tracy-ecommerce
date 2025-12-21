@@ -31,7 +31,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
-          className="auth-modal__container relative w-full max-w-md bg-white overflow-hidden shadow-2xl"
+          onClick={(e) => e.stopPropagation()}
+          className="auth-modal__container relative z-10 w-full max-w-md bg-white overflow-hidden shadow-2xl"
         >
           {/* Header */}
           <div className="auth-modal__header flex justify-between items-center p-4 border-b border-gold/20">

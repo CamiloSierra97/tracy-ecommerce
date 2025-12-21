@@ -7,19 +7,12 @@ import {
 } from "next/font/google";
 
 // 1. Fuente Serif Principal (Regular y Bold)
+// 1. Fuente Serif Principal (Regular, Bold, Italic)
 export const playfair = Playfair_Display({
   subsets: ["latin"],
   weight: ["400", "700"],
+  style: ["normal", "italic"],
   variable: "--font-Playfair",
-  display: "swap",
-});
-
-// 2. Fuente Serif Cursiva (Italic)
-export const playfair_italic = Playfair_Display({
-  subsets: ["latin"],
-  weight: "700",
-  style: "italic",
-  variable: "--font-Playfair-italic",
   display: "swap",
 });
 

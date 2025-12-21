@@ -10,7 +10,7 @@ import Icon from "@/components/ui/Icon";
 export default function CartDrawer() {
   const { isOpen, closeCart, cartItems, removeFromCart, cartTotal } = useCart();
 
-  // Lock body scroll when cart is open
+  // Bloquear el scroll del body cuando el carrito está abierto
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -26,7 +26,7 @@ export default function CartDrawer() {
     <AnimatePresence>
       {isOpen && (
         <>
-          {/* Backdrop */}
+          {/* Fondo oscuro (Backdrop) */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -35,7 +35,7 @@ export default function CartDrawer() {
             className="cart-drawer__overlay fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
           />
 
-          {/* Drawer */}
+          {/* Panel Lateral (Drawer) */}
           <motion.aside
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
@@ -43,7 +43,7 @@ export default function CartDrawer() {
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="cart-drawer__panel fixed top-0 right-0 h-full w-full max-w-md bg-[#ffffff] shadow-2xl z-50 flex flex-col"
           >
-            {/* Header */}
+            {/* Encabezado del Carrito */}
             <div className="cart-drawer__header p-6 flex items-center justify-between border-b border-gray-100">
               <h2 className="cart-drawer__title text-2xl font-serif text-gray-900">
                 Tu Bolsa
@@ -57,7 +57,7 @@ export default function CartDrawer() {
               </button>
             </div>
 
-            {/* Items List */}
+            {/* Lista de Productos */}
             <div className="cart-drawer__items-list flex-1 overflow-y-auto p-6 space-y-6">
               {cartItems.length === 0 ? (
                 <div className="cart-drawer__empty-state h-full flex flex-col items-center justify-center text-center space-y-4">
@@ -110,7 +110,7 @@ export default function CartDrawer() {
               )}
             </div>
 
-            {/* Footer */}
+            {/* Pie del Carrito */}
             {cartItems.length > 0 && (
               <div className="cart-drawer__footer p-6 border-t border-gray-100 bg-gray-50/50">
                 <div className="cart-drawer__total-row flex justify-between items-center mb-4">

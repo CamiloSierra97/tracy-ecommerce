@@ -1,6 +1,6 @@
 import { Metadata, Viewport } from "next";
 import { CartProvider } from "@/context/CartContext";
-import { playfair, playfair_italic, roboto_serif } from "@/lib/fonts";
+import { playfair, roboto_serif, roboto } from "@/lib/fonts";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ReactQueryProvider from "../providers/ReactQueryProvider";
@@ -27,6 +27,23 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  openGraph: {
+    title: "Tracy Lencería | Ropa Interior de Lujo y Batas en Colombia",
+    description:
+      "Descubre la colección exclusiva de Tracy Lencería. Ropa interior, batas de seda y accesorios íntimos diseñados para resaltar tu elegancia.",
+    url: "https://tracylenceria.com",
+    siteName: "Tracy Lencería",
+    locale: "es_CO",
+    type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Tracy Lencería Colección",
+      },
+    ],
+  },
 };
 
 export const viewport: Viewport = {
@@ -40,10 +57,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body
-        className={`${playfair.variable} ${playfair_italic.variable} ${roboto_serif.variable} font-sans`}
-      >
+    <html
+      lang="es"
+      className={`${playfair.variable} ${roboto_serif.variable} ${roboto.variable}`}
+    >
+      <body className="font-sans">
         <ReactQueryProvider>
           <CartProvider>
             <div className="principal__container relative flex flex-col min-h-screen w-full">

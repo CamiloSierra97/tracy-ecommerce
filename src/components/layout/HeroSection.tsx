@@ -1,6 +1,4 @@
-import { playfair_italic, roboto_serif } from "@/lib/fonts";
 import Image from "next/image";
-
 import React from "react";
 import ScrollButton from "@/components/ui/ScrollButton";
 
@@ -23,15 +21,13 @@ const HeroSection: React.FC = () => {
       </figure>
       {/* <article> para el contenido autocontenido (el mensaje y el CTA) */}
       <article className="hero__content w-full md:w-1/2 lg:w-2/5 pb-8 pt-4 px-6 md:pt-6 md:px-8 z-10 bg-burgundy-light flex flex-col justify-center items-center text-center relative">
-        <h1
-          className={`hero__title inline-block ${roboto_serif.className} text-5xl leading-20 md:text-4xl text-light-gold mx-0 my-2`}
-        >
+        <h1 className="hero__title inline-block font-serif text-5xl leading-20 md:text-4xl text-light-gold mx-0 my-2">
           <span className="">Tracy</span>
         </h1>
 
         {/* 🌟 Aplicación del Lema 🌟 */}
         <p
-          className={`hero__slogan text-xl md:text-2xl ${playfair_italic.className} pb-2 text-golden drop-shadow-black`}
+          className={`hero__slogan text-xl md:text-2xl font-serif italic pb-2 text-golden drop-shadow-black`}
         >
           {BRAND_SLOGAN}
         </p>

@@ -1,12 +1,10 @@
-// Header component (moved to layout folder)
+// Componente Header (movido a la carpeta layout)
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Icon from "@/components/ui/Icon";
 import CartTrigger from "@/components/cart/CartTrigger";
 import UserMenu from "@/components/auth/UserMenu";
 import AnimatedSearch from "./AnimatedSearch";
-import { playfair, roboto_serif } from "@/lib/fonts";
 
 const Header: React.FC = () => {
   const mainLinks = [
@@ -18,7 +16,7 @@ const Header: React.FC = () => {
 
   return (
     <header
-      className={`header h-header-size bg-burgundy overflow-hidden shadow-sm sticky top-0 z-50 ${playfair.className}`}
+      className={`header h-header-size bg-burgundy overflow-hidden shadow-sm sticky top-0 z-50 font-serif`}
     >
       <div className="header__content">
         {/* Contenido del encabezado: Logo y Navegación */}
@@ -59,7 +57,7 @@ const Header: React.FC = () => {
                   >
                     <Link
                       href={link.href}
-                      className={`header__nav-link text-3xl text-gold hover:text-light-gold transition duration-300 block lg:text-sm ${roboto_serif.className}`}
+                      className={`header__nav-link text-3xl text-gold hover:text-light-gold transition duration-300 block lg:text-sm font-roboto-serif`}
                     >
                       {link.label}
                     </Link>
@@ -99,8 +97,8 @@ const Header: React.FC = () => {
           {/* Espacio para íconos */}
           <div className="header__utility-container h-header-size p-4 md:p-8 flex items-center justify-center z-10">
             <nav className="header__utility-nav flex items-center gap-3.5">
-              {/* Búsqueda Animada (Client Component Island) */}
-              <div className="header__utility-item header__utility-item--search h-10 flex items-center text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold transition-all">
+              {/* Búsqueda Animada (Isla de Componente Cliente) */}
+              <div className="header__utility-item header__utility-item--search h-10 flex items-center transition-all">
                 <AnimatedSearch />
               </div>
 

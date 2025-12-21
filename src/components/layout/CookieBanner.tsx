@@ -8,10 +8,10 @@ export default function CookieBanner() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Check if consent is already given
+    // Verificar si ya se ha dado el consentimiento
     const consent = localStorage.getItem("cookieConsent");
     if (!consent) {
-      // Show banner after a small delay for better UX
+      // Mostrar el banner después de un pequeño retraso para una mejor experiencia de usuario (UX)
       const timer = setTimeout(() => setIsVisible(true), 1000);
       return () => clearTimeout(timer);
     }
@@ -25,22 +25,26 @@ export default function CookieBanner() {
   if (!isVisible) return null;
 
   return (
-    <div className="cookie-banner fixed bottom-0 left-0 right-0 z-100 bg-zinc-900 text-white p-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] border-t border-zinc-800 md:m-4 md:rounded-xl">
+    <div
+      role="dialog"
+      aria-live="polite"
+      className="cookie-banner fixed bottom-0 left-0 right-0 z-100 bg-ivory text-burgundy p-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] border-t border-burgundy-light/30 md:m-4 md:rounded-xl"
+    >
       <div className="cookie-banner__container container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="cookie-banner__content flex-1 text-sm text-zinc-300 leading-relaxed">
+        <div className="cookie-banner__content flex-1 text-sm text-burgundy/80 leading-relaxed">
           <p className="cookie-banner__text">
             Utilizamos cookies para mejorar tu experiencia. Al continuar
             navegando, aceptas nuestra{" "}
             <Link
               href="/cookies"
-              className="cookie-banner__link text-white font-medium underline decoration-zinc-500 underline-offset-4 hover:text-golden hover:decoration-golden transition-all"
+              className="cookie-banner__link text-burgundy font-medium underline decoration-burgundy/50 underline-offset-4 hover:text-gold hover:decoration-gold transition-all"
             >
               Política de Cookies
             </Link>{" "}
             y{" "}
             <Link
               href="/privacidad"
-              className="cookie-banner__link text-white font-medium underline decoration-zinc-500 underline-offset-4 hover:text-golden hover:decoration-golden transition-all"
+              className="cookie-banner__link text-burgundy font-medium underline decoration-burgundy/50 underline-offset-4 hover:text-gold hover:decoration-gold transition-all"
             >
               Política de Privacidad
             </Link>
@@ -50,13 +54,13 @@ export default function CookieBanner() {
         <div className="cookie-banner__actions flex items-center gap-3">
           <button
             onClick={acceptCookies}
-            className="cookie-banner__btn cookie-banner__btn--accept bg-white text-gray-900 px-6 py-2 rounded-full font-medium text-sm hover:bg-gray-100 transition-colors whitespace-nowrap"
+            className="cookie-banner__btn cookie-banner__btn--accept bg-burgundy text-ivory px-6 py-2 rounded-full font-medium text-sm hover:bg-burgundy-light/90 transition-colors whitespace-nowrap cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
           >
             Aceptar todo
           </button>
           <button
-            onClick={() => setIsVisible(false)} // Just hide for session if closed without accepting? Or strictly required? Usually X just hides it.
-            className="cookie-banner__btn cookie-banner__btn--close p-2 hover:bg-gray-800 rounded-full transition-colors md:hidden"
+            onClick={() => setIsVisible(false)} // Solo ocultar por la sesión si se cierra sin aceptar. Comúnmente la X solo lo oculta.
+            className="cookie-banner__btn cookie-banner__btn--close p-2 hover:bg-burgundy-light/20 rounded-full transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
             aria-label="Cerrar"
           >
             <X size={20} className="cookie-banner__icon" />

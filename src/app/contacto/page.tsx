@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import { playfair, roboto_serif } from "@/lib/fonts";
 import Icon from "@/components/ui/Icon";
 
 export const metadata: Metadata = {
@@ -11,13 +10,11 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <main
-      className={`main-contact min-h-screen bg-ivory py-16 px-6 md:px-12 ${roboto_serif.className}`}
+      className={`main-contact min-h-screen bg-ivory py-16 px-6 md:px-12 font-roboto-serif`}
     >
       <div className="max-w-4xl mx-auto">
         <header className="text-center mb-16">
-          <h1
-            className={`text-4xl md:text-5xl text-burgundy mb-6 ${playfair.className}`}
-          >
+          <h1 className={`text-4xl md:text-5xl text-burgundy mb-6 font-serif`}>
             Contáctanos
           </h1>
           <div className="w-24 h-1 bg-golden mx-auto opacity-60 rounded-full"></div>
@@ -31,7 +28,7 @@ export default function ContactPage() {
           {/* Info de contacto */}
           <div className="space-y-8">
             <h2
-              className={`text-2xl text-burgundy-light font-medium mb-6 ${playfair.className}`}
+              className={`text-2xl text-burgundy-light font-medium mb-6 font-serif`}
             >
               Información
             </h2>

@@ -106,7 +106,7 @@ export default function RegisterForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="register-form__submit-btn w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50"
+          className="register-form__submit-btn w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
         >
           {isLoading ? "Registrarse" : "Crear Cuenta"}
         </button>

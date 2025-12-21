@@ -2,26 +2,24 @@ import React from "react";
 
 interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: string;
-  size?: number;
+  size?: number | string;
 }
 
 const Icon: React.FC<IconProps> = ({
   name,
   size = 24,
-  className,
+  className = "",
   ...props
 }) => {
-  const spritePath = "/Sprite.svg";
   return (
     <svg
-      className={`icon ${className || ""}`.trim()}
+      className={`inline-block shrink-0 ${className}`.trim()}
       width={size}
       height={size}
+      viewBox="0 0 24 24" // Siempre fijo
       aria-hidden="true"
-      {...props}
     >
-      {/* 🛑 La magia del SVG Sprite: Referenciar el ID del símbolo */}
-      <use href={`${spritePath}#${name}`} />
+      <use href={`/Sprite.svg#${name}`} />
     </svg>
   );
 };

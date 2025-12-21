@@ -10,6 +10,11 @@ export default function AnimatedSearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
+  // Conditional classes: Only show bottom border hover when search is closed
+  const containerClasses = isSearchOpen
+    ? "text-gold"
+    : "text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold";
+
   const handleSearch = () => {
     if (!searchTerm.trim()) return;
 
@@ -27,7 +32,9 @@ export default function AnimatedSearch() {
   };
 
   return (
-    <div className="search-bar relative flex items-center h-full text-gold transition-all">
+    <div
+      className={`animated-search search-bar relative flex items-center h-full transition-all ${containerClasses}`}
+    >
       <AnimatePresence>
         {isSearchOpen && (
           <motion.input
@@ -40,7 +47,7 @@ export default function AnimatedSearch() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="search-bar__input bg-transparent border-b border-gold text-sm text-ivory placeholder-gold/70 focus:outline-none mr-2 font-sans"
+            className="animated-search__input bg-transparent border rounded-full border-gold text-sm text-ivory placeholder-gold/70 focus:outline-none mr-2 font-sans px-3"
             aria-label="Buscar productos"
             autoFocus
             onBlur={() => {
@@ -59,9 +66,9 @@ export default function AnimatedSearch() {
           }
         }}
         aria-label="Buscar"
-        className="search-bar__button cursor-pointer hover:text-light-gold"
+        className="animated-search__button cursor-pointer hover:text-light-gold focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-gold"
       >
-        <Icon name="icon-search" className="search-bar__icon" />
+        <Icon name="icon-search" className="animated-search__icon" />
       </button>
     </div>
   );

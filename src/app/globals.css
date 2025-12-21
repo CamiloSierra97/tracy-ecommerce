@@ -23,9 +23,9 @@
   }
 }
 
-/*Aquí usamos los colores de marca como paleta completa en variables de Tailwind*/
+/* Tailwind v4 Theme Configuration */
 @theme {
-  --color-*: initial;
+  /* Colors */
   --color-burgundy: #580a1e;
   --color-burgundy-light: #8a505e;
   --color-gray: #5a5856;
@@ -34,14 +34,16 @@
   --color-light-gold: #ffe895;
   --color-ivory: #f4f1ec;
   --color-black: #1c1c1c;
+
+  /* Spacing */
   --spacing-card-size: 25rem;
   --spacing-card-half-size: 12.5rem;
   --spacing-header-size: 7rem;
+
+  /* Fonts */
   --font-playfair: var(--font-Playfair), serif;
-  --font-playfair-italic: var(--font-Playfair-italic), serif;
   --font-roboto-serif: var(--font-Roboto-Serif), serif;
-  /* Map default sans/serif to our fonts */
-  --font-sans: var(--font-Roboto-Serif), sans-serif;
+  --font-sans: var(--font-Roboto), sans-serif;
   --font-serif: var(--font-Playfair), serif;
 }
 

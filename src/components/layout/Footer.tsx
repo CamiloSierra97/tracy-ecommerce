@@ -3,25 +3,27 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="footer bg-gray-900 text-gray-200 py-12 px-4 font-(--font-roboto-serif)">
+    <footer className="footer bg-burgundy text-ivory py-12 px-4 font-sans">
       <div className="footer__container max-w-6xl mx-auto">
-        <div className="footer__divider border-t border-gray-800 pt-8"></div>
+        <div className="footer__divider border-t border-burgundy-light/30 pt-8"></div>
         <div className="footer__grid grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="footer__section">
-            <h3 className="footer__title font-semibold text-lg mb-4">Tracy</h3>
-            <p className="footer__description text-gray-400">
+            <h3 className="footer__title font-serif font-semibold text-xl mb-4 text-gold">
+              Tracy
+            </h3>
+            <p className="footer__description text-ivory/80">
               Tu tienda de ropa interior premium en línea.
             </p>
           </div>
           <div className="footer__section">
-            <h4 className="footer__title font-semibold mb-4">
+            <h4 className="footer__title font-serif font-semibold mb-4 text-gold">
               Enlaces Rápidos
             </h4>
-            <ul className="footer__list space-y-2 text-gray-400">
+            <ul className="footer__list space-y-2 text-ivory/80">
               <li>
                 <Link
                   href="/"
-                  className="footer__link hover:text-white transition-colors"
+                  className="footer__link hover:text-gold transition-colors"
                 >
                   Inicio
                 </Link>
@@ -29,7 +31,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/tienda"
-                  className="footer__link hover:text-white transition-colors"
+                  className="footer__link hover:text-gold transition-colors"
                 >
                   Tienda
                 </Link>
@@ -37,7 +39,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/acerca-de"
-                  className="footer__link hover:text-white transition-colors"
+                  className="footer__link hover:text-gold transition-colors"
                 >
                   Acerca de
                 </Link>
@@ -45,14 +47,14 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer__section">
-            <h4 className="footer__title font-semibold mb-4">
+            <h4 className="footer__title font-serif font-semibold mb-4 text-gold">
               Atención al Cliente
             </h4>
-            <ul className="footer__list space-y-2 text-gray-400">
+            <ul className="footer__list space-y-2 text-ivory/80">
               <li>
                 <Link
                   href="/contacto"
-                  className="footer__link hover:text-white transition-colors"
+                  className="footer__link hover:text-gold transition-colors"
                 >
                   Contacto
                 </Link>
@@ -60,7 +62,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/faq"
-                  className="footer__link hover:text-white transition-colors"
+                  className="footer__link hover:text-gold transition-colors"
                 >
                   FAQ
                 </Link>
@@ -68,7 +70,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/envios"
-                  className="footer__link hover:text-white transition-colors"
+                  className="footer__link hover:text-gold transition-colors"
                 >
                   Envíos
                 </Link>
@@ -76,14 +78,14 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer__section">
-            <h4 className="footer__title font-semibold mb-4">
+            <h4 className="footer__title font-serif font-semibold mb-4 text-gold">
               Información Legal
             </h4>
-            <ul className="footer__list space-y-2 text-gray-400">
+            <ul className="footer__list space-y-2 text-ivory/80">
               <li>
                 <Link
                   href="/terminos"
-                  className="footer__link hover:text-white transition-colors"
+                  className="footer__link hover:text-gold transition-colors"
                 >
                   Términos
                 </Link>
@@ -91,7 +93,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/privacidad"
-                  className="footer__link hover:text-white transition-colors"
+                  className="footer__link hover:text-gold transition-colors"
                 >
                   Privacidad
                 </Link>
@@ -99,7 +101,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/cookies"
-                  className="footer__link hover:text-white transition-colors"
+                  className="footer__link hover:text-gold transition-colors"
                 >
                   Cookies
                 </Link>
@@ -107,11 +109,11 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="footer__bottom border-t border-gray-800 pt-8">
-          <p className="footer__copyright text-center text-gray-400">
+        <div className="footer__bottom border-t border-burgundy-light/30 pt-8">
+          <p className="footer__copyright text-center text-ivory/60 text-sm">
             © 2025 Tracy Lencería®. Todos los derechos reservados.
           </p>
-          <p className="footer__credit text-center text-gray-400">
+          <p className="footer__credit text-center text-ivory/60 text-sm mt-2">
             Made with 💖 by SierraDev
           </p>
         </div>

@@ -69,30 +69,30 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
     );
 
   return (
-    <section className="products-grid p-6 max-w-[1920px] mx-auto">
+    <section className="page-products__grid-container p-6 max-w-[1920px] mx-auto">
       {title && (
-        <div className="products-grid__header flex flex-col items-center mb-6">
-          <h2 className="products-grid__title text-3xl font-serif font-medium text-burgundy relative inline-block">
+        <div className="page-products__header flex flex-col items-center mb-6">
+          <h2 className="page-products__title text-3xl font-serif font-medium text-burgundy relative inline-block">
             {title}
           </h2>
-          <div className="products-grid__divider w-24 h-1 bg-linear-to-r from-transparent via-golden to-transparent mt-3 rounded-full opacity-60"></div>
+          <div className="page-products__divider w-24 h-1 bg-linear-to-r from-transparent via-golden to-transparent mt-3 rounded-full opacity-60"></div>
         </div>
       )}
 
       {/* Toolbar inspired by reference image */}
-      <div className="products-grid__toolbar flex flex-col md:flex-row justify-between items-center border-b border-gray-200 pb-4 mb-8 text-sm text-gray-600 font-medium relative z-20">
-        <div className="products-grid__count flex items-center gap-4 mb-4 md:mb-0 w-full md:w-auto">
-          <span className="text-gray-400 text-xs tracking-wide">
+      <div className="page-products__toolbar flex flex-col md:flex-row justify-between items-center border-b border-black pb-4 mb-8 text-sm text-black font-medium relative z-20">
+        <div className="page-products__count flex items-center gap-4 mb-4 md:mb-0 w-full md:w-auto">
+          <span className="text-black text-xs tracking-wide">
             {sortedProducts.length} PRODUCTOS
           </span>
         </div>
 
-        <div className="products-grid__actions flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
+        <div className="page-products__actions flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
           {/* Column Switcher */}
-          <div className="products-grid__layout-switch flex items-center gap-2">
+          <div className="page-products__layout-switch flex items-center gap-2">
             <button
               onClick={() => setGridCols(2)}
-              className={`products-grid__layout-btn hover:text-burgundy hover:cursor-pointer transition-colors ${
+              className={`page-products__layout-btn hover:text-burgundy hover:cursor-pointer transition-colors ${
                 gridCols === 2 ? "text-burgundy font-bold" : ""
               }`}
             >
@@ -101,7 +101,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
             <span className="text-gray-300">|</span>
             <button
               onClick={() => setGridCols(4)}
-              className={`products-grid__layout-btn hover:text-burgundy hover:cursor-pointer transition-colors ${
+              className={`page-products__layout-btn hover:text-burgundy hover:cursor-pointer transition-colors ${
                 gridCols === 4 ? "text-burgundy font-bold" : ""
               }`}
             >
@@ -110,9 +110,9 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
           </div>
 
           {/* Sort Dropdown */}
-          <div className="products-grid__sort relative">
+          <div className="page-products__sort relative">
             <div
-              className="products-grid__sort-trigger flex items-center gap-2 cursor-pointer hover:text-burgundy transition-colors group select-none"
+              className="page-products__sort-trigger flex items-center gap-2 cursor-pointer hover:text-burgundy transition-colors group select-none"
               onClick={() => setIsSortOpen(!isSortOpen)}
             >
               <span>
@@ -137,7 +137,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  className="products-grid__sort-menu absolute right-0 top-full mt-2 w-48 bg-white shadow-xl border border-gray-100 rounded-lg p-2 z-50 overflow-hidden"
+                  className="page-products__sort-menu absolute right-0 top-full mt-2 w-48 bg-white shadow-xl border border-gray-100 rounded-lg p-2 z-50 overflow-hidden"
                 >
                   {sortOptions.map((option) => (
                     <button
@@ -146,10 +146,10 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                         setSortBy(option.value);
                         setIsSortOpen(false);
                       }}
-                      className={`products-grid__sort-item block w-full text-left px-4 py-2 text-sm rounded-md transition-colors ${
+                      className={`page-products__sort-item block w-full text-left px-4 py-2 text-sm rounded-md transition-colors hover:cursor-pointer hover:bg-burgundy/5 ${
                         sortBy === option.value
                           ? "bg-burgundy/10 text-burgundy font-bold"
-                          : "hover:bg-gray-50"
+                          : ""
                       }`}
                     >
                       {option.label}
@@ -163,7 +163,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
           {/* Filter Button */}
           <button
             onClick={() => setIsFilterOpen(!isFilterOpen)}
-            className={`products-grid__filter-btn uppercase tracking-wider hover:text-burgundy focus:ring-2 focus:ring-burgundy/50 focus:outline-none rounded-sm px-1 hover:cursor-pointer transition-colors font-semibold flex items-center gap-1 ${
+            className={`page-products__filter-btn uppercase tracking-wider hover:text-burgundy focus:ring-2 focus:ring-burgundy/50 focus:outline-none rounded-sm px-1 hover:cursor-pointer transition-colors font-semibold flex items-center gap-1 ${
               isFilterOpen ? "text-burgundy" : ""
             }`}
           >
@@ -182,7 +182,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="products-grid__filters overflow-hidden mb-8 bg-white/50 backdrop-blur-sm border border-gold/10 rounded-xl"
+            className="page-products__filters overflow-hidden mb-8 bg-white/50 backdrop-blur-sm border border-gold/10 rounded-xl"
           >
             <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-8">
               {/* Placeholder Filters */}
@@ -238,7 +238,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
       </AnimatePresence>
 
       <ul
-        className={`products-grid__list grid gap-6 xl:gap-8 transition-all duration-500 ease-in-out ${
+        className={`page-products__list grid gap-6 xl:gap-8 transition-all duration-500 ease-in-out ${
           gridCols === 4
             ? "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
             : "grid-cols-2"
@@ -327,15 +327,15 @@ function ProductCard({
             <div className="product-card__overlay absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
           </Link>
 
-          {/* Hover Zoom Button - Top Right Corner */}
-          <div className="product-card__action-zoom absolute top-4 right-4 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 z-30">
+          {/* Hover Zoom Button - Top Left Corner */}
+          <div className="product-card__action-zoom absolute top-4 left-4 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 z-30">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 onOpenQuickView();
               }}
-              className="product-card__btn-icon cursor-pointer bg-white/95 backdrop-blur-sm text-black p-3 rounded-full shadow-lg hover:text-burgundy duration-300 hover:scale-105 transition"
+              className="product-card__btn-icon cursor-pointer backdrop-blur-sm text-[rgba(0,0,0,0.8)] p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] duration-300 hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border transition flex justify-center items-center"
               aria-label="Vista rápida"
               type="button"
             >
@@ -343,15 +343,15 @@ function ProductCard({
             </button>
           </div>
 
-          {/* Hover Add to Cart Button - Top Right Corner (Below Zoom) */}
-          <div className="product-card__action-cart absolute top-16 right-4 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 z-30 delay-75">
+          {/* Hover Add to Cart Button - Top Right Corner */}
+          <div className="product-card__action-cart absolute top-4 right-4 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 z-30 delay-75">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 addToCart(product);
               }}
-              className="product-card__btn-icon cursor-pointer bg-white/95 backdrop-blur-sm text-black p-3 rounded-full shadow-lg hover:text-burgundy hover:text-white duration-300 hover:scale-105 transition"
+              className="product-card__btn-icon cursor-pointer backdrop-blur-sm text-black p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border duration-300 transition flex justify-center items-center"
               aria-label="Agregar al carrito"
               type="button"
             >
@@ -365,7 +365,7 @@ function ProductCard({
             className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 pointer-events-none px-4"
           >
             <div className="flex justify-center opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300 pointer-events-auto">
-              <span className="product-card__btn-text w-full bg-white/95 backdrop-blur-sm text-burgundy font-medium py-3 px-6 rounded-xl shadow-lg text-center text-sm tracking-wide hover:bg-white transform active:scale-95 transition-all">
+              <span className="product-card__btn-text w-3/4 backdrop-blur-sm text-[rgba(0,0,0,0.8)] font-medium py-3 px-6 rounded-xl  shadow-lg text-center text-sm transform active:scale-95 hover:scale-105 hover:text-[rgba(0,0,0,1)] hover:border hover:border-[rgba(0,0,0,1)] transition-all">
                 Ver Detalles
               </span>
             </div>
@@ -464,25 +464,25 @@ function QuickViewModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overscroll-contain">
+        <div className="quick-view-modal fixed inset-0 z-50 flex items-center justify-center p-4 overscroll-contain">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="quick-view-modal__overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="relative bg-white rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden grid grid-cols-1 md:grid-cols-2 max-h-[90vh]"
+            className="quick-view-modal__container relative bg-white rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden grid grid-cols-1 md:grid-cols-2 max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-50 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 transition-all shadow-sm hover:shadow-md"
+              className="quick-view-modal__close-btn absolute top-4 right-4 z-50 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 transition-all shadow-sm hover:shadow-md"
               aria-label="Cerrar"
             >
               <Icon name="icon-close" size={24} />
@@ -490,7 +490,7 @@ function QuickViewModal({
 
             {/* Left Side: Zoomable Image */}
             <div
-              className="relative h-[400px] md:h-full overflow-hidden bg-gray-50 cursor-zoom-in group"
+              className="quick-view-modal__image-section relative h-[400px] md:h-full overflow-hidden bg-gray-50 cursor-zoom-in group"
               onMouseEnter={handleMouseEnter}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}
@@ -525,8 +525,8 @@ function QuickViewModal({
             </div>
 
             {/* Right Side: Product Details */}
-            <div className="p-8 md:p-12 flex flex-col justify-center bg-white">
-              <h2 className="text-3xl font-serif text-gray-900 mb-2 leading-tight">
+            <div className="quick-view-modal__details-section p-8 md:p-12 flex flex-col justify-center bg-white">
+              <h2 className="quick-view-modal__title text-3xl font-serif text-gray-900 mb-2 leading-tight">
                 {product.name}
               </h2>
               <div className="w-20 h-1 bg-tracy-burdeos mb-6 opacity-20"></div>
@@ -535,7 +535,7 @@ function QuickViewModal({
                 {formatPrice(product.price)}
               </p>
 
-              <div className="prose prose-sm text-gray-600 mb-8 line-clamp-3">
+              <div className="quick-view-modal__description prose prose-sm text-gray-600 mb-8 line-clamp-3">
                 <div
                   dangerouslySetInnerHTML={{
                     __html:
@@ -555,9 +555,9 @@ function QuickViewModal({
                 </button>
                 <Link
                   href={`/productos/${product.slug ?? product.id}`}
-                  className="w-full py-4 border border-gray-200 rounded-xl hover:bg-gray-50 hover:border-tracy-burdeos/30 transition-all text-gray-600 font-medium text-center uppercase tracking-wider text-sm hover:text-burgundy"
+                  className="w-full py-4 border border-gray-200 rounded-xl hover:border-tracy-burdeos/30 transition-all text-gray-600 font-medium text-center uppercase tracking-wider text-sm hover:text-burgundy"
                 >
-                  Ver Detalle Completo
+                  Ver Detalles
                 </Link>
               </div>
             </div>
