@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Icon from "@/components/ui/Icon";
-import AuthModal from "./AuthModal";
+import dynamic from "next/dynamic";
+const AuthModal = dynamic(() => import("./AuthModal"), { ssr: false });
 
 export default function AuthTrigger() {
   const [isOpen, setIsOpen] = useState(false);

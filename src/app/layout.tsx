@@ -6,8 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import ReactQueryProvider from "../providers/ReactQueryProvider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import CartDrawer from "@/components/cart/CartDrawer";
-import CookieBanner from "@/components/layout/CookieBanner";
+import DynamicLayoutElements from "@/components/layout/DynamicLayoutElements";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -54,8 +53,7 @@ export default function RootLayout({
             <Analytics />
             <SpeedInsights />
             <Footer />
-            <CartDrawer />
-            <CookieBanner />
+            <DynamicLayoutElements />
           </CartProvider>
         </ReactQueryProvider>
       </body>

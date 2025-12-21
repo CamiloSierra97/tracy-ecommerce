@@ -1,7 +1,14 @@
-import Products from "@/components/product/Products";
-import { metadata } from "./layout";
+import dynamic from "next/dynamic";
+const Products = dynamic(() => import("@/components/product/Products"), {
+  loading: () => <div className="min-h-screen"></div>,
+});
+
 import { roboto_serif } from "@/lib/fonts";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import HeroSection from "@/components/layout/HeroSection";
 
 import WooCommerceService from "@/services/WooCommerceService";
@@ -21,10 +28,10 @@ export default async function Page() {
     },
     initialPageParam: 1,
     getNextPageParam: (lastPage: any, allPages: any) => {
-       const currentTotalPages = lastPage.totalPages;
-       const nextPage = allPages.length + 1;
-       return nextPage <= currentTotalPages ? nextPage : undefined;
-    }
+      const currentTotalPages = lastPage.totalPages;
+      const nextPage = allPages.length + 1;
+      return nextPage <= currentTotalPages ? nextPage : undefined;
+    },
   });
 
   return (
@@ -38,7 +45,6 @@ export default async function Page() {
         </section>
         <section>
           <Products title="Nuestra Colección" basePath="/"></Products>
-
         </section>
       </main>
     </HydrationBoundary>
