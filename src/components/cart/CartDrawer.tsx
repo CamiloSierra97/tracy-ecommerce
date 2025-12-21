@@ -41,7 +41,7 @@ export default function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="cart-drawer__panel fixed top-0 right-0 h-full w-full max-w-md bg-[#ffffff] shadow-2xl z-50 flex flex-col"
+            className="cart-drawer__panel fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col"
           >
             {/* Encabezado del Carrito */}
             <div className="cart-drawer__header p-6 flex items-center justify-between border-b border-gray-100">
@@ -61,7 +61,7 @@ export default function CartDrawer() {
             <div className="cart-drawer__items-list flex-1 overflow-y-auto p-6 space-y-6">
               {cartItems.length === 0 ? (
                 <div className="cart-drawer__empty-state h-full flex flex-col items-center justify-center text-center space-y-4">
-                  <div className="cart-drawer__empty-icon w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300">
+                  <div className="cart-drawer__empty-icon size-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300">
                     <Icon name="icon-bag" size={32} />
                   </div>
                   <p className="cart-drawer__empty-text text-gray-500 text-lg">

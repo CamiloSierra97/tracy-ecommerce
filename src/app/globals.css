@@ -26,6 +26,11 @@
 /* Tailwind v4 Theme Configuration */
 @theme {
   /* Colors */
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
   --color-burgundy: #580a1e;
   --color-burgundy-light: #8a505e;
   --color-gray: #5a5856;

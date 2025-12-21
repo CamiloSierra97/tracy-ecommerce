@@ -110,7 +110,7 @@ export default function Products({
             <motion.div
               /* ... spinner ... */ className="page-products__infinite-loader flex flex-col items-center text-gray-500"
             >
-              <motion.div className="page-products__spinner w-8 h-8 border-4 border-pink-400 border-t-transparent rounded-full animate-spin" />
+              <motion.div className="page-products__spinner size-8 border-4 border-pink-400 border-t-transparent rounded-full animate-spin" />
               <span className="page-products__loading-text mt-2 text-sm">
                 Cargando más productos...
               </span>

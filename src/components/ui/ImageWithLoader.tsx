@@ -28,7 +28,7 @@ export default function ImageWithLoader({
       {isLoading && (
         <div className="image-loader__spinner-container absolute inset-0 z-10 flex items-center justify-center bg-gray-50/80 animate-pulse">
           <ThreeRingLoader
-            className={cn("image-loader__spinner w-12 h-12", loaderClassName)}
+            className={cn("image-loader__spinner size-12", loaderClassName)}
           />
         </div>
       )}

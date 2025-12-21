@@ -39,7 +39,7 @@ const Header: React.FC = () => {
             {/* 2. BOTÓN (Label) */}
             <label
               htmlFor="menu__checkbox"
-              className="header__menu-toggle menu__toggle w-[50px] h-[50px] cursor-pointer lg:hidden"
+              className="header__menu-toggle menu__toggle size-[50px] cursor-pointer lg:hidden"
               aria-label="Alternar menú principal"
             >
               <div className="header__menu-bar"></div>
@@ -80,7 +80,7 @@ const Header: React.FC = () => {
 
             <Link
               href="/"
-              className="header__logo-link w-28 h-28 pt-5 relative flex justify-center items-center"
+              className="header__logo-link size-28 pt-5 relative flex justify-center items-center"
             >
               <Image
                 src="/WhatsApp Image 2025-12-19 at 9.09.47 AM.jpeg"

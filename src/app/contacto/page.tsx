@@ -34,7 +34,7 @@ export default function ContactPage() {
             </h2>
 
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-burgundy/5 flex items-center justify-center text-burgundy shrink-0">
+              <div className="size-12 rounded-full bg-burgundy/5 flex items-center justify-center text-burgundy shrink-0">
                 <Icon name="icon-user" size={24} />
                 {/* Note: Using 'icon-user' as generic placeholder if 'icon-whatsapp'/phone not available in Icon set yet. 
                                     If you have whatsapp icon, switch to it. */}
@@ -51,7 +51,7 @@ export default function ContactPage() {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-burgundy/5 flex items-center justify-center text-burgundy shrink-0">
+              <div className="size-12 rounded-full bg-burgundy/5 flex items-center justify-center text-burgundy shrink-0">
                 <Icon name="icon-truck" size={24} />
               </div>
               <div>
@@ -66,7 +66,7 @@ export default function ContactPage() {
             </div>
 
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-burgundy/5 flex items-center justify-center text-burgundy shrink-0">
+              <div className="size-12 rounded-full bg-burgundy/5 flex items-center justify-center text-burgundy shrink-0">
                 <Icon name="icon-bag" size={24} />
               </div>
               <div>

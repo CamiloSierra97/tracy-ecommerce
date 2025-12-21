@@ -47,7 +47,7 @@ export default function ProductGallery({
       {/* Main Image */}
       <div className="product-details__main-image-container relative grow bg-gray-50 rounded-2xl overflow-hidden aspect-3/4 lg:h-[700px] shadow-sm border border-gray-100 group">
         <div
-          className={`product-details__zoom-area w-full h-full relative cursor-zoom-in ${
+          className={`product-details__zoom-area size-full relative cursor-zoom-in ${
             isZoomed ? "cursor-zoom-out" : ""
           }`}
           onClick={() => setIsZoomed(!isZoomed)}

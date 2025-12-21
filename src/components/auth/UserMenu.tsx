@@ -18,7 +18,7 @@ export default async function UserMenu() {
             className="user-menu__avatar rounded-full border border-gold"
           />
         ) : (
-          <div className="user-menu__avatar-placeholder w-7 h-7 rounded-full bg-gold/20 flex items-center justify-center text-gold">
+          <div className="user-menu__avatar-placeholder size-7 rounded-full bg-gold/20 flex items-center justify-center text-gold">
             <span className="text-xs font-bold">
               {session.user.name?.[0] ?? "U"}
             </span>

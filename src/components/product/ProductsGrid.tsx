@@ -63,7 +63,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
 
   if (!products.length)
     return (
-      <div className="products-grid text-center py-10 text-tracy-gris-humo/60">
+      <div className="page-products__empty-state text-center py-10 text-tracy-gris-humo/60">
         No hay productos disponibles
       </div>
     );
@@ -82,7 +82,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
       {/* Toolbar inspired by reference image */}
       <div className="page-products__toolbar flex flex-col md:flex-row justify-between items-center border-b border-black pb-4 mb-8 text-sm text-black font-medium relative z-20">
         <div className="page-products__count flex items-center gap-4 mb-4 md:mb-0 w-full md:w-auto">
-          <span className="text-black text-xs tracking-wide">
+          <span className="page-products__count-text text-black text-xs tracking-wide">
             {sortedProducts.length} PRODUCTOS
           </span>
         </div>
@@ -98,7 +98,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
             >
               2
             </button>
-            <span className="text-gray-300">|</span>
+            <span className="page-products__separator text-gray-300">|</span>
             <button
               onClick={() => setGridCols(4)}
               className={`page-products__layout-btn hover:text-burgundy hover:cursor-pointer transition-colors ${
@@ -169,7 +169,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
           >
             Filtrar
             {isFilterOpen && (
-              <span className="w-1.5 h-1.5 bg-golden rounded-full inline-block mb-1"></span>
+              <span className="page-products__filter-active-dot w-1.5 h-1.5 bg-golden rounded-full inline-block mb-1"></span>
             )}
           </button>
         </div>
@@ -184,7 +184,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
             exit={{ height: 0, opacity: 0 }}
             className="page-products__filters overflow-hidden mb-8 bg-white/50 backdrop-blur-sm border border-gold/10 rounded-xl"
           >
-            <div className="p-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="page-products__filters-content p-6 grid grid-cols-1 md:grid-cols-4 gap-8">
               {/* Placeholder Filters */}
               <div className="filter-group">
                 <h4 className="filter-group__title font-serif text-burgundy mb-3">
@@ -285,13 +285,13 @@ function ProductCard({
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="h-full flex flex-col relative"
+        className="product-card__content h-full flex flex-col relative"
       >
         {/* Image Area */}
         <div className="product-card__image-container relative aspect-3/4 overflow-hidden rounded-3xl bg-gray-100 shadow-sm transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:border-golden/30 border border-transparent group-hover:scale-[1.02] transform">
           <Link
             href={`/productos/${product.slug ?? product.id}`}
-            className="block w-full h-full relative"
+            className="product-card__link block size-full relative"
           >
             {/* Skeleton Loader */}
             {isImageLoading && (
@@ -306,7 +306,7 @@ function ProductCard({
               priority={priority}
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               onLoad={() => setIsImageLoading(false)}
-              className={`product-card__image w-full h-full object-cover transform transition-transform duration-700 ease-out ${
+              className={`product-card__image size-full object-cover transform transition-transform duration-700 ease-out ${
                 isImageLoading ? "opacity-0" : "opacity-100"
               }`}
             />
@@ -319,7 +319,7 @@ function ProductCard({
                 width={500}
                 height={667}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="product-card__image-hover absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-10"
+                className="product-card__image-hover absolute inset-0 size-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-10"
               />
             )}
 
@@ -335,7 +335,7 @@ function ProductCard({
                 e.stopPropagation();
                 onOpenQuickView();
               }}
-              className="product-card__btn-icon cursor-pointer backdrop-blur-sm text-[rgba(0,0,0,0.8)] p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] duration-300 hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border transition flex justify-center items-center"
+              className="product-card__btn-icon cursor-pointer backdrop-blur-sm text-[rgba(0,0,0,0.8)] p-2 md:p-3 size-10 md:size-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] duration-300 hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border transition flex justify-center items-center"
               aria-label="Vista rápida"
               type="button"
             >
@@ -351,7 +351,7 @@ function ProductCard({
                 e.stopPropagation();
                 addToCart(product);
               }}
-              className="product-card__btn-icon cursor-pointer backdrop-blur-sm text-black p-2 md:p-3 w-10 h-10 md:w-12 md:h-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border duration-300 transition flex justify-center items-center"
+              className="product-card__btn-icon cursor-pointer backdrop-blur-sm text-black p-2 md:p-3 size-10 md:size-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border duration-300 transition flex justify-center items-center"
               aria-label="Agregar al carrito"
               type="button"
             >
@@ -364,8 +364,8 @@ function ProductCard({
             href={`/productos/${product.slug ?? product.id}`}
             className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 pointer-events-none px-4"
           >
-            <div className="flex justify-center opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300 pointer-events-auto">
-              <span className="product-card__btn-text w-3/4 backdrop-blur-sm text-[rgba(0,0,0,0.8)] font-medium py-3 px-6 rounded-xl  shadow-lg text-center text-sm transform active:scale-95 hover:scale-105 hover:text-[rgba(0,0,0,1)] hover:border hover:border-[rgba(0,0,0,1)] transition-all">
+            <div className="product-card__details-wrapper flex justify-center opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300 pointer-events-auto">
+              <span className="product-card__btn-text w-3/4 backdrop-blur-sm text-[rgba(0,0,0,0.8)] font-medium py-2 px-3 md:py-3 md:px-4 rounded-md shadow-lg text-center text-sm transform active:scale-95 hover:scale-105 hover:text-[rgba(0,0,0,1)] hover:border hover:border-[rgba(0,0,0,1)] transition-all">
                 Ver Detalles
               </span>
             </div>
@@ -376,12 +376,12 @@ function ProductCard({
         <div className="product-card__info mt-4 px-1 space-y-1">
           <Link
             href={`/productos/${product.slug ?? product.id}`}
-            className="block"
+            className="product-card__title-link block"
           >
             <h3 className="product-card__title text-base font-serif font-medium text-gray-900 leading-snug group-hover:text-burgundy transition-colors">
               {product.name}
             </h3>
-            <div className="flex items-center justify-between">
+            <div className="product-card__price-wrapper flex items-center justify-between">
               <p className="product-card__price text-lg font-bold text-burgundy tracking-wide">
                 {formatPrice(product.price)}
               </p>
@@ -497,19 +497,19 @@ function QuickViewModal({
               onWheel={handleWheel}
             >
               <motion.div
-                className="w-full h-full flex items-center justify-center p-4"
+                className="quick-view-modal__zoom-content size-full flex items-center justify-center p-4"
                 style={{
                   transformOrigin: zoomStyle.origin,
                 }}
                 animate={{ scale: zoomStyle.scale }}
                 transition={{ type: "tween", ease: "linear", duration: 0.1 }}
               >
-                <div className="relative w-full h-full">
+                <div className="quick-view-modal__image-wrapper relative size-full">
                   <Image
                     src={product.images?.[0]?.src ?? "/placeholder.png"}
                     alt={product.name}
                     fill
-                    className="object-contain"
+                    className="quick-view-modal__image object-contain"
                     sizes="(max-width: 768px) 100vw, 50vw"
                     priority
                   />
@@ -517,8 +517,8 @@ function QuickViewModal({
               </motion.div>
 
               {/* Zoom Hint Overlay */}
-              <div className="absolute bottom-6 left-0 right-0 text-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="bg-black/40 text-white text-xs px-4 py-2 rounded-full backdrop-blur-sm tracking-wide">
+              <div className="quick-view-modal__zoom-hint absolute bottom-6 left-0 right-0 text-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="quick-view-modal__zoom-text bg-black/40 text-white text-xs px-4 py-2 rounded-full backdrop-blur-sm tracking-wide">
                   Rueda del mouse para zoom
                 </span>
               </div>
@@ -529,9 +529,9 @@ function QuickViewModal({
               <h2 className="quick-view-modal__title text-3xl font-serif text-gray-900 mb-2 leading-tight">
                 {product.name}
               </h2>
-              <div className="w-20 h-1 bg-tracy-burdeos mb-6 opacity-20"></div>
+              <div className="quick-view-modal__divider w-20 h-1 bg-tracy-burdeos mb-6 opacity-20"></div>
 
-              <p className="text-3xl font-bold text-burgundy mb-6">
+              <p className="quick-view-modal__price text-3xl font-bold text-burgundy mb-6">
                 {formatPrice(product.price)}
               </p>
 
@@ -545,17 +545,17 @@ function QuickViewModal({
                 />
               </div>
 
-              <div className="flex flex-col gap-4 mt-auto">
+              <div className="quick-view-modal__actions flex flex-col gap-4 mt-auto">
                 <button
                   onClick={() => addToCart(product)}
-                  className="w-full bg-tracy-burdeos text-white py-4 rounded-xl font-bold tracking-wide hover:bg-opacity-90 transition-all flex items-center justify-center gap-3 shadow-xl shadow-tracy-burdeos/20 hover:scale-[1.01] active:scale-[0.98]"
+                  className="quick-view-modal__add-btn w-full bg-tracy-burdeos text-white py-4 rounded-xl font-bold tracking-wide hover:bg-opacity-90 transition-all flex items-center justify-center gap-3 shadow-xl shadow-tracy-burdeos/20 hover:scale-[1.01] active:scale-[0.98]"
                 >
                   <Icon name="icon-bag" size={22} />
                   AGREGAR AL CARRITO
                 </button>
                 <Link
                   href={`/productos/${product.slug ?? product.id}`}
-                  className="w-full py-4 border border-gray-200 rounded-xl hover:border-tracy-burdeos/30 transition-all text-gray-600 font-medium text-center uppercase tracking-wider text-sm hover:text-burgundy"
+                  className="quick-view-modal__details-btn w-full py-4 border border-gray-200 rounded-xl hover:border-tracy-burdeos/30 transition-all text-gray-600 font-medium text-center uppercase tracking-wider text-sm hover:text-burgundy"
                 >
                   Ver Detalles
                 </Link>

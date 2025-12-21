@@ -45,18 +45,15 @@ export default function FloatingButtons() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsPromoOpen(true)}
-            className="floating-buttons__btn floating-buttons__btn--promo w-16 h-16 rounded-full opacity-50 md:opacity-100 bg-gray text-black flex items-center justify-center shadow-lg relative group cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+            className="floating-buttons__btn floating-buttons__btn--promo size-16 rounded-full opacity-50 md:opacity-100 bg-gray text-black flex items-center justify-center shadow-lg relative group cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
             aria-label="Promociones y Regalos"
           >
             {/* Indicador de Notificación (Punto rojo) */}
-            <span className="absolute top-0 right-0 w-4 h-4 font-bold flex items-center justify-center rounded-full border bg-burgundy-light border-burgundy text-burgundy">
+            <span className="absolute top-0 right-0 size-4 font-bold flex items-center justify-center rounded-full border bg-burgundy-light border-burgundy text-burgundy">
               1
             </span>
-            <div className="w-8 h-8">
-              <Icon
-                name="icon-gift-float"
-                className="w-full h-full text-black"
-              />
+            <div className="size-8">
+              <Icon name="icon-gift-float" className="size-full text-black" />
             </div>
           </motion.button>
 
@@ -65,13 +62,13 @@ export default function FloatingButtons() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsWhatsAppOpen(!isWhatsAppOpen)}
-            className="floating-buttons__btn floating-buttons__btn--whatsapp w-16 h-16 rounded-full opacity-50 md:opacity-100 bg-[#25D366] text-ivory flex items-center justify-center shadow-lg cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+            className="floating-buttons__btn floating-buttons__btn--whatsapp size-16 rounded-full opacity-50 md:opacity-100 bg-[#25D366] text-ivory flex items-center justify-center shadow-lg cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
             aria-label="Contactar por WhatsApp"
           >
             {isWhatsAppOpen ? (
               <X size={32} strokeWidth={2.5} />
             ) : (
-              <div className="w-10 h-10">
+              <div className="size-10">
                 {/* Usando el ID del Sprite actualizado */}
                 <Icon
                   name="icon-whatsapp-float"
