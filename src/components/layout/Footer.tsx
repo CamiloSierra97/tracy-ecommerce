@@ -5,10 +5,10 @@ export default function Footer() {
   return (
     <footer className="footer bg-burgundy text-ivory py-12 px-4 font-sans">
       <div className="footer__container max-w-6xl mx-auto">
-        <div className="footer__divider border-t border-burgundy-light/30 pt-8"></div>
+        <div className="footer__divider border-t-2 border-burgundy-light/50 pt-8"></div>
         <div className="footer__grid grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="footer__section">
-            <h3 className="footer__title font-serif font-semibold text-xl mb-4 text-gold">
+            <h3 className="footer__title font-roboto-serif font-semibold text-xl mb-4 text-gold">
               Tracy
             </h3>
             <p className="footer__description text-ivory/80">
@@ -16,7 +16,7 @@ export default function Footer() {
             </p>
           </div>
           <div className="footer__section">
-            <h4 className="footer__title font-serif font-semibold mb-4 text-gold">
+            <h4 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
               Enlaces Rápidos
             </h4>
             <ul className="footer__list space-y-2 text-ivory/80">
@@ -47,7 +47,7 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer__section">
-            <h4 className="footer__title font-serif font-semibold mb-4 text-gold">
+            <h4 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
               Atención al Cliente
             </h4>
             <ul className="footer__list space-y-2 text-ivory/80">
@@ -78,7 +78,7 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer__section">
-            <h4 className="footer__title font-serif font-semibold mb-4 text-gold">
+            <h4 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
               Información Legal
             </h4>
             <ul className="footer__list space-y-2 text-ivory/80">
@@ -109,7 +109,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="footer__bottom border-t border-burgundy-light/30 pt-8">
+        <div className="footer__bottom border-t-2 border-burgundy-light/50 pt-8">
           <p className="footer__copyright text-center text-ivory/60 text-sm">
             © 2025 Tracy Lencería®. Todos los derechos reservados.
           </p>
