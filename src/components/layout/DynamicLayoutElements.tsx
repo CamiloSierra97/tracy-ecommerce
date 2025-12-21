@@ -10,11 +10,19 @@ const CookieBanner = dynamic(() => import("@/components/layout/CookieBanner"), {
   ssr: false,
 });
 
+const FloatingButtons = dynamic(
+  () => import("@/components/layout/FloatingButtons"),
+  {
+    ssr: false,
+  }
+);
+
 export default function DynamicLayoutElements() {
   return (
     <>
       <CartDrawer />
       <CookieBanner />
+      <FloatingButtons />
     </>
   );
 }
