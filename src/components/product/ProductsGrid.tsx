@@ -137,7 +137,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  className="page-products__sort-menu absolute right-0 top-full mt-2 w-48 bg-white shadow-xl border border-gray-100 rounded-lg p-2 z-50 overflow-hidden"
+                  className="page-products__sort-menu absolute right-0 top-full mt-2 w-48 bg-ivory shadow-xl border border-gray-100 rounded-lg p-2 z-50 overflow-hidden"
                 >
                   {sortOptions.map((option) => (
                     <button
@@ -182,7 +182,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="page-products__filters overflow-hidden mb-8 bg-white/50 backdrop-blur-sm border border-gold/10 rounded-xl"
+            className="page-products__filters overflow-hidden mb-8 bg-ivory/50 backdrop-blur-sm border border-gold/10 rounded-xl"
           >
             <div className="page-products__filters-content p-6 grid grid-cols-1 md:grid-cols-4 gap-8">
               {/* Placeholder Filters */}
@@ -222,7 +222,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
                   Color
                 </h4>
                 <div className="filter-group__colors flex flex-wrap gap-2">
-                  {["bg-black", "bg-white", "bg-red-700", "bg-stone-200"].map(
+                  {["bg-black", "bg-ivory", "bg-red-700", "bg-stone-200"].map(
                     (color, i) => (
                       <span
                         key={i}
@@ -288,7 +288,7 @@ function ProductCard({
         className="product-card__content h-full flex flex-col relative"
       >
         {/* Image Area */}
-        <div className="product-card__image-container relative aspect-3/4 overflow-hidden rounded-3xl bg-gray-100 shadow-sm transition-all duration-500 ease-out group-hover:shadow-2xl group-hover:border-golden/30 border border-transparent group-hover:scale-[1.02] transform">
+        <div className="product-card__image-container relative aspect-3/4 overflow-hidden rounded-3xl shadow-sm transition-all duration-500 ease-out group-hover:shadow-xl group-hover:border-gold group-hover:shadow-burgundy-light border border-transparent group-hover:scale-[1.01] transform">
           <Link
             href={`/productos/${product.slug ?? product.id}`}
             className="product-card__link block size-full relative"
@@ -477,12 +477,12 @@ function QuickViewModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
-            className="quick-view-modal__container relative bg-white rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden grid grid-cols-1 md:grid-cols-2 max-h-[90vh]"
+            className="quick-view-modal__container relative rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden grid grid-cols-1 md:grid-cols-2 max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={onClose}
-              className="quick-view-modal__close-btn absolute top-4 right-4 z-50 bg-white/80 hover:bg-white text-gray-800 rounded-full p-2 transition-all shadow-sm hover:shadow-md"
+              className="quick-view-modal__close-btn absolute top-4 right-4 z-50 bg-ivory text-black rounded-full p-2 transition-all shadow-sm hover:shadow-md"
               aria-label="Cerrar"
             >
               <Icon name="icon-close" size={24} />
@@ -518,14 +518,14 @@ function QuickViewModal({
 
               {/* Zoom Hint Overlay */}
               <div className="quick-view-modal__zoom-hint absolute bottom-6 left-0 right-0 text-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <span className="quick-view-modal__zoom-text bg-black/40 text-white text-xs px-4 py-2 rounded-full backdrop-blur-sm tracking-wide">
+                <span className="quick-view-modal__zoom-text bg-black/40 text-ivory text-xs px-4 py-2 rounded-full backdrop-blur-sm tracking-wide">
                   Rueda del mouse para zoom
                 </span>
               </div>
             </div>
 
             {/* Right Side: Product Details */}
-            <div className="quick-view-modal__details-section p-8 md:p-12 flex flex-col justify-center bg-white">
+            <div className="quick-view-modal__details-section p-8 md:p-12 flex flex-col justify-center bg-ivory">
               <h2 className="quick-view-modal__title text-3xl font-serif text-gray-900 mb-2 leading-tight">
                 {product.name}
               </h2>
@@ -548,7 +548,7 @@ function QuickViewModal({
               <div className="quick-view-modal__actions flex flex-col gap-4 mt-auto">
                 <button
                   onClick={() => addToCart(product)}
-                  className="quick-view-modal__add-btn w-full bg-tracy-burdeos text-white py-4 rounded-xl font-bold tracking-wide hover:bg-opacity-90 transition-all flex items-center justify-center gap-3 shadow-xl shadow-tracy-burdeos/20 hover:scale-[1.01] active:scale-[0.98]"
+                  className="quick-view-modal__add-btn w-full bg-tracy-burdeos text-ivory py-4 rounded-xl font-bold tracking-wide hover:bg-opacity-90 transition-all flex items-center justify-center gap-3 shadow-xl shadow-tracy-burdeos/20 hover:scale-[1.01] active:scale-[0.98]"
                 >
                   <Icon name="icon-bag" size={22} />
                   AGREGAR AL CARRITO
