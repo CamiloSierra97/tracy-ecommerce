@@ -1,3 +1,4 @@
+import Image from "next/image";
 import WooCommerceService from "@/services/WooCommerceService";
 import HeroSection from "@/components/layout/HeroSection";
 
@@ -39,10 +40,19 @@ export default async function Page() {
         <section
           className={`hero-section flex font-roboto-serif justify-center relative overflow-hidden `}
         >
-          <div className="absolute inset-0 z-0 max-md:hidden md:bg-[url('/Patron.svg')] md:bg-cover md:bg-center blur-xs scale-110"></div>
+          <div className="hero-section__patron absolute inset-0 z-0 max-md:hidden blur-xs scale-110">
+            <Image
+              src="/Patron.svg"
+              alt=""
+              fill
+              priority
+              className="hero-section__patron__image object-cover object-center"
+              sizes="100vw"
+            />
+          </div>
           <HeroSection></HeroSection>
         </section>
-        <section>
+        <section className="page-products">
           <Products title="Nuestra Colección" basePath="/"></Products>
         </section>
       </div>

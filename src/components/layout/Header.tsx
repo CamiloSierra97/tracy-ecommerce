@@ -80,7 +80,7 @@ const Header: React.FC = () => {
 
             <Link
               href="/"
-              className="header__logo-link size-28 pt-5 relative flex justify-center items-center"
+              className="header__logo-link size-[170px] lg:size-[220px] pt-5 relative flex justify-center items-center"
             >
               <Image
                 src="/WhatsApp Image 2025-12-19 at 9.09.47 AM.jpeg"
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
                 width={129}
                 height={129}
                 objectPosition="center"
-                className="header__logo-image opacity-80 hover:opacity-100 transition duration-300 w-full transform scale-150 md:scale-200 relative bottom-1/8"
+                className="header__logo-image opacity-80 hover:opacity-100 transition duration-300 w-auto h-auto object-contain relative bottom-1/8"
               />
             </Link>
           </div>
