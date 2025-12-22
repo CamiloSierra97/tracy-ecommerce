@@ -65,12 +65,12 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            className="promo-modal__container relative z-10 w-full max-w-4xl bg-white shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
+            className="promo-modal__container relative z-10 w-full max-w-4xl bg-ivory shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={onClose}
-              className="promo-modal__close-btn absolute top-4 right-4 z-20 text-gray-500 hover:text-burgundy p-1 bg-white/50 rounded-full transition-colors cursor-pointer"
+              className="promo-modal__close-btn absolute top-4 right-4 z-20 text-black p-1 bg-burgundy-light/40 rounded-full transition-colors hover:bg-burgundy hover:text-ivory cursor-pointer"
               aria-label="Cerrar modal"
             >
               <X size={24} />
@@ -78,9 +78,9 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
 
             {/* Sección de Imagen Promocional */}
             <div className="promo-modal__image-section w-full md:w-1/2 h-64 md:h-auto overflow-hidden relative">
-              <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
+              <div className="promo-modal__image-section-div absolute inset-0 bg-gray-200 flex items-center justify-center">
                 {/* Texto invisible para lectores de pantalla en lugar de imagen placeholder */}
-                <span className="text-gray-400 sr-only">
+                <span className="promo-modal__image-section-span text-gray-400 sr-only">
                   Imagen Promocional
                 </span>
                 <Image
@@ -88,7 +88,7 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                   alt="Imagen Promocional"
                   fill
                   className="promo-modal__image object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
+                  unoptimized
                   priority
                 />
               </div>
@@ -96,23 +96,31 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
 
             {/* Sección del Formulario */}
             <div className="promo-modal__form-section w-full md:w-1/2 p-8 overflow-y-auto flex-1 min-h-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              <div className="text-center mb-8">
-                <h2 className="text-gray-500 uppercase tracking-widest text-sm mb-2">
+              <div className="promo-modal__form-title-div text-center mb-8">
+                <h2 className="promo-modal__form-title-text text-gray-500 uppercase tracking-widest text-sm mb-2">
                   suscríbete y recibe
                 </h2>
-                <h3 id="modal-title" className="text-3xl font-bold mb-2">
+                <h3
+                  id="modal-title"
+                  className="promo-modal__form-title-text text-3xl font-bold mb-2"
+                >
                   15% DE DESCUENTO
                 </h3>
-                <p className="text-gray-600">en tu primera compra</p>
+                <p className="promo-modal__form-title-text text-gray-600">
+                  en tu primera compra
+                </p>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
+              <form
+                onSubmit={handleSubmit}
+                className="promo-modal__form space-y-4"
+              >
+                <div className="promo-modal__form-inputs grid grid-cols-2 gap-4">
                   <input
                     type="text"
                     placeholder="Nombres"
                     required
-                    className="w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy"
+                    className="promo-modal__form-inputs-input w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy"
                     value={formData.nombres}
                     onChange={(e) =>
                       setFormData({ ...formData, nombres: e.target.value })
@@ -123,7 +131,7 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                     type="text"
                     placeholder="Apellidos"
                     required
-                    className="w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy"
+                    className="promo-modal__form-inputs-input w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy"
                     value={formData.apellidos}
                     onChange={(e) =>
                       setFormData({ ...formData, apellidos: e.target.value })
@@ -136,7 +144,7 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                   type="email"
                   placeholder="Correo electrónico"
                   required
-                  className="w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy"
+                  className="promo-modal__form-inputs-input w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -145,51 +153,77 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                 />
 
                 <select
-                  className="w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy bg-white"
+                  className="promo-modal__form-inputs-input w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy bg-ivory cursor-pointer"
                   value={formData.sexo}
                   onChange={(e) =>
                     setFormData({ ...formData, sexo: e.target.value })
                   }
                   aria-label="Seleccionar sexo"
                 >
-                  <option value="" disabled>
+                  <option
+                    value=""
+                    disabled
+                    className="promo-modal__form-inputs-input"
+                  >
                     Sexo
                   </option>
-                  <option value="femenino">Femenino</option>
-                  <option value="masculino">Masculino</option>
-                  <option value="otro">Otro</option>
+                  <option
+                    value="femenino"
+                    className="promo-modal__form-inputs-input"
+                  >
+                    Femenino
+                  </option>
+                  <option
+                    value="masculino"
+                    className="promo-modal__form-inputs-input"
+                  >
+                    Masculino
+                  </option>
+                  <option
+                    value="otro"
+                    className="promo-modal__form-inputs-input"
+                  >
+                    Otro
+                  </option>
                 </select>
 
-                <div className="flex items-start gap-2 text-xs text-gray-500 mt-4">
+                <div className="promo-modal__form-inputs-checkbox flex items-start gap-2 text-xs text-gray-500 mt-4">
                   <input
                     type="checkbox"
                     required
                     id="terms"
-                    className="mt-1 accent-burgundy"
+                    className="promo-modal__form-inputs-checkbox-input mt-1 accent-burgundy cursor-pointer"
                     checked={formData.terms}
                     onChange={(e) =>
                       setFormData({ ...formData, terms: e.target.checked })
                     }
                   />
                   <label htmlFor="terms">
-                    Acepto las políticas de privacidad y tratamiento de datos
+                    Acepto las políticas de{" "}
+                    <span className="text-burgundy hover:text-gold cursor-pointer">
+                      privacidad
+                    </span>{" "}
+                    y{" "}
+                    <span className="text-burgundy hover:text-gold cursor-pointer">
+                      tratamiento de datos
+                    </span>{" "}
                     personales del sitio y del Programa de Fidelización.
                   </label>
                 </div>
 
-                <div className="pt-4">
+                <div className="promo-modal__submit-btn-container pt-4">
                   <button
                     type="submit"
-                    className="promo-modal__submit-btn w-full border border-black py-3 uppercase tracking-widest hover:bg-burgundy hover:border-burgundy hover:text-white transition-colors text-sm font-medium"
+                    className="promo-modal__submit-btn w-full border border-black py-3 uppercase tracking-widest hover:bg-burgundy hover:border-burgundy hover:text-ivory transition-colors text-sm font-medium cursor-pointer"
                   >
                     Enviar
                   </button>
                 </div>
 
-                <div className="text-center mt-4">
+                <div className="promo-modal__conditions text-center mt-4">
                   <a
                     href="/terminos"
-                    className="text-xs text-gray-400 underline hover:text-gray-600"
+                    className="promo-modal__conditions-text text-xs text-black underline hover:text-black/80 transition-colors cursor-pointer"
                   >
                     VER TÉRMINOS Y CONDICIONES
                   </a>
