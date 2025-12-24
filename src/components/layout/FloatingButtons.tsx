@@ -45,7 +45,7 @@ export default function FloatingButtons() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsPromoOpen(true)}
-            className="floating-buttons__btn floating-buttons__btn--promo size-16 rounded-full opacity-50 md:opacity-100 bg-gray text-black flex items-center justify-center shadow-lg relative group cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+            className="floating-buttons__btn floating-buttons__btn--promo size-16 rounded-full opacity-50 md:opacity-100 bg-gray text-black flex items-center justify-center shadow-lg relative group"
             aria-label="Promociones y Regalos"
           >
             {/* Indicador de Notificación (Punto rojo) */}
@@ -62,7 +62,7 @@ export default function FloatingButtons() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsWhatsAppOpen(!isWhatsAppOpen)}
-            className="floating-buttons__btn floating-buttons__btn--whatsapp size-16 rounded-full opacity-50 md:opacity-100 bg-[#25D366] text-ivory flex items-center justify-center shadow-lg cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+            className="floating-buttons__btn floating-buttons__btn--whatsapp size-16 rounded-full opacity-50 md:opacity-100 bg-[#25D366] text-ivory flex items-center justify-center shadow-lg"
             aria-label="Contactar por WhatsApp"
           >
             {isWhatsAppOpen ? (

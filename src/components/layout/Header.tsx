@@ -39,7 +39,7 @@ const Header: React.FC = () => {
             {/* 2. BOTÓN (Label) */}
             <label
               htmlFor="menu__checkbox"
-              className="header__menu-toggle menu__toggle size-[50px] cursor-pointer lg:hidden"
+              className="header__menu-toggle menu__toggle size-[50px] lg:hidden"
               aria-label="Alternar menú principal"
             >
               <div className="header__menu-bar"></div>

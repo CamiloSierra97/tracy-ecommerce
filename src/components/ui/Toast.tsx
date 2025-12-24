@@ -39,7 +39,7 @@ export default function Toast({ message, isVisible, onClose }: ToastProps) {
             </div>
             <button
               onClick={onClose}
-              className="toast__close-btn text-gold/80 hover:text-gold transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              className="toast__close-btn text-gold/80 hover:text-gold transition-colors"
             >
               <Icon name="icon-close" size={18} className="toast__close-icon" />
             </button>

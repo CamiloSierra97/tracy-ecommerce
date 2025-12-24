@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/ui/Icon";
+import { X } from "lucide-react";
 
 export default function AnimatedSearch() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -47,7 +48,7 @@ export default function AnimatedSearch() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="animated-search__input bg-transparent border rounded-full border-gold text-sm text-ivory placeholder-gold/70 focus:outline-none mr-2 font-sans px-3"
+            className="animated-search__input absolute right-0 top-1/2 -translate-y-1/2 bg-burgundy border rounded-full border-gold text-sm text-ivory placeholder-gold/70 focus:outline-none font-sans pl-3 pr-10 h-8 shadow-sm"
             aria-label="Buscar productos"
             autoFocus
             onBlur={() => {
@@ -59,16 +60,41 @@ export default function AnimatedSearch() {
       </AnimatePresence>
       <button
         onClick={() => {
-          if (isSearchOpen && searchTerm) {
-            handleSearch();
+          if (isSearchOpen) {
+            // If open, clicking the button (X) closes it
+            setIsSearchOpen(false);
+            setSearchTerm("");
           } else {
-            setIsSearchOpen(!isSearchOpen);
+            setIsSearchOpen(true);
           }
         }}
-        aria-label="Buscar"
-        className="animated-search__button cursor-pointer hover:text-light-gold focus-visible:outline  focus-visible:outline-offset-2 focus-visible:outline-gold"
+        onMouseDown={(e) => e.preventDefault()}
+        aria-label={isSearchOpen ? "Cerrar búsqueda" : "Buscar"}
+        className="animated-search__button hover:text-light-gold relative z-10 w-8 h-8 flex items-center justify-center"
       >
-        <Icon name="icon-search" className="animated-search__icon" />
+        <AnimatePresence>
+          {!isSearchOpen ? (
+            <motion.div
+              key="search-icon"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
+              transition={{ duration: 0.2 }}
+            >
+              <Icon name="icon-search" className="animated-search__icon" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="close-icon"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
+              transition={{ duration: 0.2 }}
+            >
+              <X size={18} className="text-gold" />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </button>
     </div>
   );

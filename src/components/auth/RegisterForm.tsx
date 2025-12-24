@@ -51,7 +51,7 @@ export default function RegisterForm() {
             name="email"
             type="email"
             required
-            className="register-form__input w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
+            className="register-form__input input-base"
             placeholder="tu@email.com"
           />
         </div>
@@ -64,7 +64,7 @@ export default function RegisterForm() {
               name="firstName"
               type="text"
               required
-              className="register-form__input w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
+              className="register-form__input input-base"
             />
           </div>
           <div className="register-form__field">
@@ -75,7 +75,7 @@ export default function RegisterForm() {
               name="lastName"
               type="text"
               required
-              className="register-form__input w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
+              className="register-form__input input-base"
             />
           </div>
         </div>
@@ -87,7 +87,7 @@ export default function RegisterForm() {
             name="username"
             type="text"
             required
-            className="register-form__input w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
+            className="register-form__input input-base"
           />
         </div>
         <div className="register-form__field">
@@ -98,7 +98,7 @@ export default function RegisterForm() {
             name="password"
             type="password"
             required
-            className="register-form__input w-full border border-gold/30 p-2 focus:outline-none focus:border-burgundy transition-colors"
+            className="register-form__input input-base"
             placeholder="********"
           />
         </div>
@@ -106,7 +106,7 @@ export default function RegisterForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="register-form__submit-btn w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50 cursor-pointer focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+          className="register-form__submit-btn w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50"
         >
           {isLoading ? "Registrarse" : "Crear Cuenta"}
         </button>

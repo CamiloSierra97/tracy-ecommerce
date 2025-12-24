@@ -18,8 +18,26 @@
       radial-gradient(circle at 50% 0%, #ffffff 0%, #f4f1ec 45%, #e8e4dc 100%);
     background-size: 4rem 4rem, 4rem 4rem, 100% 100%;
     background-attachment: fixed;
-    color: #1c1c1c;
     min-height: 100vh;
+  }
+  button {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-burgundy-light);
+    color: var(--color-ivory);
+  }
+}
+
+@layer components {
+  .input-base {
+    @apply w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy transition-colors bg-ivory;
   }
 }
 
@@ -34,6 +52,7 @@
   --color-burgundy: #580a1e;
   --color-burgundy-light: #8a505e;
   --color-gray: #5a5856;
+  --color-gray-300: #d1d5db;
   --color-golden: #ffdc5d;
   --color-gold: #d9b338;
   --color-light-gold: #ffe895;

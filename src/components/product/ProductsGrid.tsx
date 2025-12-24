@@ -92,7 +92,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
           <div className="page-products__layout-switch flex items-center gap-2">
             <button
               onClick={() => setGridCols(2)}
-              className={`page-products__layout-btn hover:text-burgundy hover:cursor-pointer transition-colors ${
+              className={`page-products__layout-btn hover:text-burgundy transition-colors ${
                 gridCols === 2 ? "text-burgundy font-bold" : ""
               }`}
             >
@@ -101,7 +101,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
             <span className="page-products__separator text-gray-300">|</span>
             <button
               onClick={() => setGridCols(4)}
-              className={`page-products__layout-btn hover:text-burgundy hover:cursor-pointer transition-colors ${
+              className={`page-products__layout-btn hover:text-burgundy transition-colors ${
                 gridCols === 4 ? "text-burgundy font-bold" : ""
               }`}
             >
@@ -163,7 +163,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
           {/* Filter Button */}
           <button
             onClick={() => setIsFilterOpen(!isFilterOpen)}
-            className={`page-products__filter-btn uppercase tracking-wider hover:text-burgundy focus:ring-2 focus:ring-burgundy/50 focus:outline-none rounded-sm px-1 hover:cursor-pointer transition-colors font-semibold flex items-center gap-1 ${
+            className={`page-products__filter-btn uppercase tracking-wider hover:text-burgundy focus:outline-none rounded-sm px-1 transition-colors font-semibold flex items-center gap-1 ${
               isFilterOpen ? "text-burgundy" : ""
             }`}
           >
@@ -335,7 +335,7 @@ function ProductCard({
                 e.stopPropagation();
                 onOpenQuickView();
               }}
-              className="product-card__btn-icon cursor-pointer backdrop-blur-sm text-[rgba(0,0,0,0.8)] p-2 md:p-3 size-10 md:size-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] duration-300 hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border transition flex justify-center items-center"
+              className="product-card__btn-icon backdrop-blur-sm text-[rgba(0,0,0,0.8)] p-2 md:p-3 size-10 md:size-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] duration-300 hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border transition flex justify-center items-center"
               aria-label="Vista rápida"
               type="button"
             >
@@ -351,7 +351,7 @@ function ProductCard({
                 e.stopPropagation();
                 addToCart(product);
               }}
-              className="product-card__btn-icon cursor-pointer backdrop-blur-sm text-black p-2 md:p-3 size-10 md:size-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border duration-300 transition flex justify-center items-center"
+              className="product-card__btn-icon backdrop-blur-sm text-black p-2 md:p-3 size-10 md:size-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border duration-300 transition flex justify-center items-center"
               aria-label="Agregar al carrito"
               type="button"
             >
@@ -362,6 +362,7 @@ function ProductCard({
           {/* Ver Detalles Button - Bottom */}
           <Link
             href={`/productos/${product.slug ?? product.id}`}
+            aria-label={`Ver detalles de ${product.name}`}
             className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 pointer-events-none px-4"
           >
             <div className="product-card__details-wrapper flex justify-center opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300 pointer-events-auto">
@@ -478,6 +479,9 @@ function QuickViewModal({
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", duration: 0.5 }}
             className="quick-view-modal__container relative rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden grid grid-cols-1 md:grid-cols-2 max-h-[90vh]"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="quick-view-title"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -526,7 +530,10 @@ function QuickViewModal({
 
             {/* Right Side: Product Details */}
             <div className="quick-view-modal__details-section p-8 md:p-12 flex flex-col justify-center bg-ivory">
-              <h2 className="quick-view-modal__title text-3xl font-serif text-gray-900 mb-2 leading-tight">
+              <h2
+                id="quick-view-title"
+                className="quick-view-modal__title text-3xl font-serif text-gray-900 mb-2 leading-tight"
+              >
                 {product.name}
               </h2>
               <div className="quick-view-modal__divider w-20 h-1 bg-tracy-burdeos mb-6 opacity-20"></div>

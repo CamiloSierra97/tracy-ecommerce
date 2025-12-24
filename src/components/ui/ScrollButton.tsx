@@ -12,7 +12,7 @@ const ScrollButton: React.FC = () => {
       duration={900}
       delay={0}
       offset={0}
-      className="scroll-button bg-golden text-burgundy font-bold py-3 px-8 rounded-full shadow-lg hover:cursor-pointer hover:bg-gold"
+      className="scroll-button bg-gold text-burgundy font-bold py-3 px-8 rounded-full shadow-lg hover:bg-golden cursor-pointer"
     >
       Descubre la Colección
     </ScrollLink>

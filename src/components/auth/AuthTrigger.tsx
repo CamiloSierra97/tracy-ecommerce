@@ -13,7 +13,7 @@ export default function AuthTrigger() {
       <button
         onClick={() => setIsOpen(true)}
         aria-label="Mi Cuenta"
-        className="auth-trigger header__utility-button cursor-pointer flex items-center text-gold hover:text-light-gold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+        className="auth-trigger header__utility-button flex items-center text-gold hover:text-light-gold transition-colors"
       >
         <Icon name="icon-user" />
       </button>

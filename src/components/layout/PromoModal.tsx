@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { X, ChevronDown } from "lucide-react";
 import Image from "next/image";
 
 interface PromoModalProps {
@@ -18,6 +18,8 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
     sexo: "",
     terms: false,
   });
+
+  const [isSexOpen, setIsSexOpen] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,7 +72,7 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
           >
             <button
               onClick={onClose}
-              className="promo-modal__close-btn absolute top-4 right-4 z-20 text-black p-1 bg-burgundy-light/40 rounded-full transition-colors hover:bg-burgundy hover:text-ivory cursor-pointer"
+              className="promo-modal__close-btn absolute top-4 right-4 z-20 text-black p-1 bg-burgundy-light/40 rounded-full transition-colors hover:bg-burgundy hover:text-ivory"
               aria-label="Cerrar modal"
             >
               <X size={24} />
@@ -120,7 +122,7 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                     type="text"
                     placeholder="Nombres"
                     required
-                    className="promo-modal__form-inputs-input w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy"
+                    className="promo-modal__form-inputs-input input-base"
                     value={formData.nombres}
                     onChange={(e) =>
                       setFormData({ ...formData, nombres: e.target.value })
@@ -131,7 +133,7 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                     type="text"
                     placeholder="Apellidos"
                     required
-                    className="promo-modal__form-inputs-input w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy"
+                    className="promo-modal__form-inputs-input input-base"
                     value={formData.apellidos}
                     onChange={(e) =>
                       setFormData({ ...formData, apellidos: e.target.value })
@@ -144,7 +146,7 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                   type="email"
                   placeholder="Correo electrónico"
                   required
-                  className="promo-modal__form-inputs-input w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy"
+                  className="promo-modal__form-inputs-input input-base"
                   value={formData.email}
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
@@ -152,40 +154,65 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                   aria-label="Correo electrónico"
                 />
 
-                <select
-                  className="promo-modal__form-inputs-input w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy bg-ivory cursor-pointer"
-                  value={formData.sexo}
-                  onChange={(e) =>
-                    setFormData({ ...formData, sexo: e.target.value })
-                  }
-                  aria-label="Seleccionar sexo"
-                >
-                  <option
-                    value=""
-                    disabled
-                    className="promo-modal__form-inputs-input"
+                <div className="relative">
+                  <button
+                    type="button"
+                    onClick={() => setIsSexOpen(!isSexOpen)}
+                    className="promo-modal__form-inputs-input w-full p-2 border border-gray-300 bg-ivory text-left flex items-center justify-between focus:outline-none focus:border-burgundy"
                   >
-                    Sexo
-                  </option>
-                  <option
-                    value="femenino"
-                    className="promo-modal__form-inputs-input"
-                  >
-                    Femenino
-                  </option>
-                  <option
-                    value="masculino"
-                    className="promo-modal__form-inputs-input"
-                  >
-                    Masculino
-                  </option>
-                  <option
-                    value="otro"
-                    className="promo-modal__form-inputs-input"
-                  >
-                    Otro
-                  </option>
-                </select>
+                    <span
+                      className={
+                        formData.sexo
+                          ? "promo-modal__form-inputs-input-span text-black"
+                          : "promo-modal__form-inputs-input-span text-burgundy/80"
+                      }
+                    >
+                      {formData.sexo
+                        ? formData.sexo.charAt(0).toUpperCase() +
+                          formData.sexo.slice(1)
+                        : "Sexo"}
+                    </span>
+                    <ChevronDown
+                      size={16}
+                      className={`promo-modal__chevron-down text-black transition-transform ${
+                        isSexOpen ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+
+                  <AnimatePresence>
+                    {isSexOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="promo-modal__options absolute top-full left-0 right-0 mt-1 bg-ivory border border-gray-200 shadow-lg z-50 max-h-48 overflow-y-auto"
+                      >
+                        {/* Options */}
+                        {[
+                          { value: "femenino", label: "Femenino" },
+                          { value: "masculino", label: "Masculino" },
+                          { value: "otro", label: "Otro" },
+                        ].map((option) => (
+                          <div
+                            key={option.value}
+                            onClick={() => {
+                              setFormData({ ...formData, sexo: option.value });
+                              setIsSexOpen(false);
+                            }}
+                            className={`promo-modal__options-option p-2 cursor-pointer transition-colors hover:bg-burgundy/50 hover:text-white ${
+                              formData.sexo === option.value
+                                ? "bg-burgundy/20 text-burgundy font-medium"
+                                : "text-gray-700"
+                            }`}
+                          >
+                            {option.label}
+                          </div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
                 <div className="promo-modal__form-inputs-checkbox flex items-start gap-2 text-xs text-gray-500 mt-4">
                   <input
@@ -214,7 +241,7 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                 <div className="promo-modal__submit-btn-container pt-4">
                   <button
                     type="submit"
-                    className="promo-modal__submit-btn w-full border border-black py-3 uppercase tracking-widest hover:bg-burgundy hover:border-burgundy hover:text-ivory transition-colors text-sm font-medium cursor-pointer"
+                    className="promo-modal__submit-btn w-full border border-black py-3 uppercase tracking-widest hover:bg-burgundy hover:border-burgundy hover:text-ivory transition-colors text-sm font-medium"
                   >
                     Enviar
                   </button>

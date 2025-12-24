@@ -12,7 +12,7 @@ export default function LoginButton() {
       <button
         type="submit"
         aria-label="Mi Cuenta"
-        className="login-button__submit cursor-pointer focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-gold"
+        className="login-button__submit"
       >
         Sign in with Google
       </button>
