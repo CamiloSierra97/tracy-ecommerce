@@ -19,8 +19,8 @@ export default function SecretoPage() {
         <div className="absolute inset-0 bg-burgundy/50 group-hover:bg-burgundy/40 transition-colors duration-500" />
 
         <div className="relative z-10 flex flex-col items-center">
-          <h2 className="text-5xl md:text-6xl text-gold mb-4 tracking-wider drop-shadow-md">
-            Mujer
+          <h2 className="text-5xl md:text-6xl text-gold font-serif italic mb-4 tracking-wider drop-shadow-md">
+            Women
           </h2>
           <p className="text-ivory/70 text-lg mb-8 max-w-xs font-sans font-light tracking-wide drop-shadow-sm">
             Elegancia que abraza tu piel. Descubre nuestra colección insignia.
@@ -47,8 +47,8 @@ export default function SecretoPage() {
         <div className="absolute inset-0 bg-black/70 group-hover:bg-black/40 transition-colors duration-500" />
 
         <div className="relative z-10 flex flex-col items-center">
-          <h2 className="text-5xl md:text-6xl text-gold mb-4 tracking-wider drop-shadow-md">
-            Hombre
+          <h2 className="text-5xl md:text-6xl text-gold font-serif italic mb-4 tracking-wider drop-shadow-md">
+            Men
           </h2>
           <p className="text-ivory/60 text-lg mb-8 max-w-xs font-sans font-light tracking-wide drop-shadow-sm">
             Atrévete a redefinir la comodidad. Lujo y libertad, solo para ti.
@@ -75,8 +75,8 @@ export default function SecretoPage() {
         <div className="absolute inset-0 bg-pink/50 group-hover:bg-pink/20 transition-colors duration-500" />
 
         <div className="relative z-10 flex flex-col items-center">
-          <h2 className="text-5xl md:text-6xl text-golden mb-4 tracking-wider drop-shadow-md">
-            Niña
+          <h2 className="text-5xl md:text-6xl text-golden font-serif italic mb-4 tracking-wider drop-shadow-md">
+            Junior
           </h2>
           <p className="text-ivory text-lg mb-8 max-w-xs font-sans font-light tracking-wide drop-shadow-sm">
             Suavidad infinita para sus mejores momentos. Confort puro.

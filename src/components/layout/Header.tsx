@@ -83,7 +83,7 @@ const Header: React.FC = () => {
               className="header__logo-link size-28 pt-5 relative flex justify-center items-center"
             >
               <Image
-                src="/WhatsApp Image 2025-12-19 at 9.09.47 AM.jpeg"
+                src="/LogoTracy.svg"
                 loading="eager"
                 alt="TRACY Logo Ropa Interior de Lujo"
                 width={129}
