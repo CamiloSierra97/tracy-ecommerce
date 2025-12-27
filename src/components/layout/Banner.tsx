@@ -20,7 +20,7 @@ const HeroSection: React.FC = () => {
         />
       </figure>
       {/* <article> para el contenido autocontenido (el mensaje y el CTA) */}
-      <article className="hero__content w-full md:w-1/2 lg:w-2/5 pb-8 pt-4 px-6 md:pt-6 md:px-8 z-10 bg-burgundy-light flex flex-col justify-center items-center relative gap-4 text-center">
+      <article className="hero__content w-full md:w-1/2 lg:w-2/5 pb-8 pt-4 px-6 md:pt-6 md:px-8 z-10 bg-burgundy-light flex flex-col justify-center items-center text-center relative gap-4">
         <h1 className="hero__title inline-block font-serif text-5xl leading-20 md:text-4xl text-light-gold mx-0 my-2">
           <span className="">Tracy</span>
         </h1>
@@ -31,7 +31,7 @@ const HeroSection: React.FC = () => {
         >
           {BRAND_SLOGAN}
         </p>
-        <p className="hero__description text-ivory mb-8 opacity-90 md:text-lg leading-relaxed text-pretty text-center">
+        <p className="hero__description text-ivory mb-8 opacity-90 text-base md:text-lg leading-relaxed text-pretty hyphens-auto whitespace-pre-line text-justify">
           Creemos que nuestra marca es el primer paso hacia la autenticidad.
           Nuestras colecciones están diseñadas para celebrar cada silueta,
           combinando seducción con un bienestar que se siente como una segunda

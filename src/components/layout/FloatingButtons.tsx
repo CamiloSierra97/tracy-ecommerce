@@ -10,6 +10,24 @@ import PromoModal from "./PromoModal";
 export default function FloatingButtons() {
   const [isWhatsAppOpen, setIsWhatsAppOpen] = useState(false);
   const [isPromoOpen, setIsPromoOpen] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   // Salvaguarda: Asegurar que el scroll del body se desbloquee al cerrar el menú de WhatsApp
   useEffect(() => {
@@ -39,7 +57,7 @@ export default function FloatingButtons() {
         </div>
 
         {/* Capa de Botones de Acción */}
-        <div className="floating-buttons__actions flex flex-col gap-4 pointer-events-auto items-end">
+        <div className="floating-buttons__actions flex flex-col gap-4 pointer-events-auto items-center">
           {/* Botón de Promociones */}
           <motion.button
             whileHover={{ scale: 1.1 }}
@@ -77,6 +95,27 @@ export default function FloatingButtons() {
               </div>
             )}
           </motion.button>
+
+          {/* Botón Scroll Top (Debajo de WhatsApp) */}
+          <AnimatePresence>
+            {showScrollTop && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={scrollToTop}
+                className="floating-buttons__btn floating-buttons__btn--scroll rounded-lg size-8 md:size-10 bg-burgundy text-gold flex items-center justify-center shadow-lg transition-colors border border-burgundy-light/20"
+                aria-label="Volver arriba"
+              >
+                <Icon
+                  name="icon-chevron-down"
+                  className="rotate-180 size-6 md:size-8"
+                />
+              </motion.button>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 

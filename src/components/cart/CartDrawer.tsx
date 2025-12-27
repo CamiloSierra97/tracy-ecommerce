@@ -8,7 +8,14 @@ import Image from "next/image";
 import Icon from "@/components/ui/Icon";
 
 export default function CartDrawer() {
-  const { isOpen, closeCart, cartItems, removeFromCart, cartTotal } = useCart();
+  const {
+    isOpen,
+    closeCart,
+    cartItems,
+    removeFromCart,
+    updateQuantity,
+    cartTotal,
+  } = useCart();
 
   // Bloquear el scroll del body cuando el carrito está abierto
   useEffect(() => {
@@ -61,15 +68,15 @@ export default function CartDrawer() {
             <div className="cart-drawer__items-list flex-1 overflow-y-auto p-6 space-y-6">
               {cartItems.length === 0 ? (
                 <div className="cart-drawer__empty-state h-full flex flex-col items-center justify-center text-center space-y-4">
-                  <div className="cart-drawer__empty-icon size-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-300">
+                  <div className="cart-drawer__empty-icon size-16 bg-gray-50 rounded-full flex items-center justify-center text-black/10">
                     <Icon name="icon-bag" size={32} />
                   </div>
-                  <p className="cart-drawer__empty-text text-gray-500 text-lg">
+                  <p className="cart-drawer__empty-text text-black text-lg">
                     Tu bolsa está vacía
                   </p>
                   <button
                     onClick={closeCart}
-                    className="cart-drawer__continue-btn text-tracy-burdeos font-medium hover:underline"
+                    className="cart-drawer__continue-btn text-black font-medium hover:underline"
                   >
                     Continuar comprando
                   </button>
@@ -93,15 +100,41 @@ export default function CartDrawer() {
                         <button
                           onClick={() => removeFromCart(item.id)}
                           aria-label={`Eliminar ${item.name}`}
-                          className="cart-item__remove-btn text-gray-400 hover:text-red-500 p-1"
+                          className="cart-item__remove-btn text-black hover:text-burgundy p-1"
                         >
                           <Icon name="icon-trash" size={18} />
                         </button>
                       </div>
-                      <p className="cart-item__quantity text-sm text-gray-500 mt-1">
-                        Cantidad: {item.quantity}
-                      </p>
-                      <p className="cart-item__price text-tracy-burdeos font-bold mt-2">
+                      <div className="flex items-center gap-3 mt-2">
+                        <div className="flex items-center border border-black/10 rounded-sm">
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                            }
+                            className="size-8 flex items-center justify-center text-burgundy hover:bg-ivory border-r border-black/10 transition-colors"
+                            aria-label="Disminuir cantidad"
+                          >
+                            <span className="text-lg font-light leading-none mb-0.5">
+                              -
+                            </span>
+                          </button>
+                          <span className="w-10 text-center text-sm font-medium text-gray-700">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
+                            className="size-8 flex items-center justify-center text-burgundy hover:bg-ivory border-l border-black/10 transition-colors"
+                            aria-label="Aumentar cantidad"
+                          >
+                            <span className="text-lg font-light leading-none mb-0.5">
+                              +
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                      <p className="cart-item__price text-burgundy font-bold mt-2">
                         {formatPrice(item.price)}
                       </p>
                     </div>
@@ -112,21 +145,38 @@ export default function CartDrawer() {
 
             {/* Pie del Carrito */}
             {cartItems.length > 0 && (
-              <div className="cart-drawer__footer p-6 border-t border-gray-100 bg-gray-50/50">
-                <div className="cart-drawer__total-row flex justify-between items-center mb-4">
-                  <span className="cart-drawer__total-label text-gray-600">
-                    Subtotal
-                  </span>
-                  <span className="cart-drawer__total-amount text-xl font-bold text-gray-900">
-                    {formatPrice(cartTotal)}
-                  </span>
+              <div className="cart-drawer__footer bg-gray-50/50">
+                <div className="cart-drawer__subtotal-section p-6 border-y border-gray-200">
+                  <div className="flex justify-between items-center">
+                    <span className="cart-drawer__total-label text-gray-600 font-serif text-lg">
+                      Subtotal
+                    </span>
+                    <span className="cart-drawer__total-amount text-2xl font-serif font-bold text-burgundy">
+                      {formatPrice(cartTotal)}
+                    </span>
+                  </div>
                 </div>
-                <p className="cart-drawer__tax-note text-xs text-gray-400 mb-4 text-center">
-                  Impuestos y envío calculados al finalizar la compra.
-                </p>
-                <button className="cart-drawer__checkout-btn w-full bg-tracy-burdeos text-white py-4 rounded-xl font-medium text-lg hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl active:scale-[0.98]">
-                  Finalizar Compra
-                </button>
+
+                <div className="cart-drawer__actions p-6 space-y-4">
+                  <p className="cart-drawer__shipping-note text-sm text-gray-500 text-center leading-relaxed">
+                    <span className="font-semibold text-burgundy">
+                      Envíos gratis a toda Colombia.
+                    </span>{" "}
+                    Al finalizar la compra podrás elegir el método de pago que
+                    más se adapte a tus necesidades.
+                  </p>
+
+                  <a
+                    href="/carrito"
+                    className="cart-drawer__view-cart-btn block w-full border border-burgundy text-burgundy py-4 rounded-full font-serif font-bold text-lg uppercase tracking-widest text-center hover:bg-burgundy hover:text-gold hover:-translate-y-0.5 transition-all duration-300"
+                  >
+                    Ver Carrito
+                  </a>
+
+                  <button className="cart-drawer__checkout-btn w-full bg-burgundy text-gold py-4 rounded-full font-serif font-bold text-lg uppercase tracking-widest hover:bg-burgundy-light hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 shadow-lg shadow-burgundy/20">
+                    Finalizar Compra
+                  </button>
+                </div>
               </div>
             )}
           </motion.aside>
