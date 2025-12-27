@@ -45,14 +45,14 @@ export default function FloatingButtons() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsPromoOpen(true)}
-            className="floating-buttons__btn floating-buttons__btn--promo size-16 rounded-full opacity-50 md:opacity-100 bg-gray text-black flex items-center justify-center shadow-lg relative group"
+            className="floating-buttons__btn floating-buttons__btn--promo size-12 md:size-14 lg:size-16 rounded-full opacity-60 xl:opacity-100 hover:opacity-100 bg-gray text-black flex items-center justify-center shadow-lg relative group transition-all"
             aria-label="Promociones y Regalos"
           >
             {/* Indicador de Notificación (Punto rojo) */}
-            <span className="absolute top-0 right-0 size-4 font-bold flex items-center justify-center rounded-full border bg-burgundy-light border-burgundy text-burgundy">
+            <span className="absolute top-0 right-0 size-3 md:size-4 font-bold flex items-center justify-center rounded-full border bg-burgundy-light border-burgundy text-burgundy text-[10px] md:text-xs">
               1
             </span>
-            <div className="size-8">
+            <div className="size-6 md:size-8">
               <Icon name="icon-gift-float" className="size-full text-black" />
             </div>
           </motion.button>
@@ -62,18 +62,17 @@ export default function FloatingButtons() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsWhatsAppOpen(!isWhatsAppOpen)}
-            className="floating-buttons__btn floating-buttons__btn--whatsapp size-16 rounded-full opacity-50 md:opacity-100 bg-[#25D366] text-ivory flex items-center justify-center shadow-lg"
+            className="floating-buttons__btn floating-buttons__btn--whatsapp size-12 md:size-14 lg:size-16 rounded-full opacity-60 xl:opacity-100 hover:opacity-100 bg-[#25D366] text-ivory flex items-center justify-center shadow-lg transition-all"
             aria-label="Contactar por WhatsApp"
           >
             {isWhatsAppOpen ? (
               <X size={32} strokeWidth={2.5} />
             ) : (
-              <div className="size-10">
+              <div className="size-6 md:size-8 lg:size-10">
                 {/* Usando el ID del Sprite actualizado */}
                 <Icon
                   name="icon-whatsapp-float"
-                  size={40}
-                  className="floating-buttons__icon text-white"
+                  className="size-full text-white"
                 />
               </div>
             )}

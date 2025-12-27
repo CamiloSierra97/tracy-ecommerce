@@ -70,7 +70,7 @@ export default function AnimatedSearch() {
         }}
         onMouseDown={(e) => e.preventDefault()}
         aria-label={isSearchOpen ? "Cerrar búsqueda" : "Buscar"}
-        className="animated-search__button hover:text-light-gold relative z-10 w-8 h-8 flex items-center justify-center"
+        className="animated-search__button hover:text-light-gold relative z-10 w-10 h-10 flex items-center justify-center"
       >
         <AnimatePresence>
           {!isSearchOpen ? (
@@ -81,7 +81,11 @@ export default function AnimatedSearch() {
               exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
               transition={{ duration: 0.2 }}
             >
-              <Icon name="icon-search" className="animated-search__icon" />
+              <Icon
+                name="icon-search"
+                size={24}
+                className="animated-search__icon"
+              />
             </motion.div>
           ) : (
             <motion.div
@@ -91,7 +95,7 @@ export default function AnimatedSearch() {
               exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
               transition={{ duration: 0.2 }}
             >
-              <X size={18} className="text-gold" />
+              <X size={24} className="text-gold" />
             </motion.div>
           )}
         </AnimatePresence>

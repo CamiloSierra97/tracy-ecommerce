@@ -39,6 +39,18 @@
   .input-base {
     @apply w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy transition-colors bg-ivory;
   }
+
+  .header__logo-mask {
+    background-color: var(--color-gold);
+    -webkit-mask-image: url(/LogoTracy.webp);
+    mask-image: url(/LogoTracy.webp);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
 }
 
 /* Tailwind v4 Theme Configuration */

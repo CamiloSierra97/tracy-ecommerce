@@ -10,7 +10,7 @@ export default function CartTrigger() {
     <button
       aria-label="Carrito"
       role="button"
-      className="cart-trigger relative"
+      className="cart-trigger relative w-10 h-10 flex items-center justify-center"
       onClick={openCart}
     >
       <Icon name="icon-bag" size={24} className="cart-trigger__icon" />

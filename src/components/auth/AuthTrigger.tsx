@@ -1,24 +1,25 @@
 "use client";
 
-import { useState } from "react";
 import Icon from "@/components/ui/Icon";
 import dynamic from "next/dynamic";
+import { useUI } from "@/context/UIContext";
+
 const AuthModal = dynamic(() => import("./AuthModal"), { ssr: false });
 
 export default function AuthTrigger() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isAuthOpen, openAuth, closeAuth } = useUI();
 
   return (
     <>
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={openAuth}
         aria-label="Mi Cuenta"
-        className="auth-trigger header__utility-button flex items-center text-gold hover:text-light-gold transition-colors"
+        className="auth-trigger header__utility-button flex items-center justify-center w-10 h-10 text-gold hover:text-light-gold transition-colors"
       >
-        <Icon name="icon-user" />
+        <Icon name="icon-user" size={24} />
       </button>
 
-      <AuthModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <AuthModal isOpen={isAuthOpen} onClose={closeAuth} />
     </>
   );
 }

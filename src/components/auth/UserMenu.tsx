@@ -13,13 +13,13 @@ export default async function UserMenu() {
           <Image
             src={session.user.image}
             alt={session.user.name ?? "User Avatar"}
-            width={28}
-            height={28}
+            width={24}
+            height={24}
             className="user-menu__avatar rounded-full border border-gold"
           />
         ) : (
-          <div className="user-menu__avatar-placeholder size-7 rounded-full bg-gold/20 flex items-center justify-center text-gold">
-            <span className="text-xs font-bold">
+          <div className="user-menu__avatar-placeholder size-6 rounded-full bg-gold/20 flex items-center justify-center text-gold">
+            <span className="text-[10px] font-bold">
               {session.user.name?.[0] ?? "U"}
             </span>
           </div>

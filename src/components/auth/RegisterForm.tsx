@@ -35,7 +35,7 @@ export default function RegisterForm() {
         </div>
       )}
       {success && (
-        <div className="register-form__alert register-form__alert--success bg-green-50 text-green-600 p-3 text-sm rounded-sm border border-green-100">
+        <div className="register-form__alert register-form__alert--success bg-green-50 text-green-800 p-3 text-sm rounded-sm border border-green-100">
           {success}
         </div>
       )}

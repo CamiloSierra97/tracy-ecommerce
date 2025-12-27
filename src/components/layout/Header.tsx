@@ -8,9 +8,9 @@ import AnimatedSearch from "./AnimatedSearch";
 
 const Header: React.FC = () => {
   const mainLinks = [
-    { href: "/nina", label: "Niña" },
     { href: "/mujer", label: "Mujer" },
     { href: "/hombre", label: "Hombre" },
+    { href: "/nina", label: "Niña" },
     { href: "/promociones", label: "Promociones" },
   ];
 
@@ -57,7 +57,7 @@ const Header: React.FC = () => {
                   >
                     <Link
                       href={link.href}
-                      className={`header__nav-link text-3xl text-gold hover:text-light-gold transition duration-300 block lg:text-sm font-roboto-serif`}
+                      className="header__nav-link text-3xl text-gold hover:text-light-gold transition duration-300 block lg:text-sm font-roboto-serif"
                     >
                       {link.label}
                     </Link>
@@ -82,14 +82,9 @@ const Header: React.FC = () => {
               href="/"
               className="header__logo-link size-28 pt-5 relative flex justify-center items-center"
             >
-              <Image
-                src="/LogoTracy.svg"
-                loading="eager"
-                alt="TRACY Logo Ropa Interior de Lujo"
-                width={129}
-                height={129}
-                objectPosition="center"
-                className="header__logo-image opacity-80 hover:opacity-100 transition duration-300 w-full transform scale-150 md:scale-200 relative bottom-1/8"
+              <div
+                className="header__logo-mask w-full h-full transition-all duration-300 transform scale-170 hover:bg-light-gold hover:scale-180 relative bottom-1/8"
+                aria-label="TRACY Logo Ropa Interior de Lujo"
               />
             </Link>
           </div>

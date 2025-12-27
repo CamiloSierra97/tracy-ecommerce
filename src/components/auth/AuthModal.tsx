@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import LoginForm from "./LoginForm";
@@ -12,13 +13,19 @@ interface AuthModalProps {
 }
 
 export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
-  const [activeTab, setActiveTab] = useState<"login" | "register">("login");
+  const [mounted, setMounted] = useState(false);
+  const [activeTab, setActiveTab] = useState("login");
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    setMounted(true);
+    return () => setMounted(false);
+  }, []);
 
-  return (
+  if (!isOpen || !mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
-      <div className="auth-modal fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div className="auth-modal fixed inset-0 z-200 flex items-center justify-center p-4">
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -42,7 +49,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 className={`auth-modal__tab-btn text-lg font-secondary transition-colors ${
                   activeTab === "login"
                     ? "text-burgundy font-bold border-b-2 border-burgundy"
-                    : "text-gray-400 hover:text-burgundy"
+                    : "text-gray-600 hover:text-burgundy"
                 }`}
               >
                 Iniciar Sesión
@@ -52,7 +59,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 className={`auth-modal__tab-btn text-lg font-secondary transition-colors ${
                   activeTab === "register"
                     ? "text-burgundy font-bold border-b-2 border-burgundy"
-                    : "text-gray-400 hover:text-burgundy"
+                    : "text-gray-600 hover:text-burgundy"
                 }`}
               >
                 Registrarse
@@ -60,7 +67,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             </div>
             <button
               onClick={onClose}
-              className="auth-modal__close-btn text-gray-400 hover:text-burgundy"
+              className="auth-modal__close-btn text-gray-600 hover:text-burgundy"
             >
               <X size={24} />
             </button>
@@ -72,6 +79,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           </div>
         </motion.div>
       </div>
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }

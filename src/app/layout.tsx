@@ -1,6 +1,7 @@
 import { Metadata, Viewport } from "next";
 import { CartProvider } from "@/context/CartContext";
 import { playfair, roboto_serif, roboto } from "@/lib/fonts";
+import { UIProvider } from "@/context/UIContext";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ReactQueryProvider from "../providers/ReactQueryProvider";
@@ -63,16 +64,18 @@ export default function RootLayout({
     >
       <body className="font-sans">
         <ReactQueryProvider>
-          <CartProvider>
-            <div className="principal__container relative flex flex-col min-h-screen w-full">
-              <Header />
-              <main className="principal__main grow">{children}</main>
-            </div>
-            <Analytics />
-            <SpeedInsights />
-            <Footer />
-            <DynamicLayoutElements />
-          </CartProvider>
+          <UIProvider>
+            <CartProvider>
+              <div className="principal__container relative flex flex-col min-h-screen w-full">
+                <Header />
+                <main className="principal__main grow">{children}</main>
+              </div>
+              <Analytics />
+              <SpeedInsights />
+              <Footer />
+              <DynamicLayoutElements />
+            </CartProvider>
+          </UIProvider>
         </ReactQueryProvider>
       </body>
     </html>
