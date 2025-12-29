@@ -3,6 +3,7 @@ import { formatPrice } from "@/lib/utils/currency";
 import Icon from "@/components/ui/Icon";
 import ProductGallery from "./ProductGallery";
 import AddToCartBtn from "./AddToCartBtn";
+import DOMPurify from "isomorphic-dompurify";
 
 interface ProductDetailsProps {
   product: Product;
@@ -39,7 +40,9 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           <div className="product-details__description prose prose-stone mb-10 text-gray-600 leading-relaxed max-w-none">
             <div
               dangerouslySetInnerHTML={{
-                __html: product.description || product.short_description,
+                __html: DOMPurify.sanitize(
+                  product.description || product.short_description
+                ),
               }}
             />
           </div>
@@ -52,7 +55,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           {/* Additional Info / Trust Badges */}
           <div className="product-details__trust-badges grid grid-cols-2 gap-4 mt-10 p-6 bg-gray-50 rounded-xl border border-gray-100">
             <div className="trust-badge flex items-center gap-3">
-              <div className="trust-badge__icon-box size-10 rounded-full bg-white flex items-center justify-center text-burgundy shadow-sm">
+              <div className="trust-badge__icon-box size-10 rounded-full bg-ivory flex items-center justify-center text-burgundy shadow-sm">
                 <Icon name="icon-truck" size={20} />
               </div>
               <span className="trust-badge__text text-xs font-medium text-gray-600 uppercase tracking-wide">
@@ -60,7 +63,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
               </span>
             </div>
             <div className="trust-badge flex items-center gap-3">
-              <div className="trust-badge__icon-box size-10 rounded-full bg-white flex items-center justify-center text-burgundy shadow-sm">
+              <div className="trust-badge__icon-box size-10 rounded-full bg-ivory flex items-center justify-center text-burgundy shadow-sm">
                 <Icon name="icon-refresh" size={20} />
               </div>
               <span className="trust-badge__text text-xs font-medium text-gray-600 uppercase tracking-wide">

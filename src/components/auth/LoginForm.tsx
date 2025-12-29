@@ -6,10 +6,12 @@ import Icon from "@/components/ui/Icon";
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    setError("");
     const formData = new FormData(e.currentTarget);
 
     try {
@@ -21,7 +23,8 @@ export default function LoginForm() {
 
       if (result?.error) {
         // Handle error (next-auth v5 returns undefined on success if redirect:false, or error object)
-        // Actually in v5 client signIn returns nothing on success ? wait.
+        console.error(result.error);
+        setError("Usuario y/o contraseña equivocada");
       } else {
         // success, modal should act accordingly (maybe close, but page will refresh if session updates)
         // For now let's just refresh page
@@ -29,6 +32,7 @@ export default function LoginForm() {
       }
     } catch (error) {
       console.error("Login failed", error);
+      setError("Ocurrió un error inesperado");
     }
 
     setIsLoading(false);
@@ -69,12 +73,27 @@ export default function LoginForm() {
           />
         </div>
 
+        {error && (
+          <div className="bg-red-50 border border-red-100 text-red-600 text-sm px-4 py-2 rounded-sm text-center">
+            {error}
+          </div>
+        )}
+
+        <div className="flex justify-end">
+          <button
+            type="button"
+            className="text-sm text-gray-500 hover:text-burgundy hover:underline"
+          >
+            Olvidé mi contraseña
+          </button>
+        </div>
+
         <button
           type="submit"
           disabled={isLoading}
           className="login-form__submit-btn w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50"
         >
-          {isLoading ? "Cargando..." : "Ingresar"}
+          {isLoading ? "Cargando..." : "Entrar"}
         </button>
       </form>
 

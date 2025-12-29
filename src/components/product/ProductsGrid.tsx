@@ -9,6 +9,7 @@ import { formatPrice } from "@/lib/utils/currency";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "@/components/ui/Icon";
+import DOMPurify from "isomorphic-dompurify";
 
 interface ProductsGridProps {
   products: Product[];
@@ -63,7 +64,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
 
   if (!products.length)
     return (
-      <div className="page-products__empty-state text-center py-10 text-tracy-gris-humo/60">
+      <div className="page-products__empty-state text-center py-10 text-gray/60">
         No hay productos disponibles
       </div>
     );
@@ -460,12 +461,27 @@ function QuickViewModal({
     boundsRef.current = null; // Clear cache
   };
 
+  // Scroll Lock Correction
+  useEffect(() => {
+    if (isOpen) {
+      document.body.classList.add("no-scroll");
+      document.documentElement.classList.add("no-scroll");
+    } else {
+      document.body.classList.remove("no-scroll");
+      document.documentElement.classList.remove("no-scroll");
+    }
+    return () => {
+      document.body.classList.remove("no-scroll");
+      document.documentElement.classList.remove("no-scroll");
+    };
+  }, [isOpen]);
+
   if (!product) return null;
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="quick-view-modal fixed inset-0 z-50 flex items-center justify-center p-4 overscroll-contain">
+        <div className="quick-view-modal fixed inset-0 z-200 flex items-center justify-center p-4 overscroll-contain">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -536,7 +552,7 @@ function QuickViewModal({
               >
                 {product.name}
               </h2>
-              <div className="quick-view-modal__divider w-20 h-1 bg-tracy-burdeos mb-6 opacity-20"></div>
+              <div className="quick-view-modal__divider w-20 h-1 bg-burgundy mb-6 opacity-20"></div>
 
               <p className="quick-view-modal__price text-3xl font-bold text-burgundy mb-6">
                 {formatPrice(product.price)}
@@ -545,9 +561,10 @@ function QuickViewModal({
               <div className="quick-view-modal__description prose prose-sm text-gray-600 mb-8 line-clamp-3">
                 <div
                   dangerouslySetInnerHTML={{
-                    __html:
+                    __html: DOMPurify.sanitize(
                       product.short_description ||
-                      "Descubre la elegancia y confort de esta pieza exclusiva.",
+                        "Descubre la elegancia y confort de esta pieza exclusiva."
+                    ),
                   }}
                 />
               </div>
@@ -555,14 +572,14 @@ function QuickViewModal({
               <div className="quick-view-modal__actions flex flex-col gap-4 mt-auto">
                 <button
                   onClick={() => addToCart(product)}
-                  className="quick-view-modal__add-btn w-full bg-tracy-burdeos text-ivory py-4 rounded-xl font-bold tracking-wide hover:bg-opacity-90 transition-all flex items-center justify-center gap-3 shadow-xl shadow-tracy-burdeos/20 hover:scale-[1.01] active:scale-[0.98]"
+                  className="quick-view-modal__add-btn w-full bg-burgundy text-ivory py-4 rounded-xl font-bold tracking-wide hover:bg-opacity-90 transition-all flex items-center justify-center gap-3 shadow-xl shadow-burgundy/20 hover:scale-[1.01] active:scale-[0.98]"
                 >
                   <Icon name="icon-bag" size={22} />
                   AGREGAR AL CARRITO
                 </button>
                 <Link
                   href={`/productos/${product.slug ?? product.id}`}
-                  className="quick-view-modal__details-btn w-full py-4 border border-gray-200 rounded-xl hover:border-tracy-burdeos/30 transition-all text-gray-600 font-medium text-center uppercase tracking-wider text-sm hover:text-burgundy"
+                  className="quick-view-modal__details-btn w-full py-4 border border-gray-200 rounded-xl hover:border-burgundy/30 transition-all text-gray-600 font-medium text-center uppercase tracking-wider text-sm hover:text-burgundy"
                 >
                   Ver Detalles
                 </Link>

@@ -9,13 +9,13 @@ export const metadata: Metadata = {
 export default function FAQPage() {
   return (
     <article className="container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="text-4xl font-serif text-center font-bold mb-10 text-tracy-burdeos">
+      <h1 className="text-4xl font-serif text-center font-bold mb-10 text-burgundy">
         Preguntas Frecuentes
       </h1>
 
       <div className="space-y-10">
         <section>
-          <h2 className="text-xl font-serif font-bold text-tracy-burdeos mb-3">
+          <h2 className="text-xl font-serif font-bold text-burgundy mb-3">
             ¿Cómo sé cuál es mi talla?
           </h2>
           <p className="text-gray-600 leading-relaxed text-lg">
@@ -27,7 +27,7 @@ export default function FAQPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-serif font-bold text-tracy-burdeos mb-3">
+          <h2 className="text-xl font-serif font-bold text-burgundy mb-3">
             ¿Cuánto tiempo tarda el envío?
           </h2>
           <p className="text-gray-600 leading-relaxed text-lg">
@@ -38,7 +38,7 @@ export default function FAQPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-serif font-bold text-tracy-burdeos mb-3">
+          <h2 className="text-xl font-serif font-bold text-burgundy mb-3">
             ¿Qué métodos de pago aceptan?
           </h2>
           <p className="text-gray-600 leading-relaxed text-lg">
@@ -50,7 +50,7 @@ export default function FAQPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-serif font-bold text-tracy-burdeos mb-3">
+          <h2 className="text-xl font-serif font-bold text-burgundy mb-3">
             ¿Puedo cambiar o devolver productos de lencería?
           </h2>
           <p className="text-gray-600 leading-relaxed text-lg">
@@ -65,7 +65,7 @@ export default function FAQPage() {
         </section>
 
         <section>
-          <h2 className="text-xl font-serif font-bold text-tracy-burdeos mb-3">
+          <h2 className="text-xl font-serif font-bold text-burgundy mb-3">
             ¿Hacen envíos internacionales?
           </h2>
           <p className="text-gray-600 leading-relaxed text-lg">

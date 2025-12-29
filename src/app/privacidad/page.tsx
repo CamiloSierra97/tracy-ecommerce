@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <article className="privacy__container container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="privacy__title text-4xl font-serif font-bold mb-10 text-tracy-burdeos text-center">
+      <h1 className="privacy__title text-4xl font-serif font-bold mb-10 text-burgundy text-center">
         Política de Privacidad
       </h1>
 
@@ -20,7 +20,7 @@ export default function PrivacyPage() {
         </p>
 
         <section className="privacy__section">
-          <h2 className="privacy__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="privacy__section-title text-xl font-bold text-burgundy mb-3">
             Recopilación de Información
           </h2>
           <p className="privacy__section-text">
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="privacy__section">
-          <h2 className="privacy__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="privacy__section-title text-xl font-bold text-burgundy mb-3">
             Uso de la Información
           </h2>
           <p className="privacy__section-text">
@@ -44,7 +44,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="privacy__section">
-          <h2 className="privacy__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="privacy__section-title text-xl font-bold text-burgundy mb-3">
             Protección de Datos
           </h2>
           <p className="privacy__section-text">
@@ -57,7 +57,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="privacy__section">
-          <h2 className="privacy__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="privacy__section-title text-xl font-bold text-burgundy mb-3">
             Compartir Información
           </h2>
           <p className="privacy__section-text">
@@ -70,7 +70,7 @@ export default function PrivacyPage() {
         </section>
 
         <section className="privacy__section">
-          <h2 className="privacy__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="privacy__section-title text-xl font-bold text-burgundy mb-3">
             Tus Derechos
           </h2>
           <p className="privacy__section-text">

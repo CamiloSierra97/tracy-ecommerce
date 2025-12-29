@@ -74,18 +74,13 @@ const Header: React.FC = () => {
           {/* Logo */}
 
           <div className="header__logo-container flex justify-center">
-            <h1 className="header__title sr-only">
-              TRACY ropa interior de Lujo
-            </h1>
-
+            {/* Logo Link with accessible name */}
             <Link
               href="/"
               className="header__logo-link size-28 pt-5 relative flex justify-center items-center"
+              aria-label="Ir a la página de inicio de Tracy Ropa interior de lujo"
             >
-              <div
-                className="header__logo-mask w-full h-full transition-all duration-300 transform scale-170 hover:bg-light-gold hover:scale-180 relative bottom-1/8"
-                aria-label="TRACY Logo Ropa Interior de Lujo"
-              />
+              <div className="header__logo-mask w-full h-full transition-all duration-300 transform scale-170 hover:bg-light-gold hover:scale-180 relative bottom-1/8" />
             </Link>
           </div>
 

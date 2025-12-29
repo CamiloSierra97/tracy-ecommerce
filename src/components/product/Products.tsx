@@ -10,9 +10,10 @@ import { ProductsPage } from "@/services/WooCommerceService";
 
 // 🛑 TS CORRECCIÓN: Definimos las props requeridas para la reutilización.
 interface ProductsProps {
-  title: string; // Título dinámico para el H1
-  basePath: string; // La ruta base para los enlaces de paginación (ej: '/lenceria')
+  title: string;
+  basePath: string;
   initialData?: ProductsPage;
+  headingLevel?: "h1" | "h2"; // Allow dynamic heading level
 }
 
 // Nota: Asumo que useProducts devuelve la estructura necesaria (pages, totalPages).
@@ -20,6 +21,7 @@ export default function Products({
   title,
   basePath,
   initialData,
+  headingLevel = "h2", // Default to h2
 }: ProductsProps) {
   // Construct the initial infinite query structure if initialData is provided
   const infiniteInitialData = initialData
@@ -76,19 +78,21 @@ export default function Products({
       </div>
     );
 
+  const HeadingTag = headingLevel;
+
   return (
     <article className="page-products" id="products-visual">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.7 }}
-        className="page-products__content min-h-screen bg-gray-50"
+        className="page-products__content min-h-screen bg-transparent"
       >
         {/* 🛑 OPTIMIZACIÓN SEO 1: H1 DINÁMICO. Único y relevante para la página. */}
         <div className="page-products__header flex flex-col items-center py-8 px-4">
-          <h2 className="page-products__title text-2xl lg:text-4xl font-serif font-semibold lg:font-bold text-tracy-burdeos text-center mb-3 tracking-wide drop-shadow-sm">
+          <HeadingTag className="page-products__title text-2xl lg:text-4xl font-serif font-semibold lg:font-bold text-burgundy text-center mb-3 tracking-wide drop-shadow-sm">
             {title}
-          </h2>
+          </HeadingTag>
           <motion.div
             initial={{ scaleX: 0, opacity: 0 }}
             animate={{ scaleX: 1, opacity: 0.6 }}

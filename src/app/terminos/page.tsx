@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <article className="terms__container mx-auto px-4 py-12 max-w-4xl">
-      <h1 className="terms__title text-4xl font-serif font-bold mb-10 text-tracy-burdeos text-center">
+      <h1 className="terms__title text-4xl font-serif font-bold mb-10 text-burgundy text-center">
         Términos y Condiciones
       </h1>
       <p className="terms__subtitle text-sm text-gray-500 mb-10 text-center">
@@ -18,7 +18,7 @@ export default function TermsPage() {
 
       <div className="terms__content space-y-8 text-gray-700 text-base leading-relaxed">
         <section className="terms__section">
-          <h2 className="terms__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="terms__section-title text-xl font-bold text-burgundy mb-3">
             1. Aceptación de los Términos
           </h2>
           <p className="terms__section-text">
@@ -30,7 +30,7 @@ export default function TermsPage() {
         </section>
 
         <section className="terms__section">
-          <h2 className="terms__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="terms__section-title text-xl font-bold text-burgundy mb-3">
             2. Uso del Sitio
           </h2>
           <p className="terms__section-text">
@@ -41,7 +41,7 @@ export default function TermsPage() {
         </section>
 
         <section className="terms__section">
-          <h2 className="terms__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="terms__section-title text-xl font-bold text-burgundy mb-3">
             3. Propiedad Intelectual
           </h2>
           <p className="terms__section-text">
@@ -53,7 +53,7 @@ export default function TermsPage() {
         </section>
 
         <section className="terms__section">
-          <h2 className="terms__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="terms__section-title text-xl font-bold text-burgundy mb-3">
             4. Productos y Precios
           </h2>
           <p className="terms__section-text">
@@ -65,7 +65,7 @@ export default function TermsPage() {
         </section>
 
         <section className="terms__section">
-          <h2 className="terms__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="terms__section-title text-xl font-bold text-burgundy mb-3">
             5. Limitación de Responsabilidad
           </h2>
           <p className="terms__section-text">
@@ -76,7 +76,7 @@ export default function TermsPage() {
         </section>
 
         <section className="terms__section">
-          <h2 className="terms__section-title text-xl font-bold text-tracy-burdeos mb-3">
+          <h2 className="terms__section-title text-xl font-bold text-burgundy mb-3">
             6. Ley Aplicable
           </h2>
           <p className="terms__section-text">

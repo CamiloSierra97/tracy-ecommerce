@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import WooCommerceService from "@/services/WooCommerceService";
 import ProductDetails from "@/components/product/ProductDetails";
+import ProductReviews from "@/components/product/ProductReviews";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -43,6 +44,8 @@ export default async function ProductPage({ params }: Props) {
     notFound();
   }
 
+  const reviews = await WooCommerceService.getProductReviews(product.id);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
@@ -73,6 +76,11 @@ export default async function ProductPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ProductDetails product={product} />
+      <ProductReviews
+        reviews={reviews}
+        productId={product.id}
+        productName={product.name}
+      />
     </main>
   );
 }

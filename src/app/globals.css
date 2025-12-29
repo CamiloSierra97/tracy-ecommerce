@@ -40,6 +40,12 @@
     @apply w-full p-2 border border-gray-300 focus:outline-none focus:border-burgundy transition-colors bg-ivory;
   }
 
+  .no-scroll {
+    overflow: hidden !important;
+    height: 100vh !important;
+    touch-action: none;
+  }
+
   .header__logo-mask {
     background-color: var(--color-gold);
     -webkit-mask-image: url(/LogoTracy.webp);

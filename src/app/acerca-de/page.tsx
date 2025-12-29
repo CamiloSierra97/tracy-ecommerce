@@ -23,7 +23,7 @@ export default function AboutPage() {
           mujer.
         </p>
 
-        <h2 className="text-2xl font-serif text-tracy-burdeos mt-10 mb-4">
+        <h2 className="text-2xl font-serif text-burgundy mt-10 mb-4">
           Nuestra Misión
         </h2>
         <p>
@@ -34,7 +34,7 @@ export default function AboutPage() {
           excepcional que perdura.
         </p>
 
-        <h2 className="text-2xl font-serif text-tracy-burdeos mt-10 mb-4">
+        <h2 className="text-2xl font-serif text-burgundy mt-10 mb-4">
           Diseño y Calidad Colombiana
         </h2>
         <p>
@@ -45,7 +45,7 @@ export default function AboutPage() {
           se realiza con pasión y dedicación.
         </p>
 
-        <h2 className="text-2xl font-serif text-tracy-burdeos mt-10 mb-4">
+        <h2 className="text-2xl font-serif text-burgundy mt-10 mb-4">
           Nuestro Compromiso
         </h2>
         <p>

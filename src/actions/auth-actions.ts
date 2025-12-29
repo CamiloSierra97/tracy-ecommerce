@@ -1,5 +1,6 @@
 "use server";
 
+import WooCommerceService from "@/services/WooCommerceService";
 import { z } from "zod";
 
 const RegisterSchema = z.object({
@@ -30,41 +31,23 @@ export async function registerUser(prevState: any, formData: FormData) {
     validatedFields.data;
 
   try {
-    const response = await fetch(
-      `${process.env.WOOCOMMERCE_API_URL}/wp-json/wc/v3/customers`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          // Authorization: Basic base64(consumerk_key:consumer_secret)
-          Authorization:
-            "Basic " +
-            Buffer.from(
-              `${process.env.WOO_CONSUMER_KEY}:${process.env.WOO_CONSUMER_SECRET}`
-            ).toString("base64"),
-        },
-        body: JSON.stringify({
-          email,
-          username,
-          first_name: firstName,
-          last_name: lastName,
-          password,
-        }),
-      }
-    );
+    const result = await WooCommerceService.registerCustomer({
+      email,
+      username,
+      first_name: firstName,
+      last_name: lastName,
+      password,
+    });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      console.error("WooCommerce Registration Error:", data);
+    if (!result.success) {
       return {
-        error: data.message || "Error al registrar usuario.",
+        error: result.message || "Error al registrar usuario.",
       };
     }
 
     return {
       success: true,
-      message: "Cuenta creada exitosamente. Por favor inicia sesión.",
+      message: result.message,
     };
   } catch (error) {
     console.error("Registration Exception:", error);

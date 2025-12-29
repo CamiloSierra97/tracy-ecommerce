@@ -22,7 +22,12 @@ export default async function ShopPage() {
 
   return (
     <main className="principal__main">
-      <Products title="Tienda" basePath="/tienda" initialData={initialData} />
+      <Products
+        title="Tienda"
+        basePath="/tienda"
+        initialData={initialData}
+        headingLevel="h1"
+      />
     </main>
   );
 }
