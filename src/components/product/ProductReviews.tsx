@@ -14,7 +14,7 @@ export default function ProductReviews({
   productId,
   productName,
 }: ProductReviewsProps) {
-  // Calculate average rating
+  // Calcular calificación promedio
   const averageRating =
     reviews.length > 0
       ? reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length
@@ -36,7 +36,7 @@ export default function ProductReviews({
           </div>
         ) : (
           <div className="product-reviews__content grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16">
-            {/* Summary Column */}
+            {/* Columna de Resumen */}
             <div className="product-reviews__summary lg:col-span-4 flex flex-col items-center p-8 bg-gray-50 rounded-2xl h-fit sticky top-24">
               <div className="text-6xl font-bold text-burgundy mb-2 font-secondary">
                 {averageRating.toFixed(1)}
@@ -48,7 +48,7 @@ export default function ProductReviews({
               </p>
             </div>
 
-            {/* Reviews List Column */}
+            {/* Columna de Lista de Opiniones */}
             <div className="product-reviews__list lg:col-span-8 space-y-8">
               {reviews.map((review) => (
                 <div
@@ -86,7 +86,7 @@ export default function ProductReviews({
           </div>
         )}
 
-        {/* Review Form */}
+        {/* Formulario de Opinión */}
         <div className="product-reviews__form-container max-w-3xl mx-auto">
           <ReviewForm productId={productId} productName={productName} />
         </div>

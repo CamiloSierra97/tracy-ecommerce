@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Products from "@/components/product/Products";
 import WooCommerceService from "@/services/WooCommerceService";
 
-// Define the valid categories to match the static links
+// Definir las categorías válidas para coincidir con los enlaces estáticos
 const VALID_CATEGORIES = ["mujer", "hombre", "nina", "promociones"];
 
 type Props = {
@@ -11,7 +11,7 @@ type Props = {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-// Generate dynamic metadata for SEO
+// Generar metadatos dinámicos para SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { category } = await params;
 
@@ -31,15 +31,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function CategoryPage({ params }: Props) {
   const { category } = await params;
 
-  // Validate category to prevent random URLs from loading this page, return 404 if invalid
+  // Validar categoría para prevenir que URLs aleatorias carguen esta página, retornar 404 si es inválida
   if (!VALID_CATEGORIES.includes(category)) {
     notFound();
   }
 
-  // Format title for display (e.g., "mujer" -> "Mujer")
+  // Formatear título para mostrar (e.g., "mujer" -> "Mujer")
   const displayTitle = category.charAt(0).toUpperCase() + category.slice(1);
 
-  // 🛑 SSR Prefetching: Fetch initial products on server for SEO
+  // 🛑 Pre-carga SSR: Obtener productos iniciales en el servidor para SEO
   let initialData;
   try {
     initialData = await WooCommerceService.getProducts({
@@ -48,7 +48,7 @@ export default async function CategoryPage({ params }: Props) {
     });
   } catch (error) {
     console.error("Failed to prefetch products:", error);
-    // We don't crash the page, just let the client try to fetch (or show error state)
+    // No bloqueamos la página, solo dejamos que el cliente intente obtener (o mostrar estado de error)
   }
 
   return (

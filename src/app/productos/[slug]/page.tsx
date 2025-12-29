@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  // Strip HTML from description for meta description
+  // Eliminar HTML de la descripción para la meta descripción
   const cleanDescription = (
     product.short_description ||
     product.description ||
@@ -65,7 +65,7 @@ export default async function ProductPage({ params }: Props) {
         product.status === "publish"
           ? "https://schema.org/InStock"
           : "https://schema.org/OutOfStock",
-      url: `https://app.glowcosmeticoscol.com/productos/${slug}`, // Update with actual domain
+      url: `https://app.glowcosmeticoscol.com/productos/${slug}`, // Actualizar con el dominio real
     },
   };
 

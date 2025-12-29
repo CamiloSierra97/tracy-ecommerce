@@ -41,7 +41,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           onClick={(e) => e.stopPropagation()}
           className="auth-modal__container relative z-10 w-full max-w-md bg-white overflow-hidden shadow-2xl"
         >
-          {/* Header */}
+          {/* Encabezado */}
           <div className="auth-modal__header flex justify-between items-center p-4 border-b border-gold/20">
             <div className="flex gap-6">
               <button
@@ -73,7 +73,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             </button>
           </div>
 
-          {/* Content */}
+          {/* Contenido */}
           <div className="auth-modal__content p-6">
             {activeTab === "login" ? <LoginForm /> : <RegisterForm />}
           </div>

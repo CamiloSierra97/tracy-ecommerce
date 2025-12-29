@@ -13,7 +13,7 @@ interface ProductsProps {
   title: string;
   basePath: string;
   initialData?: ProductsPage;
-  headingLevel?: "h1" | "h2"; // Allow dynamic heading level
+  headingLevel?: "h1" | "h2"; // Permitir nivel de encabezado dinámico
 }
 
 // Nota: Asumo que useProducts devuelve la estructura necesaria (pages, totalPages).
@@ -21,9 +21,9 @@ export default function Products({
   title,
   basePath,
   initialData,
-  headingLevel = "h2", // Default to h2
+  headingLevel = "h2", // Por defecto h2
 }: ProductsProps) {
-  // Construct the initial infinite query structure if initialData is provided
+  // Construir la estructura de consulta infinita inicial si se proporcionan datos iniciales
   const infiniteInitialData = initialData
     ? {
         pages: [initialData],

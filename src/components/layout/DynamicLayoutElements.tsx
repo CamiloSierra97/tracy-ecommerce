@@ -23,7 +23,7 @@ export default function DynamicLayoutElements() {
   const { isOpen: isCartOpen } = useCart();
   const { isAuthOpen } = useUI();
 
-  // Hide floating buttons if either modal is open
+  // Ocultar botones flotantes si algún modal está abierto
   const shouldShowFloating = !isCartOpen && !isAuthOpen;
 
   return (

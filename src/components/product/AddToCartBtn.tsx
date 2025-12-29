@@ -17,7 +17,7 @@ export default function AddToCartBtn({ product }: AddToCartBtnProps) {
     if (isLoading) return;
     setIsLoading(true);
 
-    // Simulate a small delay for better UX (or wait for actual cart operation if async)
+    // Simular un pequeño retraso para mejor UX (o esperar la operación real del carrito si es asíncrona)
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     addToCart(product);

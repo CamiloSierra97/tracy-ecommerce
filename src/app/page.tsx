@@ -16,11 +16,11 @@ import {
 export default async function Page() {
   const queryClient = new QueryClient();
 
-  // Prefetch data on the server
+  // Pre-cargar datos en el servidor
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["products"],
     queryFn: async ({ pageParam = 1 }) => {
-      // Direct server-side call to WooCommerce
+      // Llamada directa del lado del servidor a WooCommerce
       return await WooCommerceService.getProducts({
         page: pageParam as number,
         per_page: 12,

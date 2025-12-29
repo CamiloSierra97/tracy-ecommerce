@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 interface ThreeRingLoaderProps {
-  className?: string; // For passing CSS variables and additional classes
+  className?: string; // Para pasar variables CSS y clases adicionales
 }
 
 const ThreeRingLoader: React.FC<ThreeRingLoaderProps> = ({

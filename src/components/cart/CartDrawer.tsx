@@ -1,8 +1,9 @@
 "use client";
+// Componente del cajón del carrito que muestra los productos seleccionados
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "@/context/CartContext";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { formatPrice } from "@/lib/utils/currency";
 import Image from "next/image";
 import Icon from "@/components/ui/Icon";
@@ -17,15 +18,37 @@ export default function CartDrawer() {
     cartTotal,
   } = useCart();
 
-  // Bloquear el scroll del body cuando el carrito está abierto
+  // Bloquear el scroll del body y html cuando el carrito está abierto
+  const originalBodyOverflow = useRef<string>("");
+  const originalHtmlOverflow = useRef<string>("");
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (isOpen) {
+      // Guardar valores originales
+      originalBodyOverflow.current = document.body.style.overflow;
+      originalHtmlOverflow.current = document.documentElement.style.overflow;
+      // Aplicar bloqueo
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+      // Enfocar botón cerrar
+      closeButtonRef.current?.focus();
+      // Ocultar contenido principal para lectores de pantalla
+      const main = document.getElementById("main-content");
+      if (main) main.setAttribute("aria-hidden", "true");
     } else {
-      document.body.style.overflow = "";
+      // Restaurar overflow
+      document.body.style.overflow = originalBodyOverflow.current;
+      document.documentElement.style.overflow = originalHtmlOverflow.current;
+      // Mostrar contenido principal
+      const main = document.getElementById("main-content");
+      if (main) main.removeAttribute("aria-hidden");
     }
     return () => {
-      document.body.style.overflow = "";
+      // Restaurar valores originales al desmontar
+      document.body.style.overflow = originalBodyOverflow.current;
+      document.documentElement.style.overflow = originalHtmlOverflow.current;
+      const main = document.getElementById("main-content");
+      if (main) main.removeAttribute("aria-hidden");
     };
   }, [isOpen]);
 
@@ -40,6 +63,7 @@ export default function CartDrawer() {
             exit={{ opacity: 0 }}
             onClick={closeCart}
             className="cart-drawer__overlay fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+            aria-hidden={isOpen ? "true" : "false"}
           />
 
           {/* Panel Lateral (Drawer) */}
@@ -49,13 +73,24 @@ export default function CartDrawer() {
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
             className="cart-drawer__panel fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="cart-drawer-title"
+            onKeyDown={(e) => {
+              if (e.key === "Escape") closeCart();
+            }}
+            tabIndex={-1}
           >
             {/* Encabezado del Carrito */}
             <div className="cart-drawer__header p-6 flex items-center justify-between border-b border-gray-100">
-              <h2 className="cart-drawer__title text-2xl font-serif text-gray-900">
+              <h2
+                id="cart-drawer-title"
+                className="cart-drawer__title text-2xl font-serif text-gray-900"
+              >
                 Tu Bolsa
               </h2>
               <button
+                ref={closeButtonRef}
                 onClick={closeCart}
                 aria-label="Cerrar carrito"
                 className="cart-drawer__close-btn p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-500"
@@ -106,26 +141,26 @@ export default function CartDrawer() {
                         </button>
                       </div>
                       <div className="flex items-center gap-3 mt-2">
-                        <div className="flex items-center border border-black/10 rounded-sm">
+                        <div className="cart-item__quantity-selector flex items-center border border-black/10 rounded-sm">
                           <button
                             onClick={() =>
                               updateQuantity(item.id, item.quantity - 1)
                             }
-                            className="size-8 flex items-center justify-center text-burgundy hover:bg-ivory border-r border-black/10 transition-colors"
+                            className="cart-item__quantity-btn cart-item__quantity-btn--minus size-8 flex items-center justify-center text-burgundy hover:bg-ivory border-r border-black/10 transition-colors"
                             aria-label="Disminuir cantidad"
                           >
                             <span className="text-lg font-light leading-none mb-0.5">
                               -
                             </span>
                           </button>
-                          <span className="w-10 text-center text-sm font-medium text-gray-700">
+                          <span className="cart-item__quantity-value w-10 text-center text-sm font-medium text-gray-700">
                             {item.quantity}
                           </span>
                           <button
                             onClick={() =>
                               updateQuantity(item.id, item.quantity + 1)
                             }
-                            className="size-8 flex items-center justify-center text-burgundy hover:bg-ivory border-l border-black/10 transition-colors"
+                            className="cart-item__quantity-btn cart-item__quantity-btn--plus size-8 flex items-center justify-center text-burgundy hover:bg-ivory border-l border-black/10 transition-colors"
                             aria-label="Aumentar cantidad"
                           >
                             <span className="text-lg font-light leading-none mb-0.5">

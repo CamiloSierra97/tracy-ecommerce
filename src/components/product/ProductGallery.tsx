@@ -21,7 +21,7 @@ export default function ProductGallery({
   return (
     <>
       <div className="product-details__gallery flex flex-col-reverse lg:flex-row gap-6">
-        {/* Thumbnails (Desktop: Left, Mobile: Bottom) */}
+        {/* Miniaturas (Escritorio: Izquierda, Móvil: Abajo) */}
         {images.length > 1 && (
           <div className="product-details__thumbnails flex lg:flex-col gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[700px] scrollbar-hide py-2 lg:py-0">
             {images.map((img, idx) => (
@@ -46,7 +46,7 @@ export default function ProductGallery({
           </div>
         )}
 
-        {/* Main Image */}
+        {/* Imagen Principal */}
         <div
           className="product-details__main-image-container relative grow bg-gray-50 rounded-2xl overflow-hidden aspect-3/4 lg:h-[700px] shadow-sm border border-gray-100 group cursor-zoom-in"
           onClick={() => setIsLightboxOpen(true)}
@@ -71,7 +71,7 @@ export default function ProductGallery({
             </motion.div>
           </AnimatePresence>
 
-          {/* Zoom Icon (Top Right) */}
+          {/* Ícono de Zoom (Arriba Derecha) */}
           <div className="product-details__zoom-icon absolute top-4 right-4 bg-transparent p-3 text-black opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none group-hover:pointer-events-auto hover:cursor-pointer hover:scale-110">
             <Icon name="icon-zoom" size={24} />
           </div>

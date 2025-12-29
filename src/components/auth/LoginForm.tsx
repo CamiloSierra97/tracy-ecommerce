@@ -22,12 +22,12 @@ export default function LoginForm() {
       });
 
       if (result?.error) {
-        // Handle error (next-auth v5 returns undefined on success if redirect:false, or error object)
+        // Manejar error (next-auth v5 retorna undefined en éxito si redirect:false, o un objeto de error)
         console.error(result.error);
         setError("Usuario y/o contraseña equivocada");
       } else {
-        // success, modal should act accordingly (maybe close, but page will refresh if session updates)
-        // For now let's just refresh page
+        // éxito, el modal debería actuar en consecuencia (quizás cerrarse, pero la página se refrescará si la sesión se actualiza)
+        // Por ahora solo actualicemos la página
         window.location.reload();
       }
     } catch (error) {
@@ -82,7 +82,7 @@ export default function LoginForm() {
         <div className="flex justify-end">
           <button
             type="button"
-            className="text-sm text-gray-500 hover:text-burgundy hover:underline"
+            className="login-form__forgot-password text-sm text-gray-500 hover:text-burgundy hover:underline"
           >
             Olvidé mi contraseña
           </button>
@@ -98,10 +98,10 @@ export default function LoginForm() {
       </form>
 
       <div className="login-form__divider relative flex items-center justify-center my-2">
-        <div className="absolute inset-0 flex items-center">
+        <div className="login-form__divider-line absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-200"></div>
         </div>
-        <span className="relative bg-white px-2 text-sm text-gray-500">
+        <span className="login-form__divider-text relative bg-white px-2 text-sm text-gray-500">
           O continúa con
         </span>
       </div>

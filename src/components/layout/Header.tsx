@@ -74,7 +74,7 @@ const Header: React.FC = () => {
           {/* Logo */}
 
           <div className="header__logo-container flex justify-center">
-            {/* Logo Link with accessible name */}
+            {/* Enlace del Logo con nombre accesible */}
             <Link
               href="/"
               className="header__logo-link size-28 pt-5 relative flex justify-center items-center"

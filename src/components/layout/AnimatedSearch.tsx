@@ -11,7 +11,7 @@ export default function AnimatedSearch() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
-  // Conditional classes: Only show bottom border hover when search is closed
+  // Clases condicionales: Solo mostrar borde inferior al pasar el mouse cuando la búsqueda está cerrada
   const containerClasses = isSearchOpen
     ? "text-gold"
     : "text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold";
@@ -19,11 +19,11 @@ export default function AnimatedSearch() {
   const handleSearch = () => {
     if (!searchTerm.trim()) return;
 
-    // Push the search term to the URL query parameter
-    // This will trigger a re-render in components listening to useSearchParams
+    // Empujar el término de búsqueda al parámetro de consulta de la URL
+    // Esto activará una re-renderización en los componentes que escuchan useSearchParams
     router.push(`/?search=${encodeURIComponent(searchTerm)}`);
 
-    // Optional: Close search or keep open? keeping open for now.
+    // Opcional: ¿Cerrar búsqueda o mantener abierta? Manteniendo abierta por ahora.
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -52,7 +52,7 @@ export default function AnimatedSearch() {
             aria-label="Buscar productos"
             autoFocus
             onBlur={() => {
-              // Only close if empty to allow typing
+              // Solo cerrar si está vacío para permitir escribir
               if (!searchTerm) setIsSearchOpen(false);
             }}
           />
@@ -61,7 +61,7 @@ export default function AnimatedSearch() {
       <button
         onClick={() => {
           if (isSearchOpen) {
-            // If open, clicking the button (X) closes it
+            // Si está abierta, hacer clic en el botón (X) la cierra
             setIsSearchOpen(false);
             setSearchTerm("");
           } else {

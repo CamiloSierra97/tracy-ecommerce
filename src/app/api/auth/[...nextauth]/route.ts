@@ -1,2 +1,2 @@
-import { handlers } from "@/auth"; // Referring to the auth.ts we just created
+import { handlers } from "@/auth"; // Refiriéndose al auth.ts que acabamos de crear
 export const { GET, POST } = handlers;

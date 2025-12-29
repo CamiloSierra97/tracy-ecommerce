@@ -55,7 +55,7 @@ export default function RegisterForm() {
             placeholder="tu@email.com"
           />
         </div>
-        <div className="register-form__field-group grid grid-cols-2 gap-4">
+        <div className="register-form__field-group register-form__row grid grid-cols-2 gap-4">
           <div className="register-form__field">
             <label className="register-form__label block text-sm font-medium text-gray-700 mb-1">
               Nombre

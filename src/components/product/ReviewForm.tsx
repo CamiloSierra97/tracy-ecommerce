@@ -25,7 +25,7 @@ export default function ReviewForm({
     setIsSubmitting(true);
     setMessage(null);
 
-    // Validate rating manually since it's not a standard input
+    // Validar puntuación manualmente ya que no es un input estándar
     if (rating === 0) {
       setMessage({
         type: "error",
@@ -46,7 +46,7 @@ export default function ReviewForm({
           text: "Tu valoración ha sido enviada con éxito. Espera a que sea aprobada.",
         });
         setRating(0);
-        // Reset form
+        // Reiniciar formulario
         const form = document.querySelector("form") as HTMLFormElement;
         form.reset();
       } else {
@@ -85,7 +85,7 @@ export default function ReviewForm({
       )}
 
       <form action={handleSubmit} className="space-y-6">
-        {/* Rating Field */}
+        {/* Campo de Puntuación */}
         <div className="form-group">
           <label className="block text-sm font-medium text-black/70 mb-2">
             Tu puntuación *
@@ -115,7 +115,7 @@ export default function ReviewForm({
           </div>
         </div>
 
-        {/* Comment Field */}
+        {/* Campo de Comentario */}
         <div className="form-group">
           <label
             htmlFor="review"
@@ -132,7 +132,7 @@ export default function ReviewForm({
           ></textarea>
         </div>
 
-        {/* Name & Email Fields */}
+        {/* Campos de Nombre y Email */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="form-group">
             <label
@@ -166,7 +166,7 @@ export default function ReviewForm({
           </div>
         </div>
 
-        {/* Checkbox */}
+        {/* Casilla de Verificación */}
         <div className="form-group flex items-start gap-3">
           <input
             type="checkbox"
@@ -180,7 +180,7 @@ export default function ReviewForm({
           </label>
         </div>
 
-        {/* Submit Button */}
+        {/* Botón de Envío */}
         <button
           type="submit"
           disabled={isSubmitting}

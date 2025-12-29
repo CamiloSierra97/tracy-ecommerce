@@ -1,5 +1,10 @@
-export const formatPrice = (amount: number | string): string => {
-  const value = typeof amount === "string" ? parseFloat(amount) : amount;
+/**
+ * Formatear un precio (cadena/número) al formato de Peso Colombiano
+ * @param price - El precio como cadena o número
+ * @returns Cadena de precio formateada (e.g., "$ 50.000")
+ */
+export const formatPrice = (price: number | string): string => {
+  const value = typeof price === "string" ? parseFloat(price) : price;
 
   if (isNaN(value)) {
     return "$ 0";

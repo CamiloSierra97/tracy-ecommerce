@@ -28,11 +28,11 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("search")?.toLowerCase() || "";
 
-  // 🌟 Client-Side Filtering & Sorting Logic
+  // 🌟 Lógica de Filtrado y Ordenamiento del Cliente
   const sortedProducts = useMemo(() => {
     let items = [...products];
 
-    // 1. Filter by Search Term
+    // 1. Filtrar por Término de Búsqueda
     if (searchTerm) {
       items = items.filter(
         (p) =>
@@ -42,7 +42,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
       );
     }
 
-    // 2. Sort
+    // 2. Ordenar
     if (sortBy === "price_asc") {
       return items.sort(
         (a, b) => (Number(a.price) || 0) - (Number(b.price) || 0)
@@ -80,7 +80,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
         </div>
       )}
 
-      {/* Toolbar inspired by reference image */}
+      {/* Barra de herramientas inspirada en imagen de referencia */}
       <div className="page-products__toolbar flex flex-col md:flex-row justify-between items-center border-b border-black pb-4 mb-8 text-sm text-black font-medium relative z-20">
         <div className="page-products__count flex items-center gap-4 mb-4 md:mb-0 w-full md:w-auto">
           <span className="page-products__count-text text-black text-xs tracking-wide">
@@ -89,7 +89,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
         </div>
 
         <div className="page-products__actions flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
-          {/* Column Switcher */}
+          {/* Selector de Columnas */}
           <div className="page-products__layout-switch flex items-center gap-2">
             <button
               onClick={() => setGridCols(2)}
@@ -110,7 +110,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
             </button>
           </div>
 
-          {/* Sort Dropdown */}
+          {/* Desplegable de Ordenar */}
           <div className="page-products__sort relative">
             <div
               className="page-products__sort-trigger flex items-center gap-2 cursor-pointer hover:text-burgundy transition-colors group select-none"
@@ -131,7 +131,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
               />
             </div>
 
-            {/* Dropdown Menu */}
+            {/* Menú Desplegable */}
             <AnimatePresence>
               {isSortOpen && (
                 <motion.div
@@ -161,7 +161,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
             </AnimatePresence>
           </div>
 
-          {/* Filter Button */}
+          {/* Botón de Filtro */}
           <button
             onClick={() => setIsFilterOpen(!isFilterOpen)}
             className={`page-products__filter-btn uppercase tracking-wider hover:text-burgundy focus:outline-none rounded-sm px-1 transition-colors font-semibold flex items-center gap-1 ${
@@ -176,7 +176,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
         </div>
       </div>
 
-      {/* Filter Panel (Expandable) */}
+      {/* Panel de Filtros (Expandible) */}
       <AnimatePresence>
         {isFilterOpen && (
           <motion.div
@@ -186,7 +186,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
             className="page-products__filters overflow-hidden mb-8 bg-ivory/50 backdrop-blur-sm border border-gold/10 rounded-xl"
           >
             <div className="page-products__filters-content p-6 grid grid-cols-1 md:grid-cols-4 gap-8">
-              {/* Placeholder Filters */}
+              {/* Filtros de Marcador de Posición */}
               <div className="filter-group">
                 <h4 className="filter-group__title font-serif text-burgundy mb-3">
                   Categoría
@@ -257,7 +257,7 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
         </AnimatePresence>
       </ul>
 
-      {/* Quick View Modal */}
+      {/* Modal de Vista Rápida */}
       <QuickViewModal
         product={selectedProduct}
         isOpen={!!selectedProduct}
@@ -288,7 +288,7 @@ function ProductCard({
         transition={{ duration: 0.4 }}
         className="product-card__content h-full flex flex-col relative"
       >
-        {/* Image Area */}
+        {/* Área de Imagen */}
         <div className="product-card__image-container relative aspect-3/4 overflow-hidden rounded-3xl shadow-sm transition-all duration-500 ease-out group-hover:shadow-xl group-hover:border-gold group-hover:shadow-burgundy-light border border-transparent group-hover:scale-[1.01] transform">
           <Link
             href={`/productos/${product.slug ?? product.id}`}
@@ -298,7 +298,7 @@ function ProductCard({
             {isImageLoading && (
               <div className="product-card__skeleton absolute inset-0 z-10 bg-gray-200 animate-pulse" />
             )}
-            {/* Main Image */}
+            {/* Imagen Principal */}
             <Image
               src={product.images?.[0]?.src ?? "/placeholder.png"}
               alt={product.name}
@@ -312,7 +312,7 @@ function ProductCard({
               }`}
             />
 
-            {/* Secondary Image (Hover Effect) */}
+            {/* Imagen Secundaria (Efecto Hover) */}
             {product.images?.[1] && (
               <Image
                 src={product.images[1].src}
@@ -324,11 +324,11 @@ function ProductCard({
               />
             )}
 
-            {/* Dark Overlay on Hover */}
+            {/* Superposición Oscura al Hover */}
             <div className="product-card__overlay absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
           </Link>
 
-          {/* Hover Zoom Button - Top Left Corner */}
+          {/* Botón de Zoom Hover - Esquina Superior Izquierda */}
           <div className="product-card__action-zoom absolute top-4 left-4 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 z-30">
             <button
               onClick={(e) => {
@@ -344,7 +344,7 @@ function ProductCard({
             </button>
           </div>
 
-          {/* Hover Add to Cart Button - Top Right Corner */}
+          {/* Botón Agregar al Carrito Hover - Esquina Superior Derecha */}
           <div className="product-card__action-cart absolute top-4 right-4 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 z-30 delay-75">
             <button
               onClick={(e) => {
@@ -374,7 +374,7 @@ function ProductCard({
           </Link>
         </div>
 
-        {/* Product Info */}
+        {/* Información del Producto */}
         <div className="product-card__info mt-4 px-1 space-y-1">
           <Link
             href={`/productos/${product.slug ?? product.id}`}

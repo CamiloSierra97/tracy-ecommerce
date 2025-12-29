@@ -20,7 +20,7 @@ export async function GET(request: Request) {
       );
     }
 
-    // Auth Header
+    // Cabecera de Autenticación
     const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
       "base64"
     );
@@ -30,7 +30,7 @@ export async function GET(request: Request) {
       apiUrl += `&slug=${slug}`;
     }
 
-    // Configurar opciones de fetch
+    // Configurar opciones de petición
     const options: RequestInit = {
       headers: {
         Authorization: `Basic ${auth}`,
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
 
     if (!response.ok) {
       throw new Error(
-        `WooCommerce API Error: ${response.status} ${response.statusText}`
+        `Error API WooCommerce: ${response.status} ${response.statusText}`
       );
     }
 
@@ -75,7 +75,7 @@ export async function GET(request: Request) {
     console.error("=====================================");
     console.error("=====================================");
     console.error("🔥 ERROR DE WOOCOMMERCE:", error);
-    // Log intent for debugging
+    // Loguear intento para depuración
     console.error(
       "Intento de conexión a:",
       config.woocommerce.url ? config.woocommerce.url : "URL NO DEFINIDA"

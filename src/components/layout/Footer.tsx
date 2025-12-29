@@ -1,4 +1,4 @@
-// Footer component (moved to layout folder)
+// Componente Footer (movido a la carpeta layout)
 import Link from "next/link";
 
 export default function Footer() {

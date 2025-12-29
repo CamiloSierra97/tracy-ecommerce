@@ -18,10 +18,10 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
   return (
     <article className="product-details max-w-[1400px] mx-auto px-4 md:px-8 py-10">
       <div className="product-details__grid grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20">
-        {/* --- Left Column: Images (Client Component) --- */}
+        {/* --- Columna Izquierda: Imágenes (Componente Cliente) --- */}
         <ProductGallery images={images} productName={product.name} />
 
-        {/* --- Right Column: Info (Server Component) --- */}
+        {/* --- Columna Derecha: Información (Componente Servidor) --- */}
         <div className="product-details__info flex flex-col sticky top-24 self-start">
           <div className="product-details__badge-container mb-2">
             <span className="product-details__badge text-sm uppercase tracking-widest text-gray-500 font-medium font-secondary">
@@ -48,11 +48,11 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           </div>
 
           <div className="product-details__actions flex flex-col gap-6 border-t border-gray-100 pt-8">
-            {/* Add to Cart Button (Client Component) */}
+            {/* Botón Agregar al Carrito (Componente Cliente) */}
             <AddToCartBtn product={product} />
           </div>
 
-          {/* Additional Info / Trust Badges */}
+          {/* Información Adicional / Insignias de Confianza */}
           <div className="product-details__trust-badges grid grid-cols-2 gap-4 mt-10 p-6 bg-gray-50 rounded-xl border border-gray-100">
             <div className="trust-badge flex items-center gap-3">
               <div className="trust-badge__icon-box size-10 rounded-full bg-ivory flex items-center justify-center text-burgundy shadow-sm">

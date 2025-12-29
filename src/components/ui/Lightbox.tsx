@@ -21,7 +21,7 @@ export default function Lightbox({
   const [zoomStyle, setZoomStyle] = useState({ scale: 1, origin: "50% 50%" });
   const boundsRef = useRef<DOMRect | null>(null);
 
-  // Lock scroll when open
+  // Bloquear el scroll cuando está abierto
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("no-scroll");
@@ -36,7 +36,7 @@ export default function Lightbox({
     };
   }, [isOpen]);
 
-  // Reset zoom on open & handle resize
+  // Restablecer zoom al abrir y manejar redimensionamiento
   useEffect(() => {
     if (isOpen) {
       setZoomStyle({ scale: 1, origin: "50% 50%" });
@@ -83,21 +83,21 @@ export default function Lightbox({
           className="lightbox fixed inset-0 z-200 flex items-center justify-center bg-black/95 backdrop-blur-sm"
           onClick={onClose}
         >
-          {/* Close Button */}
+          {/* Botón de Cerrar */}
           <button
             onClick={onClose}
-            className="absolute top-6 right-6 text-white/70 hover:text-white z-50 p-2 transition-colors"
+            className="lightbox__close-btn absolute top-6 right-6 text-white/70 hover:text-white z-50 p-2 transition-colors"
             aria-label="Cerrar zoom"
           >
             <Icon name="icon-close" size={40} />
           </button>
 
-          {/* Hint Overlay */}
-          <div className="absolute top-6 left-6 text-white/50 text-sm pointer-events-none z-50 font-secondary">
+          {/* Superposición de Pista */}
+          <div className="lightbox__hint absolute top-6 left-6 text-white/50 text-sm pointer-events-none z-50 font-secondary">
             Mueve el mouse para explorar • Rueda para zoom
           </div>
 
-          {/* Image Container */}
+          {/* Contenedor de Imagen */}
           <div
             className="lightbox__content relative w-full h-full overflow-hidden flex items-center justify-center p-4 cursor-zoom-in"
             onMouseEnter={handleMouseEnter}
@@ -108,7 +108,7 @@ export default function Lightbox({
             }}
           >
             <motion.div
-              className="relative w-full h-full max-w-7xl max-h-[90vh] flex items-center justify-center"
+              className="lightbox__image-wrapper relative w-full h-full max-w-7xl max-h-[90vh] flex items-center justify-center"
               animate={{
                 scale: zoomStyle.scale,
               }}

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ShopPage() {
-  // SSR Prefetching for Shop Page
+  // Pre-carga SSR para la página de Tienda
   let initialData;
   try {
     initialData = await WooCommerceService.getProducts({
@@ -21,7 +21,7 @@ export default async function ShopPage() {
   }
 
   return (
-    <main className="principal__main">
+    <main id="main-content" className="principal__main">
       <Products
         title="Tienda"
         basePath="/tienda"

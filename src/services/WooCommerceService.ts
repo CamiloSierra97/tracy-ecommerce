@@ -40,7 +40,7 @@ import config from "@/lib/config";
 
 const WooCommerceService = {
   getProductReviews: async (productId: number): Promise<Review[]> => {
-    // SERVER-SIDE: Direct Fetch to WooCommerce
+    // SOLO LADO DEL SERVIDOR: Petición directa a WooCommerce
     if (typeof window === "undefined") {
       const { url, consumerKey, consumerSecret } = config.woocommerce;
       if (url && consumerKey && consumerSecret) {
@@ -60,11 +60,11 @@ const WooCommerceService = {
             return await response.json();
           }
         } catch (error) {
-          console.error("WooCommerce Reviews Fetch Error:", error);
+          console.error("Error al obtener reseñas de WooCommerce:", error);
         }
       }
     }
-    // Client-side fallback (if needed, though typically SSR for SEO)
+    // Fallback del lado del cliente (si es necesario, aunque típicamente SSR para SEO)
     return [];
   },
 
@@ -105,7 +105,7 @@ const WooCommerceService = {
             };
           }
         } catch (error) {
-          console.error("WooCommerce Review Submission Error:", error);
+          console.error("Error al enviar reseña a WooCommerce:", error);
           return { success: false, message: "Error de conexión" };
         }
       }
@@ -117,7 +117,7 @@ const WooCommerceService = {
   },
 
   getProducts: async ({ page = 1, per_page = 12 }): Promise<ProductsPage> => {
-    // SERVER-SIDE: Direct Fetch to WooCommerce (Faster, fixes internal routing issues)
+    // SOLO LADO DEL SERVIDOR: Petición directa a WooCommerce (Más rápido, corrige problemas de enrutamiento interno)
     if (typeof window === "undefined") {
       const { url, consumerKey, consumerSecret } = config.woocommerce;
       if (url && consumerKey && consumerSecret) {
@@ -134,7 +134,7 @@ const WooCommerceService = {
             `${url}/wp-json/wc/v3/products?${params.toString()}`,
             {
               headers: { Authorization: `Basic ${auth}` },
-              next: { revalidate: 60 }, // Optional: Add caching for server calls
+              next: { revalidate: 60 }, // Opcional: Agregar caché para llamadas al servidor
             }
           );
 
@@ -148,12 +148,12 @@ const WooCommerceService = {
             };
           }
         } catch (error) {
-          console.error("WooCommerce Direct Fetch Error:", error);
+          console.error("Error en petición directa a WooCommerce:", error);
         }
       }
     }
 
-    // CLIENT-SIDE (or fallback): Fetch via Internal API
+    // LADO DEL CLIENTE (o fallback): Petición vía API Interna
     const params = new URLSearchParams({
       page: String(page),
       per_page: String(per_page),
@@ -162,7 +162,7 @@ const WooCommerceService = {
     const response = await fetch(`/api/products?${params.toString()}`);
 
     if (!response.ok) {
-      throw new Error(`Error fetching products: ${response.statusText}`);
+      throw new Error(`Error obteniendo productos: ${response.statusText}`);
     }
 
     const data = await response.json();
@@ -175,7 +175,7 @@ const WooCommerceService = {
   },
 
   getProductBySlug: async (slug: string): Promise<Product | null> => {
-    // SERVER-SIDE: Direct Fetch to WooCommerce
+    // SOLO LADO DEL SERVIDOR: Petición directa a WooCommerce
     if (typeof window === "undefined") {
       const { url, consumerKey, consumerSecret } = config.woocommerce;
       if (url && consumerKey && consumerSecret) {
@@ -196,12 +196,15 @@ const WooCommerceService = {
             return data && data.length > 0 ? data[0] : null;
           }
         } catch (error) {
-          console.error("WooCommerce Direct Fetch Error (Slug):", error);
+          console.error(
+            "Error en petición directa a WooCommerce (Slug):",
+            error
+          );
         }
       }
     }
 
-    // CLIENT-SIDE (or fallback): Fetch via Internal API
+    // LADO DEL CLIENTE (o fallback): Petición vía API Interna
     const params = new URLSearchParams({ slug });
     const response = await fetch(`/api/products?${params.toString()}`);
 
@@ -214,7 +217,7 @@ const WooCommerceService = {
   registerCustomer: async (
     data: RegisterCustomerData
   ): Promise<{ success: boolean; message?: string; error?: string }> => {
-    // SERVER-SIDE ONLY
+    // SOLO LADO DEL SERVIDOR
     if (typeof window === "undefined") {
       const { url, consumerKey, consumerSecret } = config.woocommerce;
       if (url && consumerKey && consumerSecret) {
@@ -235,11 +238,11 @@ const WooCommerceService = {
           const responseData = await response.json();
 
           if (!response.ok) {
-            console.error("WooCommerce Registration Error:", responseData);
+            console.error("Error de registro en WooCommerce:", responseData);
             return {
               success: false,
               message: responseData.message || "Error al registrar usuario.",
-              error: responseData.message, // Map for compatibility if needed
+              error: responseData.message, // Mapear para compatibilidad si es necesario
             };
           }
 
@@ -248,7 +251,7 @@ const WooCommerceService = {
             message: "Cuenta creada exitosamente. Por favor inicia sesión.",
           };
         } catch (error) {
-          console.error("Registration Exception:", error);
+          console.error("Excepción en registro:", error);
           return {
             success: false,
             message: "Error de conexión con el servidor.",
@@ -260,7 +263,7 @@ const WooCommerceService = {
     return {
       success: false,
       message: "Configuración de servidor no disponible",
-      error: "Server configuration missing",
+      error: "Falta configuración del servidor",
     };
   },
 
@@ -276,7 +279,7 @@ const WooCommerceService = {
       const { url } = config.woocommerce;
       if (url) {
         try {
-          // Note: JWT Auth plugin typically requires username/email and password
+          // Nota: El plugin JWT Auth típicamente requiere username/email y password
           const res = await fetch(`${url}/wp-json/jwt-auth/v1/token`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -292,21 +295,21 @@ const WooCommerceService = {
             return {
               success: true,
               user: {
-                id: data.user_email, // Using email as ID or could use data.user_id if available and consistent
+                id: data.user_email, // Usando email como ID o podría usar data.user_id si está disponible y es consistente
                 name: data.user_display_name,
                 email: data.user_email,
-                // image: data.user_avatar // Add if available
+                // image: data.user_avatar // Agregar si está disponible
               },
             };
           }
 
-          console.error("WP Auth Failed:", data);
+          console.error("Fallo de Autenticación WP:", data);
           return {
             success: false,
             message: "Credenciales inválidas",
           };
         } catch (error) {
-          console.error("Login Exception:", error);
+          console.error("Excepción de Inicio de Sesión:", error);
           return {
             success: false,
             message: "Error de conexión",
@@ -314,7 +317,7 @@ const WooCommerceService = {
         }
       }
     }
-    return { success: false, message: "Server configuration missing" };
+    return { success: false, message: "Falta configuración del servidor" };
   },
 };
 

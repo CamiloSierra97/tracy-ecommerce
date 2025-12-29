@@ -26,7 +26,7 @@ export const inter = Inter({
 // 4. Fuente normal Principal
 export const roboto = Roboto({
   subsets: ["latin"],
-  weight: ["400", "700"], // Added weights usually needed for Roboto
+  weight: ["400", "700"], // Se agregaron pesos usualmente necesarios para Roboto
   variable: "--font-Roboto",
   display: "swap",
 });

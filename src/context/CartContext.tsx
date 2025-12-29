@@ -10,7 +10,7 @@ import {
 import { Product } from "@/services/WooCommerceService";
 import Toast from "@/components/ui/Toast";
 
-// Extend Product to include quantity for CartItem
+// Extender Product para incluir cantidad para CartItem
 export interface CartItem extends Product {
   quantity: number;
 }
@@ -38,20 +38,20 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // Load cart from localStorage on mount
+  // Cargar carrito desde localStorage al montar
   useEffect(() => {
     const savedCart = localStorage.getItem("tracy_cart");
     if (savedCart) {
       try {
         setCartItems(JSON.parse(savedCart));
       } catch (error) {
-        console.error("Failed to parse cart from localStorage", error);
+        console.error("Error al analizar el carrito de localStorage", error);
       }
     }
     setIsLoaded(true);
   }, []);
 
-  // Save cart to localStorage whenever it changes
+  // Guardar carrito en localStorage cuando cambie
   useEffect(() => {
     if (isLoaded) {
       localStorage.setItem("tracy_cart", JSON.stringify(cartItems));
@@ -136,7 +136,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
+    throw new Error("useCart debe ser usado dentro de un CartProvider");
   }
   return context;
 };
