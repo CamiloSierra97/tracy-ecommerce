@@ -21,12 +21,7 @@ export default function StarRating({
     if (clampedRating >= starValue) {
       return "full";
     } else if (clampedRating >= starValue - 0.5) {
-      // En esta implementación simple, trataremos la mitad como vacía o llena según la preferencia de diseño
-      // Por ahora, mantengámoslo simple: si >= x.5, es aproximadamente lleno visualmente o podemos usar un ícono de media estrella si está disponible.
-      // Dado que solo tenemos 'icon-star' (generalmente lleno), nos quedaremos con la lógica lleno/vacío u opacidad.
-      // Idealmente, tendríamos 'icon-star-half', pero asumamos que 'icon-star' es lleno.
-      // Imitaremos "lleno" por ahora para cualquier cosa >= umbral de 0.5.
-      return "full";
+      return "half";
     } else {
       return "empty";
     }
@@ -41,9 +36,15 @@ export default function StarRating({
       {stars.map((type, i) => (
         <span key={i} className="star-rating__star text-golden">
           <Icon
-            name={type === "full" ? "icon-filled-star" : "icon-notfilled-star"}
+            name={
+              type === "full"
+                ? "icon-filled-star"
+                : type === "half"
+                ? "icon-half-star"
+                : "icon-notfilled-star"
+            }
             size={size}
-            className={type === "full" ? "" : "text-black/50"}
+            className={type === "empty" ? "text-black/50" : ""}
           />
         </span>
       ))}

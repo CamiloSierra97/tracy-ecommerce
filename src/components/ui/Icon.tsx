@@ -36,7 +36,7 @@ const Icon: React.FC<IconProps> = ({
       {...ariaProps}
       {...props}
     >
-      <use href={`/Sprite.svg?v=2#${name}`} />
+      <use href={`/Sprite.svg#${name}`} />
     </svg>
   );
 };
