@@ -3,9 +3,14 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { AuthError } from "next-auth"; // Import type if possible, or we check string code
+import { useRouter } from "next/navigation";
+import { useUI } from "@/context/UIContext";
 import Icon from "@/components/ui/Icon";
+import ButtonSpinner from "@/components/ui/ButtonSpinner";
 
 export default function LoginForm() {
+  const router = useRouter();
+  const { closeAuth, showToast } = useUI();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -23,13 +28,13 @@ export default function LoginForm() {
       });
 
       if (result?.error) {
-        // Manejar error (next-auth v5 retorna undefined en éxito si redirect:false, o un objeto de error)
         console.error(result.error);
         setError("Usuario y/o contraseña equivocada");
       } else {
-        // éxito, el modal debería actuar en consecuencia (quizás cerrarse, pero la página se refrescará si la sesión se actualiza)
-        // Por ahora solo actualicemos la página
-        window.location.reload();
+        // éxito
+        showToast("¡Bienvenido de nuevo!");
+        closeAuth();
+        router.refresh();
       }
     } catch (error) {
       if (
@@ -104,9 +109,16 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="login-form__submit-btn btn-animate w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
+          className="login-form__submit-btn btn-animate w-full bg-burgundy text-white py-3 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-70 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold flex justify-center items-center gap-2 rounded-sm"
         >
-          {isLoading ? "Cargando..." : "Entrar"}
+          {isLoading ? (
+            <>
+              <ButtonSpinner />
+              <span>Iniciando...</span>
+            </>
+          ) : (
+            "Entrar"
+          )}
         </button>
       </form>
 

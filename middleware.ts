@@ -4,10 +4,23 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   // Vercel proporciona información de geolocalización en el header x-vercel-ip-country
   const country = request.headers.get("x-vercel-ip-country");
+  const userAgent = request.headers.get("user-agent")?.toLowerCase() || "";
 
-  // Permitir acceso solo desde Colombia (código país CO)
+  // Lista de bots comunes para permitir indexación
+  const isBot =
+    userAgent.includes("googlebot") ||
+    userAgent.includes("bingbot") ||
+    userAgent.includes("facebookexternalhit") ||
+    userAgent.includes("twitterbot") ||
+    userAgent.includes("linkedinbot") ||
+    userAgent.includes("pinterest") ||
+    userAgent.includes("slack") ||
+    userAgent.includes("whatsapp") ||
+    userAgent.includes("discordbot");
+
+  // Permitir acceso solo desde Colombia (código país CO) pero permitir bots
   // Si no hay información de país (desarrollo local), permitir acceso
-  if (country && country !== "CO") {
+  if (!isBot && country && country !== "CO") {
     // Redirigir a página de región no disponible
     return NextResponse.redirect(new URL("/region-no-disponible", request.url));
   }

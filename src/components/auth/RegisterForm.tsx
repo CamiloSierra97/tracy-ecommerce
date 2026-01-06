@@ -2,27 +2,51 @@
 
 import { useState } from "react";
 import { registerUser } from "@/actions/auth-actions";
+import ButtonSpinner from "@/components/ui/ButtonSpinner";
+import { useUI } from "@/context/UIContext";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
+  const { closeAuth, showToast } = useUI();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-    setSuccess("");
 
     const formData = new FormData(e.currentTarget);
-    const form = e.currentTarget; // Capture form reference before async operation
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
     const result = await registerUser(null, formData);
 
     if (result.error) {
       setError(result.error);
     } else if (result.success) {
-      setSuccess(result.message!);
-      form.reset();
+      // Auto-login
+      try {
+        const loginResult = await signIn("credentials", {
+          email,
+          password,
+          redirect: false,
+        });
+
+        if (loginResult?.error) {
+          // Si el login falla aunque el registro fue exitoso (raro), mostrar mensaje genérico
+          showToast("Cuenta creada. Por favor inicia sesión.");
+        } else {
+          showToast(result.message || "¡Bienvenido! Cuenta creada con éxito");
+          closeAuth();
+          router.refresh();
+        }
+      } catch (error) {
+        console.error("Auto-login failed:", error);
+        showToast("Cuenta creada. Por favor inicia sesión.");
+      }
     }
 
     setIsLoading(false);
@@ -39,15 +63,7 @@ export default function RegisterForm() {
           {error}
         </div>
       )}
-      {success && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="register-form__alert register-form__alert--success bg-green-50 text-green-800 p-3 text-sm rounded-sm border border-green-100"
-        >
-          {success}
-        </div>
-      )}
+
       <form
         onSubmit={handleSubmit}
         className="register-form__form flex flex-col gap-4"
@@ -115,9 +131,16 @@ export default function RegisterForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="register-form__submit-btn btn-animate w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
+          className="register-form__submit-btn btn-animate w-full bg-burgundy text-white py-3 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-70 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold flex justify-center items-center gap-2 rounded-sm"
         >
-          {isLoading ? "Registrarse" : "Crear Cuenta"}
+          {isLoading ? (
+            <>
+              <ButtonSpinner />
+              <span>Registrando...</span>
+            </>
+          ) : (
+            "Crear Cuenta"
+          )}
         </button>
       </form>
     </div>

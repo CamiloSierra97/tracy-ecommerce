@@ -7,16 +7,34 @@ interface UIContextType {
   openAuth: () => void;
   closeAuth: () => void;
   toggleAuth: () => void;
+  toast: { message: string | null; isVisible: boolean };
+  showToast: (message: string) => void;
+  hideToast: () => void;
 }
 
 const UIContext = createContext<UIContextType | undefined>(undefined);
 
 export const UIProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
+  const [toast, setToast] = useState<{
+    message: string | null;
+    isVisible: boolean;
+  }>({
+    message: null,
+    isVisible: false,
+  });
 
   const openAuth = () => setIsAuthOpen(true);
   const closeAuth = () => setIsAuthOpen(false);
   const toggleAuth = () => setIsAuthOpen((prev) => !prev);
+
+  const showToast = (message: string) => {
+    setToast({ message, isVisible: true });
+  };
+
+  const hideToast = () => {
+    setToast((prev) => ({ ...prev, isVisible: false }));
+  };
 
   return (
     <UIContext.Provider
@@ -25,6 +43,9 @@ export const UIProvider = ({ children }: { children: ReactNode }) => {
         openAuth,
         closeAuth,
         toggleAuth,
+        toast,
+        showToast,
+        hideToast,
       }}
     >
       {children}

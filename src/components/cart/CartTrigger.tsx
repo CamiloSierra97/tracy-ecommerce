@@ -15,7 +15,7 @@ export default function CartTrigger() {
     >
       <Icon name="icon-bag" size={24} className="cart-trigger__icon" />
       {cartCount > 0 && (
-        <span className="cart-trigger__badge absolute -top-1 -right-2 text-white font-extrabold text-sm drop-shadow-md">
+        <span className="cart-trigger__badge absolute -top-1 right-1 text-white font-extrabold text-sm drop-shadow-md">
           {cartCount}
         </span>
       )}

@@ -1,77 +1,142 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/ui/Icon";
 import { X } from "lucide-react";
 
+// Mock de sugerencias para demostración
+const SUGGESTIONS = [
+  "Lencería",
+  "Batas de Seda",
+  "Pijamas",
+  "Ropa Interior Hombre",
+  "Colección Novias",
+  "Accesorios",
+];
+
 export default function AnimatedSearch() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Clases condicionales: Solo mostrar borde inferior al pasar el mouse cuando la búsqueda está cerrada
   const containerClasses = isSearchOpen
     ? "text-gold"
     : "text-gold border-b border-b-transparent hover:text-light-gold hover:border-b-light-gold";
 
-  const handleSearch = () => {
-    if (!searchTerm.trim()) return;
+  const handleSearch = (term: string) => {
+    const query = term || searchTerm;
+    if (!query.trim()) return;
 
-    // Empujar el término de búsqueda al parámetro de consulta de la URL
-    // Esto activará una re-renderización en los componentes que escuchan useSearchParams
-    router.push(`/?search=${encodeURIComponent(searchTerm)}`);
-
-    // Opcional: ¿Cerrar búsqueda o mantener abierta? Manteniendo abierta por ahora.
+    router.push(`/?search=${encodeURIComponent(query)}`);
+    // Opcional: cerrar al buscar
+    setIsSearchOpen(false);
+    setSearchTerm("");
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      handleSearch();
+      handleSearch(searchTerm);
     }
   };
 
   return (
     <div
       role="search"
-      className={`animated-search search-bar relative flex items-center h-full transition-all ${containerClasses}`}
+      className={`animated-search search-bar relative flex items-center h-full transition-colors duration-300 ${containerClasses}`}
     >
       <AnimatePresence>
         {isSearchOpen && (
-          <motion.input
-            initial={{ width: 0, opacity: 0, paddingRight: 0 }}
-            animate={{ width: 220, opacity: 1, paddingRight: "2.5rem" }}
-            exit={{ width: 0, opacity: 0, paddingRight: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            type="text"
-            placeholder="Buscar..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="animated-search__input absolute right-0 top-1/2 -translate-y-1/2 bg-ivory border border-gold/50 text-sm text-burgundy placeholder-burgundy/50 focus:outline-none focus:border-gold font-serif pl-4 pr-10 h-10 shadow-premium rounded-sm z-50"
-            aria-label="Buscar productos"
-            autoFocus
-            onBlur={() => {
-              // Solo cerrar si está vacío para permitir escribir
-              if (!searchTerm) setIsSearchOpen(false);
-            }}
-          />
+          <>
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 300, opacity: 1 }}
+              exit={{ width: 0, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-50 will-change-[width,opacity]"
+            >
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder="Buscar..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyDown={handleKeyDown}
+                className="w-full bg-ivory border border-gold text-sm text-burgundy placeholder-burgundy/50 focus:outline-none focus:border-gold font-serif pl-4 pr-10 h-10 rounded-t-sm shadow-premium"
+                aria-label="Buscar productos"
+                autoFocus
+                // Quitamos onBlur para manejar el cierre con un backdrop o botón explícito
+              />
+
+              {/* SUGGESTIONS DROPDOWN */}
+              {searchTerm.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute top-full left-0 w-full bg-ivory border-x border-b border-gold shadow-premium rounded-b-sm overflow-hidden"
+                >
+                  <div className="p-3">
+                    <p className="text-xs font-bold text-burgundy/70 tracking-widest mb-2 px-2 uppercase">
+                      Sugerencias
+                    </p>
+                    <ul className="flex flex-col">
+                      {SUGGESTIONS.filter((item) =>
+                        item.toLowerCase().includes(searchTerm.toLowerCase())
+                      ).map((item, index) => (
+                        <li key={index}>
+                          <button
+                            onClick={() => handleSearch(item)}
+                            className="w-full text-left px-2 py-2 text-sm text-burgundy hover:bg-gold/10 transition-colors font-serif"
+                          >
+                            {item}
+                          </button>
+                        </li>
+                      ))}
+                      {SUGGESTIONS.filter((item) =>
+                        item.toLowerCase().includes(searchTerm.toLowerCase())
+                      ).length === 0 && (
+                        <li className="px-2 py-2 text-sm text-burgundy/50 italic">
+                          No hay sugerencias
+                        </li>
+                      )}
+                    </ul>
+                  </div>
+                </motion.div>
+              )}
+            </motion.div>
+
+            {/* INVISIBLE BACKDROP to close when clicking outside */}
+            <div
+              className="fixed inset-0 z-40 bg-transparent"
+              onClick={() => {
+                setIsSearchOpen(false);
+                setSearchTerm("");
+              }}
+            />
+          </>
         )}
       </AnimatePresence>
+
       <button
         onClick={() => {
           if (isSearchOpen) {
-            // Si está abierta, hacer clic en el botón (X) la cierra
             setIsSearchOpen(false);
             setSearchTerm("");
           } else {
             setIsSearchOpen(true);
+            // Focus logic handled by autoFocus prop, but fallback relies on ref if needed
           }
         }}
-        onMouseDown={(e) => e.preventDefault()}
+        onMouseDown={(e) => {
+          // Prevent focus loss on input when clicking toggle button
+          if (isSearchOpen) e.preventDefault();
+        }}
         aria-label={isSearchOpen ? "Cerrar búsqueda" : "Buscar"}
-        className="animated-search__button hover:text-light-gold relative z-50 w-10 h-10 flex items-center justify-center"
+        className="animated-search__button hover:text-light-gold relative z-50 w-10 h-10 flex items-center justify-center transition-colors"
       >
         <AnimatePresence>
           {!isSearchOpen ? (
@@ -81,6 +146,7 @@ export default function AnimatedSearch() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
               transition={{ duration: 0.2 }}
+              className="will-change-transform"
             >
               <Icon
                 name="icon-search"

@@ -20,9 +20,11 @@ const FloatingButtons = dynamic(
   }
 );
 
+const Toast = dynamic(() => import("@/components/ui/Toast"), { ssr: false });
+
 export default function DynamicLayoutElements() {
   const { isOpen: isCartOpen } = useCart();
-  const { isAuthOpen } = useUI();
+  const { isAuthOpen, toast, hideToast } = useUI();
   const [bannerHeight, setBannerHeight] = useState(0);
 
   // Ocultar botones flotantes si algún modal está abierto
@@ -33,6 +35,11 @@ export default function DynamicLayoutElements() {
       <CartDrawer />
       <CookieBanner onHeightChange={setBannerHeight} />
       {shouldShowFloating && <FloatingButtons bottomOffset={bannerHeight} />}
+      <Toast
+        message={toast.message}
+        isVisible={toast.isVisible}
+        onClose={hideToast}
+      />
     </>
   );
 }

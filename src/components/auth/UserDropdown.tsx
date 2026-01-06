@@ -2,9 +2,12 @@
 
 import { useState, useRef, useEffect } from "react";
 import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useUI } from "@/context/UIContext";
 import Link from "next/link";
 import Icon from "@/components/ui/Icon";
 import Image from "next/image";
+import ButtonSpinner from "@/components/ui/ButtonSpinner";
 
 interface UserDropdownProps {
   user: {
@@ -16,7 +19,10 @@ interface UserDropdownProps {
 
 export default function UserDropdown({ user }: UserDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const router = useRouter();
+  const { showToast } = useUI();
 
   // Cierra el menú desplegable al hacer clic fuera de él
   useEffect(() => {
@@ -33,7 +39,18 @@ export default function UserDropdown({ user }: UserDropdownProps) {
   }, []);
 
   const handleLogout = async () => {
-    await signOut();
+    setIsLoggingOut(true);
+    try {
+      await signOut({ redirect: false });
+      showToast("Has cerrado sesión correctamente");
+      router.push("/");
+      router.refresh();
+      setIsOpen(false);
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      setIsLoggingOut(false);
+    }
   };
 
   const getFirstName = (name: string) => {
@@ -41,7 +58,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
   };
 
   return (
-    <div className="" ref={dropdownRef}>
+    <div className="md:relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="user-dropdown__trigger flex items-center gap-3 transition-opacity hover:opacity-80 group focus:outline-none relative z-50"
@@ -170,14 +187,19 @@ export default function UserDropdown({ user }: UserDropdownProps) {
         <div className="user-dropdown__logout-section p-4 md:p-1 mt-auto border-t border-gold/10 md:mt-0">
           <button
             onClick={handleLogout}
-            className="user-dropdown__logout-btn w-full flex items-center gap-4 px-4 py-3 text-base md:text-sm text-burgundy hover:bg-gold/10 hover:text-burgundy/70 transition-colors rounded-md group"
+            disabled={isLoggingOut}
+            className="user-dropdown__logout-btn w-full flex items-center gap-4 px-4 py-3 text-base md:text-sm text-burgundy hover:bg-gold/10 hover:text-burgundy/70 transition-colors rounded-md group disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <Icon
-              name="icon-close"
-              size={20}
-              className="text-burgundy group-hover:text-burgundy/70 transition-colors"
-            />
-            Cerrar Sesión
+            {isLoggingOut ? (
+              <ButtonSpinner className="text-burgundy" />
+            ) : (
+              <Icon
+                name="icon-close"
+                size={20}
+                className="text-burgundy group-hover:text-burgundy/70 transition-colors"
+              />
+            )}
+            {isLoggingOut ? "Cerrando..." : "Cerrar Sesión"}
           </button>
         </div>
       </div>
