@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import { useUI } from "@/context/UIContext";
 
@@ -26,6 +26,12 @@ export default function DynamicLayoutElements() {
   const { isOpen: isCartOpen } = useCart();
   const { isAuthOpen, toast, hideToast } = useUI();
   const [bannerHeight, setBannerHeight] = useState(0);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Esperar hasta que el componente esté montado en el cliente para evitar hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   // Ocultar botones flotantes si algún modal está abierto
   const shouldShowFloating = !isCartOpen && !isAuthOpen;
@@ -34,7 +40,9 @@ export default function DynamicLayoutElements() {
     <>
       <CartDrawer />
       <CookieBanner onHeightChange={setBannerHeight} />
-      {shouldShowFloating && <FloatingButtons bottomOffset={bannerHeight} />}
+      {isMounted && shouldShowFloating && (
+        <FloatingButtons bottomOffset={bannerHeight} />
+      )}
       <Toast
         message={toast.message}
         isVisible={toast.isVisible}

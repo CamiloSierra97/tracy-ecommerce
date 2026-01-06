@@ -36,8 +36,8 @@ export default function CookieBanner({
       }
     };
 
-    // Initial measure
-    updateHeight();
+    // Initial measure - defer to avoid forced reflow
+    requestAnimationFrame(updateHeight);
 
     // Observe changes
     const resizeObserver = new ResizeObserver(updateHeight);

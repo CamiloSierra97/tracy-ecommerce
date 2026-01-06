@@ -46,6 +46,7 @@ export default async function Page() {
               alt=""
               fill
               priority
+              {...({ fetchPriority: "high" } as any)}
               className="hero-section__patron__image object-cover object-center"
               sizes="100vw"
             />

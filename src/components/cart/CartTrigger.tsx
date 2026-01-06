@@ -1,10 +1,17 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
 import Icon from "@/components/ui/Icon";
 
 export default function CartTrigger() {
   const { openCart, cartCount } = useCart();
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Esperar hasta que el componente esté montado en el cliente para evitar hydration mismatch
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <button
@@ -14,7 +21,7 @@ export default function CartTrigger() {
       onClick={openCart}
     >
       <Icon name="icon-bag" size={24} className="cart-trigger__icon" />
-      {cartCount > 0 && (
+      {isMounted && cartCount > 0 && (
         <span className="cart-trigger__badge absolute -top-1 right-1 text-white font-extrabold text-sm drop-shadow-md">
           {cartCount}
         </span>

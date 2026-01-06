@@ -61,6 +61,7 @@ export default function RootLayout({
     <html
       lang="es"
       className={`${playfair.variable} ${roboto_serif.variable} ${roboto.variable}`}
+      suppressHydrationWarning
     >
       <body className="font-sans">
         <ReactQueryProvider>
