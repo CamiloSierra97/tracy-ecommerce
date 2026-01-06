@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { useUI } from "@/context/UIContext";
 
@@ -22,6 +23,7 @@ const FloatingButtons = dynamic(
 export default function DynamicLayoutElements() {
   const { isOpen: isCartOpen } = useCart();
   const { isAuthOpen } = useUI();
+  const [bannerHeight, setBannerHeight] = useState(0);
 
   // Ocultar botones flotantes si algún modal está abierto
   const shouldShowFloating = !isCartOpen && !isAuthOpen;
@@ -29,8 +31,8 @@ export default function DynamicLayoutElements() {
   return (
     <>
       <CartDrawer />
-      <CookieBanner />
-      {shouldShowFloating && <FloatingButtons />}
+      <CookieBanner onHeightChange={setBannerHeight} />
+      {shouldShowFloating && <FloatingButtons bottomOffset={bannerHeight} />}
     </>
   );
 }

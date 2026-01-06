@@ -34,6 +34,7 @@ export default function StarRating({
 
   return (
     <div
+      role="img"
       className={`star-rating flex gap-1 ${className}`}
       aria-label={`Calificación: ${rating} de 5 estrellas`}
     >

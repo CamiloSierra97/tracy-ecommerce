@@ -7,7 +7,11 @@ import Icon from "@/components/ui/Icon";
 import WhatsAppMenu from "./WhatsAppMenu";
 import PromoModal from "./PromoModal";
 
-export default function FloatingButtons() {
+export default function FloatingButtons({
+  bottomOffset = 0,
+}: {
+  bottomOffset?: number;
+}) {
   const [isWhatsAppOpen, setIsWhatsAppOpen] = useState(false);
   const [isPromoOpen, setIsPromoOpen] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -39,7 +43,10 @@ export default function FloatingButtons() {
 
   return (
     <>
-      <div className="floating-buttons fixed bottom-6 right-6 z-100 flex flex-col items-end gap-4 pointer-events-none">
+      <div
+        className="floating-buttons fixed right-6 z-90 flex flex-col items-end gap-4 pointer-events-none transition-all duration-300 ease-in-out"
+        style={{ bottom: `calc(1.5rem + ${bottomOffset}px)` }}
+      >
         {/* Capa del Menú de WhatsApp */}
         <div className="floating-buttons__menu-layer pointer-events-auto">
           <AnimatePresence>
@@ -60,33 +67,33 @@ export default function FloatingButtons() {
         <div className="floating-buttons__actions flex flex-col gap-4 pointer-events-auto items-center">
           {/* Botón de Promociones */}
           <motion.button
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsPromoOpen(true)}
-            className="floating-buttons__btn floating-buttons__btn--promo size-12 md:size-14 lg:size-16 rounded-full opacity-60 xl:opacity-100 hover:opacity-100 bg-gray text-black flex items-center justify-center shadow-lg relative group transition-all"
+            className="floating-buttons__btn floating-buttons__btn--promo sm:size-12 md:size-14 lg:size-16 rounded-full opacity-60 xl:opacity-100 hover:opacity-100 bg-gray text-black flex items-center justify-center shadow-lg relative group transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
             aria-label="Promociones y Regalos"
           >
             {/* Indicador de Notificación (Punto rojo) */}
             <span className="absolute top-0 right-0 size-3 md:size-4 font-bold flex items-center justify-center rounded-full border bg-burgundy-light border-burgundy text-burgundy text-[10px] md:text-xs">
               1
             </span>
-            <div className="size-6 md:size-8">
+            <div className="size-6 md:size-8 transition-transform duration-300 group-hover:rotate-15">
               <Icon name="icon-gift-float" className="size-full text-black" />
             </div>
           </motion.button>
 
           {/* Botón de WhatsApp */}
           <motion.button
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setIsWhatsAppOpen(!isWhatsAppOpen)}
-            className="floating-buttons__btn floating-buttons__btn--whatsapp size-12 md:size-14 lg:size-16 rounded-full opacity-60 xl:opacity-100 hover:opacity-100 bg-[#25D366] text-ivory flex items-center justify-center shadow-lg transition-all"
+            className="floating-buttons__btn floating-buttons__btn--whatsapp sm:size-12 md:size-14 lg:size-16 rounded-full opacity-60 xl:opacity-100 hover:opacity-100 bg-[#25D366] text-ivory flex items-center justify-center shadow-lg transition-all group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
             aria-label="Contactar por WhatsApp"
           >
             {isWhatsAppOpen ? (
               <X size={32} strokeWidth={2.5} />
             ) : (
-              <div className="size-6 md:size-8 lg:size-10">
+              <div className="size-6 md:size-8 lg:size-10 transition-transform duration-300 group-hover:rotate-15">
                 {/* Usando el ID del Sprite actualizado */}
                 <Icon
                   name="icon-whatsapp-float"
@@ -103,7 +110,7 @@ export default function FloatingButtons() {
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0 }}
-                whileHover={{ scale: 1.1 }}
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={scrollToTop}
                 className="floating-buttons__btn floating-buttons__btn--scroll rounded-lg size-8 md:size-10 bg-burgundy text-gold flex items-center justify-center shadow-lg transition-colors border border-burgundy-light/20"

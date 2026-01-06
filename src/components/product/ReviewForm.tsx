@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Icon from "@/components/ui/Icon";
 import { submitReview } from "@/app/actions/product-actions";
 
@@ -21,6 +21,9 @@ export default function ReviewForm({
     text: string;
   } | null>(null);
 
+  // Ref para el formulario
+  const formRef = useRef<HTMLFormElement>(null);
+
   const handleSubmit = async (formData: FormData) => {
     setIsSubmitting(true);
     setMessage(null);
@@ -35,6 +38,7 @@ export default function ReviewForm({
       return;
     }
 
+    // append manual values
     formData.append("productId", productId.toString());
     formData.append("rating", rating.toString());
 
@@ -46,9 +50,8 @@ export default function ReviewForm({
           text: "Tu valoración ha sido enviada con éxito. Espera a que sea aprobada.",
         });
         setRating(0);
-        // Reiniciar formulario
-        const form = document.querySelector("form") as HTMLFormElement;
-        form.reset();
+        // Reiniciar formulario de forma segura
+        formRef.current?.reset();
       } else {
         setMessage({
           type: "error",
@@ -74,6 +77,8 @@ export default function ReviewForm({
 
       {message && (
         <div
+          role="alert"
+          aria-live="assertive"
           className={`p-4 mb-6 text-sm rounded ${
             message.type === "success"
               ? "bg-light-gold text-black/70"
@@ -84,23 +89,33 @@ export default function ReviewForm({
         </div>
       )}
 
-      <form action={handleSubmit} className="space-y-6">
+      <form ref={formRef} action={handleSubmit} className="space-y-6">
         {/* Campo de Puntuación */}
         <div className="form-group">
           <label className="block text-sm font-medium text-black/70 mb-2">
             Tu puntuación *
           </label>
-          <div className="flex gap-1" onMouseLeave={() => setHoverRating(0)}>
+          <div
+            className="flex gap-1"
+            role="radiogroup"
+            aria-label="Valoración del producto"
+            onMouseLeave={() => setHoverRating(0)}
+          >
             {[1, 2, 3, 4, 5].map((star) => {
               const filled = (hoverRating || rating) >= star;
               return (
                 <button
                   key={star}
                   type="button"
-                  className="focus:outline-none transition-transform hover:scale-110"
+                  role="radio"
+                  aria-checked={rating === star}
+                  aria-label={`Puntuar ${star} estrellas`}
+                  aria-setsize={5}
+                  aria-posinset={star}
+                  className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold transition-transform hover:scale-110"
                   onClick={() => setRating(star)}
                   onMouseEnter={() => setHoverRating(star)}
-                  aria-label={`Puntuar ${star} estrellas`}
+                  aria-pressed={rating === star}
                 >
                   <Icon
                     name={filled ? "icon-filled-star" : "icon-notfilled-star"}

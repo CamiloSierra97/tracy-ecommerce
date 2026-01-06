@@ -21,8 +21,9 @@ const nextConfig = {
     return process.env.NODE_ENV === "development"
       ? [
           {
-            source: "/api/:path*",
-            destination: "https://shop.glowcosmeticoscol.com/wp-json/:path*",
+            source: "/api/products/:path*",
+            destination:
+              "https://shop.glowcosmeticoscol.com/wp-json/wc/v3/products/:path*",
           },
         ]
       : [];

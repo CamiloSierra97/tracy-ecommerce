@@ -31,22 +31,29 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
-          className="auth-modal__overlay absolute inset-0 bg-black/40 backdrop-blur-sm"
+          className="auth-modal__overlay absolute inset-0 glassmorphism"
+          aria-hidden="true"
         />
 
         <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Autenticación"
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           onClick={(e) => e.stopPropagation()}
-          className="auth-modal__container relative z-10 w-full max-w-md bg-white overflow-hidden shadow-2xl"
+          className="auth-modal__container relative z-10 w-full max-w-md bg-white/90 backdrop-blur-sm overflow-hidden shadow-premium"
         >
           {/* Encabezado */}
           <div className="auth-modal__header flex justify-between items-center p-4 border-b border-gold/20">
-            <div className="flex gap-6">
+            <div className="flex gap-6" role="tablist">
               <button
+                role="tab"
+                aria-selected={activeTab === "login"}
+                aria-controls="auth-panel"
                 onClick={() => setActiveTab("login")}
-                className={`auth-modal__tab-btn text-lg font-secondary transition-colors ${
+                className={`auth-modal__tab-btn text-lg font-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold rounded-sm ${
                   activeTab === "login"
                     ? "text-burgundy font-bold border-b-2 border-burgundy"
                     : "text-gray-600 hover:text-burgundy"
@@ -55,8 +62,11 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 Iniciar Sesión
               </button>
               <button
+                role="tab"
+                aria-selected={activeTab === "register"}
+                aria-controls="auth-panel"
                 onClick={() => setActiveTab("register")}
-                className={`auth-modal__tab-btn text-lg font-secondary transition-colors ${
+                className={`auth-modal__tab-btn text-lg font-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold rounded-sm ${
                   activeTab === "register"
                     ? "text-burgundy font-bold border-b-2 border-burgundy"
                     : "text-gray-600 hover:text-burgundy"
@@ -67,14 +77,19 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             </div>
             <button
               onClick={onClose}
-              className="auth-modal__close-btn text-gray-600 hover:text-burgundy"
+              className="auth-modal__close-btn text-gray-600 hover:text-burgundy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold rounded-full p-1"
+              aria-label="Cerrar modal"
             >
-              <X size={24} />
+              <X size={24} aria-hidden="true" />
             </button>
           </div>
 
           {/* Contenido */}
-          <div className="auth-modal__content p-6">
+          <div
+            id="auth-panel"
+            role="tabpanel"
+            className="auth-modal__content p-6"
+          >
             {activeTab === "login" ? <LoginForm /> : <RegisterForm />}
           </div>
         </motion.div>

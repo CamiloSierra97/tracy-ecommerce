@@ -62,7 +62,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const closeCart = () => setIsOpen(false);
   const toggleCart = () => setIsOpen((prev) => !prev);
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: Product, callbacks?: { onAdd?: () => void }) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.id === product.id);
       if (existingItem) {
@@ -79,10 +79,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setShowToast(true);
   };
 
-  const removeFromCart = (productId: number) => {
-    setCartItems((prevItems) =>
-      prevItems.filter((item) => item.id !== productId)
-    );
+  const removeFromCart = (
+    productId: number,
+    callbacks?: { onRemove?: () => void }
+  ) => {
+    setCartItems((prevItems) => {
+      const newItems = prevItems.filter((item) => item.id !== productId);
+      if (callbacks?.onRemove) callbacks.onRemove();
+      return newItems;
+    });
   };
 
   const clearCart = () => {

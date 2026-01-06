@@ -34,21 +34,22 @@ export default function AnimatedSearch() {
 
   return (
     <div
+      role="search"
       className={`animated-search search-bar relative flex items-center h-full transition-all ${containerClasses}`}
     >
       <AnimatePresence>
         {isSearchOpen && (
           <motion.input
             initial={{ width: 0, opacity: 0, paddingRight: 0 }}
-            animate={{ width: 180, opacity: 1, paddingRight: "0.5rem" }}
+            animate={{ width: 220, opacity: 1, paddingRight: "2.5rem" }}
             exit={{ width: 0, opacity: 0, paddingRight: 0 }}
-            transition={{ duration: 0.4, ease: "easeInOut" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             type="text"
             placeholder="Buscar..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="animated-search__input absolute right-0 top-1/2 -translate-y-1/2 bg-burgundy border rounded-full border-gold text-sm text-ivory placeholder-gold/70 focus:outline-none font-sans pl-3 pr-10 h-8 shadow-sm"
+            className="animated-search__input absolute right-0 top-1/2 -translate-y-1/2 bg-ivory border border-gold/50 text-sm text-burgundy placeholder-burgundy/50 focus:outline-none focus:border-gold font-serif pl-4 pr-10 h-10 shadow-premium rounded-sm z-50"
             aria-label="Buscar productos"
             autoFocus
             onBlur={() => {
@@ -70,7 +71,7 @@ export default function AnimatedSearch() {
         }}
         onMouseDown={(e) => e.preventDefault()}
         aria-label={isSearchOpen ? "Cerrar búsqueda" : "Buscar"}
-        className="animated-search__button hover:text-light-gold relative z-10 w-10 h-10 flex items-center justify-center"
+        className="animated-search__button hover:text-light-gold relative z-50 w-10 h-10 flex items-center justify-center"
       >
         <AnimatePresence>
           {!isSearchOpen ? (

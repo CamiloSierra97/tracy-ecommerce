@@ -20,7 +20,11 @@ export default function ProductGallery({
 
   return (
     <>
-      <div className="product-details__gallery flex flex-col-reverse lg:flex-row gap-6">
+      <div
+        role="region"
+        aria-label="Galería del producto"
+        className="product-details__gallery flex flex-col-reverse lg:flex-row gap-6"
+      >
         {/* Miniaturas (Escritorio: Izquierda, Móvil: Abajo) */}
         {images.length > 1 && (
           <div className="product-details__thumbnails flex lg:flex-col gap-4 overflow-x-auto lg:overflow-y-auto lg:max-h-[700px] scrollbar-hide py-2 lg:py-0">

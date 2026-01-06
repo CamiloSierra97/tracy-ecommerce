@@ -1,7 +1,6 @@
 // Componente Header (movido a la carpeta layout)
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import CartTrigger from "@/components/cart/CartTrigger";
 import UserMenu from "@/components/auth/UserMenu";
 import AnimatedSearch from "./AnimatedSearch";
@@ -15,9 +14,7 @@ const Header: React.FC = () => {
   ];
 
   return (
-    <header
-      className={`header h-header-size bg-burgundy overflow-hidden shadow-sm sticky top-0 z-50 font-serif`}
-    >
+    <header className="header h-header-size bg-burgundy shadow-sm sticky top-0 z-50 font-serif">
       <div className="header__content">
         {/* Contenido del encabezado: Logo y Navegación */}
         <div className="header__grid-layout grid grid-cols-3 items-center justify-center">
@@ -49,7 +46,10 @@ const Header: React.FC = () => {
 
             {/* 3. DRAWER (Panel Lateral) */}
             <nav className="header__nav menu__nav flex flex-col lg:flex-row items-center border-r border-gold lg:border-r-0 lg:border-r-transparent">
-              <ul className="header__nav-list flex flex-col lg:flex-row items-center gap-8 w-full px-6">
+              <ul
+                className="header__nav-list flex flex-col lg:flex-row items-center gap-8 w-full px-6"
+                role="menubar"
+              >
                 {mainLinks.map((link) => (
                   <li
                     key={link.href}
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
 
           {/* Espacio para íconos */}
           <div className="header__utility-container h-header-size p-4 md:p-8 flex items-center justify-center z-10">
-            <nav className="header__utility-nav flex items-center gap-3.5">
+            <nav className="header__utility-nav flex items-center gap-1 md:gap-3.5">
               {/* Búsqueda Animada (Isla de Componente Cliente) */}
               <div className="header__utility-item header__utility-item--search h-10 flex items-center transition-all">
                 <AnimatedSearch />

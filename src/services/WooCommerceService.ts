@@ -7,6 +7,9 @@ export interface Product {
   description?: string;
   images?: { id: number; src: string; name: string }[];
   status?: string;
+  on_sale?: boolean;
+  regular_price?: string;
+  sale_price?: string;
 }
 
 export interface ProductsPage {
@@ -239,10 +242,25 @@ const WooCommerceService = {
 
           if (!response.ok) {
             console.error("Error de registro en WooCommerce:", responseData);
+
+            // Tratamiento de errores y traducción
+            let errorMessage =
+              responseData.message || "Error al registrar usuario.";
+
+            if (errorMessage.includes("An account is already registered")) {
+              errorMessage =
+                "Ya existe una cuenta registrada con este correo electrónico. Por favor, inicia sesión.";
+            } else if (
+              errorMessage.includes("Username is already registered")
+            ) {
+              errorMessage =
+                "Este nombre de usuario ya está en uso. Por favor elige otro.";
+            }
+
             return {
               success: false,
-              message: responseData.message || "Error al registrar usuario.",
-              error: responseData.message, // Mapear para compatibilidad si es necesario
+              message: errorMessage,
+              error: errorMessage,
             };
           }
 
@@ -265,6 +283,41 @@ const WooCommerceService = {
       message: "Configuración de servidor no disponible",
       error: "Falta configuración del servidor",
     };
+  },
+
+  getCustomerByEmail: async (email: string): Promise<any | null> => {
+    // SOLO LADO DEL SERVIDOR
+    if (typeof window === "undefined") {
+      const { url, consumerKey, consumerSecret } = config.woocommerce;
+      if (url && consumerKey && consumerSecret) {
+        try {
+          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
+            "base64"
+          );
+          const endpoint = `${url.replace(
+            /\/$/,
+            ""
+          )}/wp-json/wc/v3/customers?email=${email}`;
+          console.log(
+            "[WooCommerceService] Checking customer:",
+            endpoint.split("?")[0]
+          ); // Log base URL for debugging
+
+          const response = await fetch(endpoint, {
+            headers: { Authorization: `Basic ${auth}` },
+            next: { revalidate: 0 },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            return data && data.length > 0 ? data[0] : null;
+          }
+        } catch (error) {
+          console.error("Error al buscar cliente por email:", error);
+        }
+      }
+    }
+    return null;
   },
 
   loginCustomer: async (credentials: {

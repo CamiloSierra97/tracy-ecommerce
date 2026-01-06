@@ -2,6 +2,7 @@
 
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { AuthError } from "next-auth"; // Import type if possible, or we check string code
 import Icon from "@/components/ui/Icon";
 
 export default function LoginForm() {
@@ -31,8 +32,16 @@ export default function LoginForm() {
         window.location.reload();
       }
     } catch (error) {
-      console.error("Login failed", error);
-      setError("Ocurrió un error inesperado");
+      if (
+        error instanceof Error &&
+        error.message.includes("CredentialsSignin")
+      ) {
+        // Fallo esperado por credenciales inválidas (NextAuth v5 beta)
+        setError("Usuario y/o contraseña equivocada");
+      } else {
+        console.error("Login failed", error);
+        setError("Ocurrió un error inesperado al iniciar sesión.");
+      }
     }
 
     setIsLoading(false);
@@ -74,7 +83,11 @@ export default function LoginForm() {
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-100 text-red-600 text-sm px-4 py-2 rounded-sm text-center">
+          <div
+            role="alert"
+            aria-live="assertive"
+            className="bg-red-50 border border-red-100 text-red-600 text-sm px-4 py-2 rounded-sm text-center"
+          >
             {error}
           </div>
         )}
@@ -82,7 +95,7 @@ export default function LoginForm() {
         <div className="flex justify-end">
           <button
             type="button"
-            className="login-form__forgot-password text-sm text-gray-500 hover:text-burgundy hover:underline"
+            className="login-form__forgot-password text-sm text-gray-500 hover:text-burgundy hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
           >
             Olvidé mi contraseña
           </button>
@@ -91,7 +104,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="login-form__submit-btn w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50"
+          className="login-form__submit-btn btn-animate w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
         >
           {isLoading ? "Cargando..." : "Entrar"}
         </button>

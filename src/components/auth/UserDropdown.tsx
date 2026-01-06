@@ -41,122 +41,142 @@ export default function UserDropdown({ user }: UserDropdownProps) {
   };
 
   return (
-    <div className="user-dropdown relative" ref={dropdownRef}>
+    <div className="" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="user-dropdown__trigger flex items-center gap-3 transition-opacity hover:opacity-80 group focus:outline-none"
+        className="user-dropdown__trigger flex items-center gap-3 transition-opacity hover:opacity-80 group focus:outline-none relative z-50"
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
         <div className="user-dropdown__greeting hidden md:flex flex-col items-end text-right">
-          <span className="user-dropdown__welcome-text text-xs text-burgundy/60 uppercase tracking-widest font-medium">
-            Bienvenido
-          </span>
-          <span className="user-dropdown__username text-gold font-serif font-medium text-lg leading-none">
-            ¡Hola, {user.name ? getFirstName(user.name) : "Usuario"}!
+          <span className="user-dropdown__username text-gold font-serif font-medium text-base tracking-wide leading-none">
+            Hola, {user.name ? getFirstName(user.name) : "Usuario"}
           </span>
         </div>
 
-        <div className="user-dropdown__avatar-container relative">
+        <div className="user-dropdown__avatar-container relative flex items-center justify-center">
           {user.image ? (
             <Image
               src={user.image}
               alt={user.name || "Usuario"}
-              width={40}
-              height={40}
-              className={`user-dropdown__avatar rounded-full border-2 transition-colors object-cover size-10 ${
-                isOpen
-                  ? "border-gold"
-                  : "border-transparent group-hover:border-gold/50"
-              }`}
+              width={32}
+              height={32}
+              className={`user-dropdown__avatar rounded-full border border-gold object-cover size-8`}
             />
           ) : (
             <div
-              className={`user-dropdown__avatar-fallback size-10 rounded-full flex items-center justify-center border-2 transition-colors bg-burgundy/5 text-burgundy ${
-                isOpen
-                  ? "border-gold"
-                  : "border-transparent group-hover:border-gold/50"
-              }`}
+              className={`user-dropdown__avatar-fallback size-8 rounded-full flex items-center justify-center border border-gold bg-transparent text-gold`}
             >
-              <span className="font-serif font-bold text-lg">
+              <span className="font-serif font-bold text-sm">
                 {user.name?.[0]?.toUpperCase() || "U"}
               </span>
             </div>
           )}
-
-          {/* Punto Indicador Activo */}
-          <div className="user-dropdown__status-indicator absolute bottom-0 right-0 size-2.5 bg-green-500 border-2 border-white rounded-full"></div>
         </div>
 
         <Icon
           name="icon-chevron-down"
-          size={16}
-          className={`user-dropdown__icon text-gray-400 transition-transform duration-300 hidden md:block ${
+          size={14}
+          className={`user-dropdown__icon text-gold transition-transform duration-300 hidden md:block ${
             isOpen ? "rotate-180" : ""
           }`}
         />
       </button>
 
-      {/* Menú Desplegable */}
+      {/* BACKDROP MOBILE ONLY */}
       <div
-        className={`user-dropdown__menu absolute right-0 mt-3 w-64 bg-white rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] border border-gray-100 transform transition-all duration-200 origin-top-right z-50 overflow-hidden ${
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 md:hidden ${
           isOpen
-            ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+            ? "opacity-100 visible"
+            : "opacity-0 invisible pointer-events-none"
         }`}
+        onClick={() => setIsOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* DRAWER (Mobile) / DROPDOWN (Desktop) */}
+      <div
+        className={`
+          user-dropdown__menu
+          fixed top-0 right-0 h-full w-64 bg-ivory shadow-2xl z-50 transform transition-transform duration-300 ease-out
+          md:absolute md:top-full md:right-0 md:h-auto md:w-56 md:mt-2 md:rounded-sm md:shadow-premium md:border md:border-gold/20
+          ${
+            isOpen
+              ? "translate-x-0 md:translate-y-0 md:opacity-100 md:scale-100"
+              : "translate-x-full md:translate-x-0 md:opacity-0 md:scale-95 md:-translate-y-2 md:pointer-events-none"
+          }
+        `}
       >
-        {/* Encabezado del Usuario en el Desplegable (Visible mayormente en móvil, o contexto) */}
-        <div className="user-dropdown__menu-header p-4 border-b border-gray-50 bg-gray-50/50">
-          <p className="user-dropdown__user-name text-sm font-medium text-gray-900 truncate">
-            {user.name}
-          </p>
-          <p className="user-dropdown__user-email text-xs text-gray-500 truncate">
-            {user.email}
-          </p>
+        {/* Encabezado Mobile (Botón Cerrar y Saludo) */}
+        <div className="user-dropdown__menu-header p-6 border-b border-gold/10 md:hidden bg-burgundy/5 flex flex-col gap-4">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="self-end text-burgundy/60 hover:text-burgundy"
+            aria-label="Cerrar menú"
+          >
+            <Icon name="icon-close" size={24} />
+          </button>
+          <div>
+            <span className="text-xs uppercase tracking-widest text-burgundy/60 font-semibold block mb-1">
+              Bienvenido
+            </span>
+            <p className="user-dropdown__user-name text-xl font-serif text-burgundy truncate">
+              {user.name}
+            </p>
+          </div>
         </div>
 
-        <div className="user-dropdown__links p-2">
+        {/* Links */}
+        <div className="user-dropdown__links p-2 md:p-1 flex flex-col gap-1 mt-2 md:mt-0">
           <Link
             href="/mi-cuenta"
-            className="user-dropdown__link flex items-center gap-3 px-3 py-2.5 text-sm text-gray-700 rounded-lg hover:bg-burgundy/5 hover:text-burgundy transition-colors group"
+            className="user-dropdown__link flex items-center gap-4 px-6 py-4 md:px-4 md:py-3 text-base md:text-sm font-medium text-burgundy hover:bg-gold/10 hover:text-burgundy transition-colors rounded-md mx-2 md:mx-0 group"
             onClick={() => setIsOpen(false)}
           >
-            <span className="user-dropdown__link-icon-wrapper p-1.5 rounded-md bg-gray-100 text-gray-500 group-hover:bg-burgundy/10 group-hover:text-burgundy transition-colors">
-              <Icon name="icon-user" size={16} />
-            </span>
+            <Icon
+              name="icon-user"
+              size={20}
+              className="text-gold group-hover:scale-110 transition-transform"
+            />
             Mi Perfil
           </Link>
           <Link
             href="/mi-cuenta/pedidos"
-            className="user-dropdown__link flex items-center gap-3 px-3 py-2.5 text-sm text-gray-700 rounded-lg hover:bg-burgundy/5 hover:text-burgundy transition-colors group"
+            className="user-dropdown__link flex items-center gap-4 px-6 py-4 md:px-4 md:py-3 text-base md:text-sm font-medium text-burgundy hover:bg-gold/10 hover:text-burgundy transition-colors rounded-md mx-2 md:mx-0 group"
             onClick={() => setIsOpen(false)}
           >
-            <span className="user-dropdown__link-icon-wrapper p-1.5 rounded-md bg-gray-100 text-gray-500 group-hover:bg-burgundy/10 group-hover:text-burgundy transition-colors">
-              <Icon name="icon-bag" size={16} />
-            </span>
+            <Icon
+              name="icon-bag"
+              size={20}
+              className="text-gold group-hover:scale-110 transition-transform"
+            />
             Mis Pedidos
           </Link>
           <Link
             href="/mi-cuenta/favoritos"
-            className="user-dropdown__link flex items-center gap-3 px-3 py-2.5 text-sm text-gray-700 rounded-lg hover:bg-burgundy/5 hover:text-burgundy transition-colors group"
+            className="user-dropdown__link flex items-center gap-4 px-6 py-4 md:px-4 md:py-3 text-base md:text-sm font-medium text-burgundy hover:bg-gold/10 hover:text-burgundy transition-colors rounded-md mx-2 md:mx-0 group"
             onClick={() => setIsOpen(false)}
           >
-            <span className="user-dropdown__link-icon-wrapper p-1.5 rounded-md bg-gray-100 text-gray-500 group-hover:bg-burgundy/10 group-hover:text-burgundy transition-colors">
-              <Icon name="icon-heart" size={16} />
-            </span>
+            <Icon
+              name="icon-notfilled-star"
+              size={20}
+              className="text-gold group-hover:scale-110 transition-transform"
+            />
             Lista de Deseos
           </Link>
         </div>
 
-        <div className="user-dropdown__logout-section border-t border-gray-50 p-2">
+        {/* Logout (Mobile: Bottom / Desktop: Bottom of dropdown) */}
+        <div className="user-dropdown__logout-section p-4 md:p-1 mt-auto border-t border-gold/10 md:mt-0">
           <button
             onClick={handleLogout}
-            className="user-dropdown__logout-btn w-full flex items-center gap-3 px-3 py-2.5 text-sm text-red-600 rounded-lg hover:bg-red-50 transition-colors group"
+            className="user-dropdown__logout-btn w-full flex items-center gap-4 px-4 py-3 text-base md:text-sm text-burgundy hover:bg-gold/10 hover:text-burgundy/70 transition-colors rounded-md group"
           >
-            <span className="p-1.5 rounded-md bg-red-50 text-red-500 group-hover:bg-red-100 transition-colors">
-              <Icon name="icon-close" size={16} />
-              {/* Asumiendo que icon-close o un ícono de salir existe, cerrar es un fallback seguro usualmente */}
-            </span>
+            <Icon
+              name="icon-close"
+              size={20}
+              className="text-burgundy group-hover:text-burgundy/70 transition-colors"
+            />
             Cerrar Sesión
           </button>
         </div>

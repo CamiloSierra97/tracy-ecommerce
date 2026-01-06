@@ -1,11 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { X } from "lucide-react";
 import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
+import { X } from "lucide-react";
 
-export default function CookieBanner() {
+export default function CookieBanner({
+  onHeightChange,
+}: {
+  onHeightChange?: (height: number) => void;
+}) {
   const [isVisible, setIsVisible] = useState(false);
+  const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Verificar si ya se ha dado el consentimiento
@@ -17,6 +22,32 @@ export default function CookieBanner() {
     }
   }, []);
 
+  useEffect(() => {
+    if (!onHeightChange) return;
+
+    if (!isVisible) {
+      onHeightChange(0);
+      return;
+    }
+
+    const updateHeight = () => {
+      if (bannerRef.current) {
+        onHeightChange(bannerRef.current.offsetHeight);
+      }
+    };
+
+    // Initial measure
+    updateHeight();
+
+    // Observe changes
+    const resizeObserver = new ResizeObserver(updateHeight);
+    if (bannerRef.current) {
+      resizeObserver.observe(bannerRef.current);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, [isVisible, onHeightChange]);
+
   const acceptCookies = () => {
     localStorage.setItem("cookieConsent", "true");
     setIsVisible(false);
@@ -26,10 +57,11 @@ export default function CookieBanner() {
 
   return (
     <div
+      ref={bannerRef}
       role="dialog"
       aria-live="polite"
       aria-label="Consentimiento de cookies"
-      className="cookie-banner fixed bottom-0 left-0 right-0 z-100 bg-ivory p-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] border-t border-burgundy-light/30 md:m-4 md:rounded-xl"
+      className="cookie-banner fixed bottom-0 left-0 right-0 z-200 bg-ivory p-6 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] border-t border-burgundy-light/30 md:m-4 md:rounded-xl"
     >
       <div className="cookie-banner__container container mx-auto max-w-6xl flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="cookie-banner__content flex-1 text-sm leading-relaxed">
@@ -55,16 +87,16 @@ export default function CookieBanner() {
         <div className="cookie-banner__actions flex items-center gap-3">
           <button
             onClick={acceptCookies}
-            className="cookie-banner__btn cookie-banner__btn--accept bg-burgundy text-ivory px-6 py-2 rounded-full font-medium text-sm hover:bg-burgundy-light hover:text-black transition-colors whitespace-nowrap"
+            className="cookie-banner__btn--accept bg-burgundy text-ivory px-6 py-2 rounded-full font-medium text-sm hover:bg-burgundy-light hover:text-black transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
           >
             Aceptar todo
           </button>
           <button
             onClick={() => setIsVisible(false)} // Solo ocultar por la sesión si se cierra sin aceptar. Comúnmente la X solo lo oculta.
-            className="cookie-banner__btn cookie-banner__btn--close p-2 hover:bg-burgundy-light/20 rounded-full transition-colors"
+            className="cookie-banner__btn--close p-2 hover:bg-burgundy-light/20 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
             aria-label="Cerrar"
           >
-            <X size={20} className="cookie-banner__icon" />
+            <X size={20} className="cookie-banner__icon" aria-hidden="true" />
           </button>
         </div>
       </div>

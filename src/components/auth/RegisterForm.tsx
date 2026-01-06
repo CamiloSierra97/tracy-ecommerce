@@ -15,13 +15,14 @@ export default function RegisterForm() {
     setSuccess("");
 
     const formData = new FormData(e.currentTarget);
+    const form = e.currentTarget; // Capture form reference before async operation
     const result = await registerUser(null, formData);
 
     if (result.error) {
       setError(result.error);
     } else if (result.success) {
       setSuccess(result.message!);
-      e.currentTarget.reset();
+      form.reset();
     }
 
     setIsLoading(false);
@@ -30,12 +31,20 @@ export default function RegisterForm() {
   return (
     <div className="register-form flex flex-col gap-4">
       {error && (
-        <div className="register-form__alert register-form__alert--error bg-red-50 text-red-600 p-3 text-sm rounded-sm border border-red-100">
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="register-form__alert register-form__alert--error bg-red-50 text-red-600 p-3 text-sm rounded-sm border border-red-100"
+        >
           {error}
         </div>
       )}
       {success && (
-        <div className="register-form__alert register-form__alert--success bg-green-50 text-green-800 p-3 text-sm rounded-sm border border-green-100">
+        <div
+          role="status"
+          aria-live="polite"
+          className="register-form__alert register-form__alert--success bg-green-50 text-green-800 p-3 text-sm rounded-sm border border-green-100"
+        >
           {success}
         </div>
       )}
@@ -106,7 +115,7 @@ export default function RegisterForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="register-form__submit-btn w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50"
+          className="register-form__submit-btn btn-animate w-full bg-burgundy text-white py-2 font-medium hover:bg-burgundy/90 transition-colors disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
         >
           {isLoading ? "Registrarse" : "Crear Cuenta"}
         </button>

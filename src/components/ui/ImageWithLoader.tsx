@@ -23,6 +23,9 @@ export default function ImageWithLoader({
 
   return (
     <div
+      role="img"
+      aria-label={alt}
+      aria-busy={isLoading}
       className={cn("image-loader relative overflow-hidden", wrapperClassName)}
     >
       {isLoading && (
@@ -36,10 +39,10 @@ export default function ImageWithLoader({
         src={src}
         alt={alt}
         className={cn(
-          "image-loader__img transition-opacity duration-500 ease-out",
+          "image-loader__img transition-all duration-700 ease-out transform",
           isLoading
-            ? "image-loader__img--loading opacity-0"
-            : "image-loader__img--loaded opacity-100",
+            ? "image-loader__img--loading opacity-0 scale-95 blur-md"
+            : "image-loader__img--loaded opacity-100 scale-100 blur-0",
           className
         )}
         onLoad={(e) => {

@@ -23,7 +23,11 @@ export default function Toast({ message, isVisible, onClose }: ToastProps) {
   return (
     <AnimatePresence>
       {isVisible && message && (
-        <div className="toast fixed bottom-6 right-6 z-9999 text-left">
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="toast fixed bottom-6 right-6 z-9999 text-left"
+        >
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -31,7 +35,9 @@ export default function Toast({ message, isVisible, onClose }: ToastProps) {
             transition={{ duration: 0.3, ease: "easeOut" }}
             className="toast__content bg-burgundy border border-golden text-ivory px-6 py-4 rounded-lg shadow-2xl flex items-center gap-4 min-w-[320px]"
           >
-            <div className="toast__icon text-gold text-xl">🛍️</div>
+            <div className="toast__icon text-gold text-xl" aria-hidden="true">
+              🛍️
+            </div>
             <div className="toast__message-container flex-1">
               <p className="toast__message font-bold text-sm tracking-wide">
                 {message}
@@ -39,9 +45,15 @@ export default function Toast({ message, isVisible, onClose }: ToastProps) {
             </div>
             <button
               onClick={onClose}
+              aria-label="Cerrar notificación"
               className="toast__close-btn text-gold/80 hover:text-gold transition-colors"
             >
-              <Icon name="icon-close" size={18} className="toast__close-icon" />
+              <Icon
+                name="icon-close"
+                size={18}
+                className="toast__close-icon"
+                aria-hidden="true"
+              />
             </button>
           </motion.div>
         </div>

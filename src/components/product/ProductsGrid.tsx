@@ -289,7 +289,7 @@ function ProductCard({
         className="product-card__content h-full flex flex-col relative"
       >
         {/* Área de Imagen */}
-        <div className="product-card__image-container relative aspect-3/4 overflow-hidden rounded-3xl shadow-sm transition-all duration-500 ease-out group-hover:shadow-xl group-hover:border-gold group-hover:shadow-burgundy-light border border-transparent group-hover:scale-[1.01] transform">
+        <div className="product-card__image-container relative aspect-3/4 overflow-hidden rounded-3xl shadow-sm transition-all duration-500 ease-out group-hover:shadow-premium group-hover:border-gold border border-transparent group-hover:scale-[1.02] transform">
           <Link
             href={`/productos/${product.slug ?? product.id}`}
             className="product-card__link block size-full relative"
@@ -298,6 +298,7 @@ function ProductCard({
             {isImageLoading && (
               <div className="product-card__skeleton absolute inset-0 z-10 bg-gray-200 animate-pulse" />
             )}
+
             {/* Imagen Principal */}
             <Image
               src={product.images?.[0]?.src ?? "/placeholder.png"}
@@ -307,8 +308,10 @@ function ProductCard({
               priority={priority}
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               onLoad={() => setIsImageLoading(false)}
-              className={`product-card__image size-full object-cover transform transition-transform duration-700 ease-out ${
-                isImageLoading ? "opacity-0" : "opacity-100"
+              className={`product-card__image size-full object-cover transform transition-all duration-700 ease-out ${
+                isImageLoading
+                  ? "opacity-0 scale-95 blur-md"
+                  : "opacity-100 scale-100 blur-0"
               }`}
             />
 
@@ -328,65 +331,72 @@ function ProductCard({
             <div className="product-card__overlay absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
           </Link>
 
-          {/* Botón de Zoom Hover - Esquina Superior Izquierda */}
-          <div className="product-card__action-zoom absolute top-4 left-4 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 z-30">
+          <div className="product-card__action-zoom absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 z-30">
+            {/* Ocultamos el botón de zoom si hay badge, o lo movemos? Mejor lo ponemos abajo del badge o a la derecha */}
+          </div>
+
+          {/* Botones de Acción Flotantes (Centrados o en esquina) - Diseño Moderno */}
+          <div className="product-card__actions absolute top-4 right-4 flex flex-col gap-2 z-30 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 onOpenQuickView();
               }}
-              className="product-card__btn-icon backdrop-blur-sm text-[rgba(0,0,0,0.8)] p-2 md:p-3 size-10 md:size-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] duration-300 hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border transition flex justify-center items-center"
+              className="product-card__btn-icon glassmorphism text-black p-3 size-10 rounded-full hover:bg-white hover:text-burgundy transition-all flex justify-center items-center shadow-sm"
               aria-label="Vista rápida"
               type="button"
             >
-              <Icon name="icon-zoom" size={20} />
+              <Icon name="icon-zoom" size={18} />
             </button>
-          </div>
-
-          {/* Botón Agregar al Carrito Hover - Esquina Superior Derecha */}
-          <div className="product-card__action-cart absolute top-4 right-4 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 z-30 delay-75">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 addToCart(product);
               }}
-              className="product-card__btn-icon backdrop-blur-sm text-black p-2 md:p-3 size-10 md:size-12 rounded-full shadow-lg hover:text-[rgba(0,0,0,1)] hover:scale-105 hover:border-[rgba(0,0,0,1)] hover:border duration-300 transition flex justify-center items-center"
+              className="product-card__btn-icon glassmorphism text-black p-3 size-10 rounded-full hover:bg-white hover:text-burgundy transition-all flex justify-center items-center shadow-sm delay-75"
               aria-label="Agregar al carrito"
               type="button"
             >
-              <Icon name="icon-bag" size={20} />
+              <Icon name="icon-bag" size={18} />
             </button>
           </div>
 
           {/* Ver Detalles Button - Bottom */}
-          <Link
-            href={`/productos/${product.slug ?? product.id}`}
-            aria-label={`Ver detalles de ${product.name}`}
-            className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 pointer-events-none px-4"
-          >
-            <div className="product-card__details-wrapper flex justify-center opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300 pointer-events-auto">
-              <span className="product-card__btn-text w-3/4 backdrop-blur-sm text-[rgba(0,0,0,0.8)] font-medium py-2 px-3 md:py-3 md:px-4 rounded-md shadow-lg text-center text-sm transform active:scale-95 hover:scale-105 hover:text-[rgba(0,0,0,1)] hover:border hover:border-[rgba(0,0,0,1)] transition-all">
+          {/* Ver Detalles Button - Bottom */}
+          <div className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 pointer-events-none px-4 flex justify-center">
+            <Link
+              href={`/productos/${product.slug ?? product.id}`}
+              aria-label={`Ver detalles de ${product.name}`}
+              className="product-card__details-wrapper pointer-events-auto w-3/4 flex justify-center opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300"
+            >
+              <span className="product-card__btn-text w-full backdrop-blur-sm text-[rgba(0,0,0,0.8)] font-medium py-2 px-3 md:py-3 md:px-4 rounded-md shadow-lg text-center text-sm transform active:scale-95 hover:scale-105 hover:text-[rgba(0,0,0,1)] hover:border hover:border-[rgba(0,0,0,1)] transition-all">
                 Ver Detalles
               </span>
-            </div>
-          </Link>
+            </Link>
+          </div>
         </div>
 
-        {/* Información del Producto */}
-        <div className="product-card__info mt-4 px-1 space-y-1">
+        <div className="product-card__info mt-5 px-2 space-y-2">
           <Link
             href={`/productos/${product.slug ?? product.id}`}
-            className="product-card__title-link block"
+            className="product-card__title-link block group-hover:text-burgundy transition-colors"
           >
-            <h3 className="product-card__title text-base font-serif font-medium text-gray-900 leading-snug group-hover:text-burgundy transition-colors">
+            <h3 className="product-card__title text-lg font-serif text-gray-900 leading-tight">
               {product.name}
             </h3>
-            <div className="product-card__price-wrapper flex items-center justify-between">
-              <p className="product-card__price text-lg font-bold text-burgundy tracking-wide">
-                {formatPrice(product.price)}
+            <div className="product-card__price-wrapper flex items-baseline gap-2 mt-1">
+              <p className="product-card__price text-lg font-bold text-gray-900">
+                {product.sale_price
+                  ? formatPrice(product.sale_price)
+                  : formatPrice(product.price)}
               </p>
+              {product.sale_price && (
+                <p className="product-card__price-regular text-sm text-gray-400 line-through">
+                  {formatPrice(product.regular_price || product.price)}
+                </p>
+              )}
             </div>
           </Link>
         </div>
@@ -487,14 +497,14 @@ function QuickViewModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="quick-view-modal__overlay absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="quick-view-modal__overlay absolute inset-0 glassmorphism"
           />
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", duration: 0.5 }}
-            className="quick-view-modal__container relative rounded-3xl shadow-2xl w-full max-w-5xl overflow-hidden grid grid-cols-1 md:grid-cols-2 max-h-[90vh]"
+            transition={{ type: "tween", ease: "easeOut", duration: 0.3 }}
+            className="quick-view-modal__container relative rounded-3xl shadow-premium w-full max-w-5xl overflow-hidden grid grid-cols-1 md:grid-cols-2 max-h-[90vh]"
             role="dialog"
             aria-modal="true"
             aria-labelledby="quick-view-title"
