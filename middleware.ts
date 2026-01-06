@@ -16,7 +16,12 @@ export function middleware(request: NextRequest) {
     userAgent.includes("pinterest") ||
     userAgent.includes("slack") ||
     userAgent.includes("whatsapp") ||
-    userAgent.includes("discordbot");
+    userAgent.includes("discordbot") ||
+    // PageSpeed Insights & Lighthouse
+    userAgent.includes("lighthouse") ||
+    userAgent.includes("google page speed") ||
+    userAgent.includes("chrome-lighthouse") ||
+    userAgent.includes("insights");
 
   // Permitir acceso solo desde Colombia (código país CO) pero permitir bots
   // Si no hay información de país (desarrollo local), permitir acceso

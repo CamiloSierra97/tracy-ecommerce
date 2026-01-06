@@ -46,10 +46,7 @@ const Header: React.FC = () => {
 
             {/* 3. DRAWER (Panel Lateral) */}
             <nav className="header__nav menu__nav flex flex-col lg:flex-row items-center border-r border-gold lg:border-r-0 lg:border-r-transparent">
-              <ul
-                className="header__nav-list flex flex-col lg:flex-row items-center gap-8 w-full px-6"
-                role="menubar"
-              >
+              <ul className="header__nav-list flex flex-col lg:flex-row items-center gap-8 w-full px-6">
                 {mainLinks.map((link) => (
                   <li
                     key={link.href}

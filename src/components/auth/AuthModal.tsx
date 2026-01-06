@@ -43,7 +43,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           onClick={(e) => e.stopPropagation()}
-          className="auth-modal__container relative z-10 w-full max-w-md bg-white/90 backdrop-blur-sm overflow-hidden shadow-premium"
+          className="auth-modal__container relative z-10 w-full max-w-md bg-ivory backdrop-blur-sm overflow-hidden shadow-premium"
         >
           {/* Encabezado */}
           <div className="auth-modal__header flex justify-between items-center p-4 border-b border-gold/20">
@@ -56,7 +56,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 className={`auth-modal__tab-btn text-lg font-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold rounded-sm ${
                   activeTab === "login"
                     ? "text-burgundy font-bold border-b-2 border-burgundy"
-                    : "text-gray-600 hover:text-burgundy"
+                    : "text-black/60s hover:text-burgundy"
                 }`}
               >
                 Iniciar Sesión
@@ -69,7 +69,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
                 className={`auth-modal__tab-btn text-lg font-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold rounded-sm ${
                   activeTab === "register"
                     ? "text-burgundy font-bold border-b-2 border-burgundy"
-                    : "text-gray-600 hover:text-burgundy"
+                    : "text-black/60 hover:text-burgundy"
                 }`}
               >
                 Registrarse
@@ -77,7 +77,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
             </div>
             <button
               onClick={onClose}
-              className="auth-modal__close-btn text-gray-600 hover:text-burgundy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold rounded-full p-1"
+              className="auth-modal__close-btn text-black/60 hover:text-burgundy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold rounded-full p-1"
               aria-label="Cerrar modal"
             >
               <X size={24} aria-hidden="true" />

@@ -11,17 +11,17 @@ export default function Footer() {
         <div className="footer__divider border-t-2 border-burgundy-light/50 pt-8"></div>
         <div className="footer__grid grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="footer__section">
-            <h3 className="footer__title font-roboto-serif font-semibold text-xl mb-4 text-gold">
+            <h2 className="footer__title font-roboto-serif font-semibold text-xl mb-4 text-gold">
               Tracy
-            </h3>
+            </h2>
             <p className="footer__description text-ivory/80">
               Tu tienda de ropa interior premium en línea.
             </p>
           </div>
           <div className="footer__section">
-            <h4 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
+            <h3 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
               Enlaces Rápidos
-            </h4>
+            </h3>
             <ul className="footer__list space-y-2 text-ivory/80">
               <li>
                 <Link
@@ -50,9 +50,9 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer__section">
-            <h4 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
+            <h3 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
               Atención al Cliente
-            </h4>
+            </h3>
             <ul className="footer__list space-y-2 text-ivory/80">
               <li>
                 <Link
@@ -81,9 +81,9 @@ export default function Footer() {
             </ul>
           </div>
           <div className="footer__section">
-            <h4 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
+            <h3 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
               Información Legal
-            </h4>
+            </h3>
             <ul className="footer__list space-y-2 text-ivory/80">
               <li>
                 <Link

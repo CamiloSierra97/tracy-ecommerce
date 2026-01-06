@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 import { registerUser } from "@/actions/auth-actions";
-import ButtonSpinner from "@/components/ui/ButtonSpinner";
 import { useUI } from "@/context/UIContext";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import ButtonSpinner from "@/components/ui/ButtonSpinner";
+import Icon from "@/components/ui/Icon";
 
 export default function RegisterForm() {
   const { closeAuth, showToast } = useUI();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -77,7 +79,7 @@ export default function RegisterForm() {
             type="email"
             required
             className="register-form__input input-base"
-            placeholder="tu@email.com"
+            placeholder="Correo electrónico"
           />
         </div>
         <div className="register-form__field-group register-form__row grid grid-cols-2 gap-4">
@@ -90,6 +92,7 @@ export default function RegisterForm() {
               type="text"
               required
               className="register-form__input input-base"
+              placeholder="Nombre"
             />
           </div>
           <div className="register-form__field">
@@ -101,6 +104,7 @@ export default function RegisterForm() {
               type="text"
               required
               className="register-form__input input-base"
+              placeholder="Apellido"
             />
           </div>
         </div>
@@ -113,19 +117,35 @@ export default function RegisterForm() {
             type="text"
             required
             className="register-form__input input-base"
+            placeholder="Crea un nombre de usuario"
           />
         </div>
         <div className="register-form__field">
           <label className="register-form__label block text-sm font-medium text-gray-700 mb-1">
             Contraseña
           </label>
-          <input
-            name="password"
-            type="password"
-            required
-            className="register-form__input input-base"
-            placeholder="********"
-          />
+          <div className="relative">
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              required
+              className="register-form__input input-base pr-10"
+              placeholder="Nueva contraseña"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-0 top-0 h-full px-3 text-burgundy/60 hover:text-burgundy transition-colors focus:outline-none z-10"
+              aria-label={
+                showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+              }
+            >
+              <Icon
+                name={showPassword ? "icon-eye-off" : "icon-eye"}
+                size={20}
+              />
+            </button>
+          </div>
         </div>
 
         <button
