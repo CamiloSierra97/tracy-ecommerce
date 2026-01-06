@@ -23,8 +23,10 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Promo submission:", formData);
-    // TODO: Conectar con la API de marketing para envío del formularioUi
+    // Simulación de envío a API
+    setTimeout(() => {
+      onClose();
+    }, 1000);
     onClose();
   };
 

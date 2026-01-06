@@ -17,6 +17,7 @@ const HeroSection: React.FC = () => {
           sizes="(max-width: 768px) 100vw, 50vw"
           quality={85}
           priority
+          {...({ fetchPriority: "high" } as any)}
         />
       </figure>
       {/* <article> para el contenido autocontenido (el mensaje y el CTA) */}
