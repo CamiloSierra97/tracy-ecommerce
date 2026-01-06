@@ -42,6 +42,25 @@ const nextConfig = {
             value:
               "camera=(), microphone=(), geolocation=(), browsing-topics=()",
           },
+          {
+            key: "Content-Security-Policy",
+            value: `
+              default-src 'self';
+              script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com;
+              style-src 'self' 'unsafe-inline';
+              img-src 'self' blob: data: https://shop.glowcosmeticoscol.com https://*.googleusercontent.com;
+              font-src 'self' data:;
+              connect-src 'self' https://shop.glowcosmeticoscol.com https://vitals.vercel-insights.com;
+              object-src 'none';
+              base-uri 'self';
+              form-action 'self';
+              frame-ancestors 'none';
+              block-all-mixed-content;
+              upgrade-insecure-requests;
+            `
+              .replace(/\s{2,}/g, " ")
+              .trim(),
+          },
         ],
       },
     ];
