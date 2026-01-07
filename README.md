@@ -23,7 +23,6 @@ Este repositorio contiene el código del cliente web que muestra los productos, 
 - Oro: `#d4af37`
 - Oro Claro: `#ffe895`
 - Marfil: `#f4f1ec`
-- Gris: `#5a5856`
 - Negro: `#1c1c1c`
 
 ## Estructura del código
@@ -45,6 +44,27 @@ tracy-ecommerce/
 |-- package.json          # Dependencias y scripts
 |-- tailwind.config.js    # Configuración de Tailwind CSS
 ```
+
+## Arquitectura de UI y Mejoras (Nuevo)
+
+### Componentes Destacados
+
+- **Hero Carousel**: Carrusel principal optimizado con transiciones suaves, navegación por gestos (en desarrollo) y paginación estilo "glassmorphism".
+  - **Animaciones**: Flechas con efecto "pulso" y desplazamiento al hover para invitar a la interacción.
+  - **Indicadores**: Diseño premium con barra dorada activa y puntos expansibles.
+
+### Metodología y Estándares
+
+- **BEM (Block, Element, Modifier)**: Se ha adoptado estrictamente la convención BEM en componentes críticos (`HeroSection`, `TripleBanner`, `HeroCarousel`) para garantizar estilos encapsulados y mantenibles.
+  - Ejemplo: `.hero-carousel__slide--active`, `.triple-banner__content`.
+
+### Optimización de Performance (Mobile First)
+
+- **Carga Condicional de Imágenes**:
+  - Se evita la descarga de imágenes pesadas de escritorio en dispositivos móviles mediante Media Queries en CSS (`globals.css`).
+  - Mobile: Fondo de color sólido o degradado ligero (0 bytes de imagen).
+  - Desktop: Carga diferida de imágenes de alta resolución (`background-image: url(...)`).
+- **Sprite SVG**: Uso de un archivo único `Sprite.svg` para iconos (`<use href="...">`), reduciendo el tamaño del DOM y mejorando el caché.
 
 ## Instalación
 
