@@ -308,10 +308,8 @@ function ProductCard({
               priority={priority}
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               onLoad={() => setIsImageLoading(false)}
-              className={`product-card__image size-full object-cover transform transition-all duration-700 ease-out ${
-                isImageLoading
-                  ? "opacity-0 scale-95 blur-md"
-                  : "opacity-100 scale-100 blur-0"
+              className={`product-card__image size-full object-cover transition-all duration-700 ease-out ${
+                isImageLoading ? "opacity-0 scale-95" : "opacity-100 scale-100"
               }`}
             />
 

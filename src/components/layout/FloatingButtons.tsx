@@ -44,8 +44,8 @@ export default function FloatingButtons({
   return (
     <>
       <div
-        className="floating-buttons fixed right-6 z-90 flex flex-col items-end gap-4 pointer-events-none transition-all duration-300 ease-in-out"
-        style={{ bottom: `calc(1.5rem + ${bottomOffset}px)` }}
+        className="floating-buttons fixed right-6 bottom-6 z-90 flex flex-col items-end gap-4 pointer-events-none transition-all duration-300 ease-in-out"
+        style={{ transform: `translateY(-${bottomOffset}px)` }}
       >
         {/* Capa del Menú de WhatsApp */}
         <div className="floating-buttons__menu-layer pointer-events-auto">
