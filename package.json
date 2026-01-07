@@ -9,11 +9,11 @@
     "lint": "eslint"
   },
   "browserslist": [
-    "chrome >= 100",
-    "firefox >= 91",
-    "edge >= 100",
-    "safari >= 15",
-    "ios >= 15"
+    "chrome >= 111",
+    "firefox >= 111",
+    "edge >= 111",
+    "safari >= 16.4",
+    "ios >= 16.4"
   ],
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.16",

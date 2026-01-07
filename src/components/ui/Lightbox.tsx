@@ -53,9 +53,9 @@ export default function Lightbox({
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!boundsRef.current) {
-      boundsRef.current = e.currentTarget.getBoundingClientRect();
-    }
+    // Trust that bounds were set in handleMouseEnter - early return prevents forced reflow
+    if (!boundsRef.current) return;
+
     const { left, top, width, height } = boundsRef.current;
     const x = ((e.clientX - left) / width) * 100;
     const y = ((e.clientY - top) / height) * 100;

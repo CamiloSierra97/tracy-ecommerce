@@ -433,10 +433,8 @@ function QuickViewModal({
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Fallback: If for some reason bounds are missing, read them (rare case)
-    if (!boundsRef.current) {
-      boundsRef.current = e.currentTarget.getBoundingClientRect();
-    }
+    // Trust that bounds were set in handleMouseEnter - early return prevents forced reflow
+    if (!boundsRef.current) return;
 
     const { left, top, width, height } = boundsRef.current;
     const x = ((e.clientX - left) / width) * 100;
