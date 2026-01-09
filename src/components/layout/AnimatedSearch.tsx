@@ -4,7 +4,6 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import Icon from "@/components/ui/Icon";
-import { X } from "lucide-react";
 
 // Mock de sugerencias para demostración
 const SUGGESTIONS = [
@@ -162,7 +161,7 @@ export default function AnimatedSearch() {
               exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
               transition={{ duration: 0.2 }}
             >
-              <X size={24} className="text-gold" />
+              <Icon name="icon-close" size={24} className="text-gold" />
             </motion.div>
           )}
         </AnimatePresence>

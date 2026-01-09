@@ -415,10 +415,10 @@ function QuickViewModal({
   const [zoomStyle, setZoomStyle] = useState({ scale: 1, origin: "50% 50%" });
   const { addToCart } = useCart();
 
-  // Start of Optimization: Cache element bounds to avoid forced reflows on every mouse move
+  // Inicio de Optimización: Cachear límites del elemento para evitar recálculos forzados en cada movimiento del mouse
   const boundsRef = useRef<DOMRect | null>(null);
 
-  // Invalidate bounds on window resize to ensure accuracy
+  // Invalidar límites al redimensionar ventana para asegurar precisión
   useEffect(() => {
     const handleResize = () => {
       boundsRef.current = null;
@@ -428,46 +428,46 @@ function QuickViewModal({
   }, []);
 
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
-    // READ: Measure layout once when entering
+    // LECTURA: Medir diseño una vez al entrar
     boundsRef.current = e.currentTarget.getBoundingClientRect();
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Trust that bounds were set in handleMouseEnter - early return prevents forced reflow
+    // Confiar en que los límites fueron establecidos en handleMouseEnter - retorno temprano previene recálculo forzado
     if (!boundsRef.current) return;
 
     const { left, top, width, height } = boundsRef.current;
     const x = ((e.clientX - left) / width) * 100;
     const y = ((e.clientY - top) / height) * 100;
 
-    // WRITE: Update state (triggers render/style change)
+    // ESCRITURA: Actualizar estado (dispara render/cambio de estilo)
     setZoomStyle((prev) => ({ ...prev, origin: `${x}% ${y}%` }));
   };
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
-    // Prevent background scrolling
-    // Note: This works because React onWheel is not passive by default,
-    // or we rely on the body lock. But explicit preventDefault helps.
-    // However, React events might raise a warning if we try to preventDefault on a passive event.
-    // Ideally, body style overflow='hidden' handles this, but some browsers propagate.
+    // Prevenir scroll del fondo
+    // Nota: Esto funciona porque React onWheel no es pasivo por defecto,
+    // o confiamos en el bloqueo del body. Pero preventDefault explícito ayuda.
+    // Sin embargo, eventos React podrían lanzar advertencia si intentamos preventDefault en un evento pasivo.
+    // Idealmente, body style overflow='hidden' maneja esto, pero algunos navegadores propagan.
 
-    // Actually, just stopping propagation is often enough if body is hidden.
+    // En realidad, detener la propagación es usualmente suficiente si el body está oculto.
     e.stopPropagation();
-    // e.preventDefault(); // React synthetic event wrapper might not support this for wheel depending on React version/browser.
+    // e.preventDefault(); // El wrapper de eventos sintéticos de React podría no soportar esto para wheel dependiendo de la versión de React/navegador.
 
-    const delta = -Math.sign(e.deltaY) * 0.5; // Zoom step
+    const delta = -Math.sign(e.deltaY) * 0.5; // Paso de zoom
     setZoomStyle((prev) => ({
       ...prev,
-      scale: Math.min(Math.max(1, prev.scale + delta), 5), // Clamp between 1x and 5x
+      scale: Math.min(Math.max(1, prev.scale + delta), 5), // Limitar entre 1x y 5x
     }));
   };
 
   const handleMouseLeave = () => {
     setZoomStyle({ scale: 1, origin: "50% 50%" });
-    boundsRef.current = null; // Clear cache
+    boundsRef.current = null; // Limpiar caché
   };
 
-  // Scroll Lock Correction
+  // Correcci\u00f3n de bloqueo de scroll
   useEffect(() => {
     if (isOpen) {
       document.body.classList.add("no-scroll");

@@ -301,7 +301,7 @@ const WooCommerceService = {
           console.log(
             "[WooCommerceService] Checking customer:",
             endpoint.split("?")[0]
-          ); // Log base URL for debugging
+          ); // Log de URL base para depuración
 
           const response = await fetch(endpoint, {
             headers: { Authorization: `Basic ${auth}` },

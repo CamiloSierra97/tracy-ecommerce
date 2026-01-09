@@ -38,7 +38,7 @@ export default function ReviewForm({
       return;
     }
 
-    // append manual values
+    // agregar valores manualmente
     formData.append("productId", productId.toString());
     formData.append("rating", rating.toString());
 

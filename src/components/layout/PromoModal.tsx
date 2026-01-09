@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronDown } from "lucide-react";
+import Icon from "@/components/ui/Icon";
 import Image from "next/image";
 
 interface PromoModalProps {
@@ -77,7 +77,7 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
               className="promo-modal__close-btn absolute top-4 right-4 z-20 text-black p-1 bg-burgundy-light/40 rounded-full transition-colors hover:bg-burgundy hover:text-ivory"
               aria-label="Cerrar modal"
             >
-              <X size={24} />
+              <Icon name="icon-close" size={24} />
             </button>
 
             {/* Sección de Imagen Promocional */}
@@ -174,7 +174,8 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                           formData.sexo.slice(1)
                         : "Sexo"}
                     </span>
-                    <ChevronDown
+                    <Icon
+                      name="icon-chevron-down"
                       size={16}
                       className={`promo-modal__chevron-down text-black transition-transform ${
                         isSexOpen ? "rotate-180" : ""

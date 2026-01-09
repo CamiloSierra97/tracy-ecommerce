@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
 import Icon from "@/components/ui/Icon";
 import WhatsAppMenu from "./WhatsAppMenu";
 import PromoModal from "./PromoModal";
@@ -91,7 +90,7 @@ export default function FloatingButtons({
             aria-label="Contactar por WhatsApp"
           >
             {isWhatsAppOpen ? (
-              <X size={32} strokeWidth={2.5} />
+              <Icon name="icon-close" size={32} className="text-white" />
             ) : (
               <div className="size-6 md:size-8 lg:size-10 transition-transform duration-300 group-hover:rotate-15">
                 {/* Usando el ID del Sprite actualizado */}

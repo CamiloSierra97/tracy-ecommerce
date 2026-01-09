@@ -1,6 +1,6 @@
-import { auth } from "@/auth";
 import AuthTrigger from "./AuthTrigger";
 import UserDropdown from "./UserDropdown";
+import { auth } from "@/auth";
 
 export default async function UserMenu() {
   const session = await auth();

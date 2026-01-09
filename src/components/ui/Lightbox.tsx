@@ -53,7 +53,7 @@ export default function Lightbox({
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Trust that bounds were set in handleMouseEnter - early return prevents forced reflow
+    // Confiar en que los límites fueron establecidos en handleMouseEnter - retorno temprano previene recálculo forzado
     if (!boundsRef.current) return;
 
     const { left, top, width, height } = boundsRef.current;

@@ -36,8 +36,8 @@ export default function ContactPage() {
             <div className="flex items-start gap-4">
               <div className="size-12 rounded-full bg-burgundy/5 flex items-center justify-center text-burgundy shrink-0">
                 <Icon name="icon-user" size={24} />
-                {/* Note: Using 'icon-user' as generic placeholder if 'icon-whatsapp'/phone not available in Icon set yet. 
-                                    If you have whatsapp icon, switch to it. */}
+                {/* Nota: Usando 'icon-user' como placeholder genérico si 'icon-whatsapp'/teléfono no está disponible en el set de íconos aún.
+                                    Si tienes el ícono de WhatsApp, cámbialo. */}
               </div>
               <div>
                 <h3 className="font-bold text-gray-800 mb-1">

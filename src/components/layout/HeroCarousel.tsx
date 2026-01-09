@@ -3,9 +3,10 @@
 import { useState, useEffect, useRef } from "react";
 import HeroSection from "@/components/layout/HeroSection";
 import TripleBanner from "@/components/layout/TripleBanner";
+import Icon from "../ui/Icon";
 
 const SLIDES_COUNT = 2;
-const SLIDE_DURATION = 8000; // 8 seconds per slide for better readability
+const SLIDE_DURATION = 8000; // 8 segundos por diapositiva para mejor legibilidad
 
 export default function HeroCarousel() {
   const [current, setCurrent] = useState(0);
@@ -41,7 +42,7 @@ export default function HeroCarousel() {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Slide 1: Original Hero Section */}
+      {/* Diapositiva 1: Sección Hero Original */}
       <div
         className={`hero-carousel__slide hero-carousel__slide--hero absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
           current === 0
@@ -55,7 +56,7 @@ export default function HeroCarousel() {
         </div>
       </div>
 
-      {/* Slide 2: Triple Banner */}
+      {/* Diapositiva 2: Triple Banner */}
       <div
         className={`hero-carousel__slide hero-carousel__slide--banner absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
           current === 1
@@ -66,7 +67,7 @@ export default function HeroCarousel() {
         <TripleBanner />
       </div>
 
-      {/* Navigation Arrows */}
+      {/* Flechas de Navegación */}
       <button
         onClick={(e) => {
           e.stopPropagation();
@@ -77,12 +78,10 @@ export default function HeroCarousel() {
                    bg-black/30 hover:bg-black/50 text-gold
                    p-4 rounded-full backdrop-blur-sm border border-gold/50 
                    transition-all duration-300 transform hover:scale-110 shadow-lg"
-        aria-label="Previous slide"
+        aria-label="Diapositiva anterior"
       >
-        <div className="transform transition-transform duration-300 group-hover:-translate-x-2">
-          <svg className="w-6 h-6 stroke-current" aria-hidden="true">
-            <use href="/Sprite.svg#icon-chevron-left-dashed" />
-          </svg>
+        <div className="hero-carousel__container transform transition-transform duration-300 group-hover:-translate-x-2">
+          <Icon name="icon-arrow-left-dashed" size={24} />
         </div>
       </button>
 
@@ -96,16 +95,14 @@ export default function HeroCarousel() {
                    bg-black/30 hover:bg-black/50 text-gold
                    p-4 rounded-full backdrop-blur-sm border border-gold/50 
                    transition-all duration-300 transform hover:scale-110 shadow-lg"
-        aria-label="Next slide"
+        aria-label="Siguiente diapositiva"
       >
-        <div className="transform transition-transform duration-300 group-hover:translate-x-2">
-          <svg className="w-6 h-6 stroke-current" aria-hidden="true">
-            <use href="/Sprite.svg#icon-chevron-right-dashed" />
-          </svg>
+        <div className="hero-carousel__container transform transition-transform duration-300 group-hover:translate-x-2">
+          <Icon name="icon-arrow-right-dashed" size={24}></Icon>
         </div>
       </button>
 
-      {/* Pagination Indicators */}
+      {/* Indicadores de Paginación */}
       <div className="hero-carousel__pagination absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-3 px-4 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10 shadow-2xl">
         {[...Array(SLIDES_COUNT)].map((_, index) => (
           <button

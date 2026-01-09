@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { X } from "lucide-react";
+import Icon from "@/components/ui/Icon";
 
 export default function CookieBanner({
   onHeightChange,
@@ -96,7 +96,12 @@ export default function CookieBanner({
             className="cookie-banner__btn--close p-2 hover:bg-burgundy-light/20 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
             aria-label="Cerrar"
           >
-            <X size={20} className="cookie-banner__icon" aria-hidden="true" />
+            <Icon
+              name="icon-close"
+              size={24}
+              className="cookie-banner__icon"
+              aria-hidden="true"
+            />
           </button>
         </div>
       </div>

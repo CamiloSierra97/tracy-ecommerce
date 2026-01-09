@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import Icon from "@/components/ui/Icon";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
 
@@ -80,7 +80,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
               className="auth-modal__close-btn text-black/60 hover:text-burgundy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold rounded-full p-1"
               aria-label="Cerrar modal"
             >
-              <X size={24} aria-hidden="true" />
+              <Icon name="icon-close" size={24} aria-hidden="true" />
             </button>
           </div>
 
