@@ -9,7 +9,6 @@ import { formatPrice } from "@/lib/utils/currency";
 import Image from "next/image";
 import Link from "next/link";
 import Icon from "@/components/ui/Icon";
-import DOMPurify from "isomorphic-dompurify";
 
 interface ProductsGridProps {
   products: Product[];
@@ -357,7 +356,7 @@ function ProductCard({
           {/* Ver Detalles Button - Enlace Independiente Superpuesto */}
           <Link
             href={`/productos/${product.slug ?? product.id}`}
-            className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 px-4 flex justify-center translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300"
+            className="product-card__action-details absolute bottom-4 left-0 right-0 z-40 px-4 flex justify-center translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300 cursor-pointer"
           >
             <span className="product-card__btn-text w-2/3 text-[rgba(0,0,0,0.8)] font-medium py-2 px-3 md:py-3 md:px-4 rounded-md shadow-lg text-center text-sm transform active:scale-95 lg:hover:scale-105 lg:hover:text-[rgba(0,0,0,1)] lg:hover:border lg:hover:border-[rgba(0,0,0,1)] lg:hover:backdrop-blur-md transition-all">
               Ver Detalles
@@ -556,10 +555,10 @@ function QuickViewModal({
               <div className="quick-view-modal__description prose prose-sm text-gray-600 mb-8 line-clamp-3">
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(
+                    __html: (
                       product.short_description ||
-                        "Descubre la elegancia y confort de esta pieza exclusiva."
-                    ),
+                      "Descubre la elegancia y confort de esta pieza exclusiva."
+                    ).replace(/<[^>]*>?/gm, ""),
                   }}
                 />
               </div>

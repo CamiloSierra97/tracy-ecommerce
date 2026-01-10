@@ -1,7 +1,7 @@
 import { Review } from "@/services/WooCommerceService";
 import StarRating from "@/components/ui/StarRating";
 import ReviewForm from "./ReviewForm";
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
 
 interface ProductReviewsProps {
   reviews: Review[];
@@ -77,7 +77,7 @@ export default function ProductReviews({
                   <div
                     className="review-card__content text-gray-600 leading-relaxed prose prose-sm max-w-none"
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(review.review),
+                      __html: sanitizeHtml(review.review),
                     }}
                   />
                 </div>
