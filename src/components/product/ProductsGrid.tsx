@@ -577,7 +577,7 @@ function QuickViewModal({
                 </button>
                 <Link
                   href={`/productos/${product.slug ?? product.id}`}
-                  className="quick-view-modal__details-btn w-full py-4 border border-gray-200 rounded-xl hover:border-burgundy/30 transition-all text-gray-600 font-medium text-center uppercase tracking-wider text-sm hover:text-burgundy"
+                  className="quick-view-modal__details-btn w-full py-4 border border-black rounded-xl hover:border-burgundy/30 transition-all text-black font-medium text-center uppercase tracking-wider text-sm hover:text-burgundy"
                 >
                   Ver Detalles
                 </Link>
