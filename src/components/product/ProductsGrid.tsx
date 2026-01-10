@@ -289,7 +289,7 @@ function ProductCard({
         className="product-card__content h-full flex flex-col relative"
       >
         {/* Área de Imagen e Interacción */}
-        <div className="product-card__image-container relative aspect-3/4 overflow-hidden rounded-3xl shadow-sm transition-all duration-500 ease-out group-hover:shadow-premium group-hover:border-gold border border-transparent group-hover:scale-[1.02] transform">
+        <div className="product-card__image-container relative aspect-3/4 overflow-hidden rounded-3xl shadow-sm transition-all duration-500 ease-out lg:group-hover:shadow-premium lg:group-hover:border-gold border border-transparent lg:group-hover:scale-[1.02] transform">
           <Link
             href={`/productos/${product.slug ?? product.id}`}
             className="product-card__main-link block size-full relative z-10"
