@@ -330,7 +330,7 @@ function ProductCard({
 
             {/* Ver Detalles Button - Renderizado dentro del Link principal para mejor respuesta en móvil */}
             <div className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 px-4 flex justify-center translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300">
-              <span className="product-card__btn-text w-2/3 text-[rgba(0,0,0,0.8)] font-medium py-2 px-3 md:py-3 md:px-4 rounded-md shadow-lg text-center text-sm transform active:scale-95 hover:scale-105 hover:text-[rgba(0,0,0,1)] hover:border hover:border-[rgba(0,0,0,1)] hover:backdrop-blur-md transition-all">
+              <span className="product-card__btn-text w-2/3 text-[rgba(0,0,0,0.8)] font-medium py-2 px-3 md:py-3 md:px-4 rounded-md shadow-lg text-center text-sm transform active:scale-95 lg:hover:scale-105 lg:hover:text-[rgba(0,0,0,1)] lg:hover:border lg:hover:border-[rgba(0,0,0,1)] lg:hover:backdrop-blur-md transition-all">
                 Ver Detalles
               </span>
             </div>
@@ -344,7 +344,7 @@ function ProductCard({
                 e.stopPropagation();
                 onOpenQuickView();
               }}
-              className="product-card__btn-icon glassmorphism text-black p-3 size-10 rounded-full hover:bg-white hover:text-burgundy transition-all flex justify-center items-center shadow-sm"
+              className="product-card__btn-icon glassmorphism text-black p-3 size-10 rounded-full lg:hover:bg-white lg:hover:text-burgundy transition-all flex justify-center items-center shadow-sm text-burgundy bg-white/80"
               aria-label="Vista rápida"
               type="button"
             >
@@ -356,7 +356,7 @@ function ProductCard({
                 e.stopPropagation();
                 addToCart(product);
               }}
-              className="product-card__btn-icon glassmorphism text-black p-3 size-10 rounded-full hover:bg-white hover:text-burgundy transition-all flex justify-center items-center shadow-sm"
+              className="product-card__btn-icon glassmorphism text-black p-3 size-10 rounded-full lg:hover:bg-white lg:hover:text-burgundy transition-all flex justify-center items-center shadow-sm text-burgundy bg-white/80"
               aria-label="Agregar al carrito"
               type="button"
             >
@@ -368,7 +368,7 @@ function ProductCard({
         <div className="product-card__info mt-5 px-2 space-y-2">
           <Link
             href={`/productos/${product.slug ?? product.id}`}
-            className="product-card__title-link block group-hover:text-burgundy transition-colors"
+            className="product-card__title-link block lg:group-hover:text-burgundy transition-colors"
           >
             <h3 className="product-card__title text-lg font-serif text-gray-900 leading-tight">
               {product.name}
