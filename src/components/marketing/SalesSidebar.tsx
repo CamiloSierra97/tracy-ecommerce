@@ -16,7 +16,7 @@ export default function SalesSidebar() {
         {/* Placeholder for Product Image - Using a generic specialized div if image not available, or a real Next Image if we had one. 
             For now, I'll use a placeholder colored div or the logo/pattern if specific product image isn't ready. 
             Actually, I'll use a placeholder color block that looks elegant. */}
-        <div className="relative w-full aspect-[3/4] bg-ivory mb-4 rounded-xl overflow-hidden flex items-center justify-center">
+        <div className="relative w-full aspect-3/4 bg-ivory mb-4 rounded-xl overflow-hidden flex items-center justify-center">
           {/* Ideally this is a product image. Using a pattern for now or a specific product image if known. */}
           <div className="absolute inset-0 bg-burgundy/5" />
           <Icon name="icon-bag" size={32} className="text-gold/50" />
