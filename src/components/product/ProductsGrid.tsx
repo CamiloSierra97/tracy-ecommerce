@@ -325,7 +325,7 @@ function ProductCard({
             )}
 
             {/* Superposición Oscura al Hover */}
-            <div className="product-card__overlay absolute inset-0 bg-black/5 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 z-10" />
+            <div className="product-card__overlay absolute inset-0 bg-black/5 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none" />
           </Link>
 
           {/* Botones de Acción Flotantes - Fuera del Link principal para evitar conflictos de navegación */}

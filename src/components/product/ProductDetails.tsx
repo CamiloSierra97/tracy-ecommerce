@@ -3,7 +3,7 @@ import { formatPrice } from "@/lib/utils/currency";
 import Icon from "@/components/ui/Icon";
 import ProductGallery from "./ProductGallery";
 import AddToCartBtn from "./AddToCartBtn";
-import DOMPurify from "isomorphic-dompurify";
+import sanitizeHtml from "sanitize-html";
 
 interface ProductDetailsProps {
   product: Product;
@@ -40,8 +40,8 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
           <div className="product-details__description prose prose-stone mb-10 text-gray-600 leading-relaxed max-w-none">
             <div
               dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(
-                  product.description || product.short_description
+                __html: sanitizeHtml(
+                  product.description || product.short_description || ""
                 ),
               }}
             />
