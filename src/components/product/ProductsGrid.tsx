@@ -282,7 +282,6 @@ function ProductCard({
   return (
     <li className="product-card group relative">
       <motion.div
-        layout
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
@@ -321,7 +320,7 @@ function ProductCard({
                 width={500}
                 height={667}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="product-card__image-hover absolute inset-0 size-full object-cover opacity-0 lg:group-hover:opacity-100 transition-all duration-500 ease-in-out z-10"
+                className="product-card__image-hover absolute inset-0 size-full object-cover opacity-0 lg:group-hover:opacity-100 transition-all duration-500 ease-in-out z-10 pointer-events-none"
               />
             )}
 
