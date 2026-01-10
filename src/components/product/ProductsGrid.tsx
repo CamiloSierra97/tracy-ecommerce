@@ -345,7 +345,6 @@ function ProductCard({
             <button
               onClick={(e) => {
                 e.preventDefault();
-                e.stopPropagation();
                 addToCart(product);
               }}
               className="product-card__btn-icon pointer-events-auto glassmorphism text-black p-3 size-10 rounded-full lg:hover:bg-ivory lg:hover:text-burgundy transition-all flex justify-center items-center shadow-sm bg-ivory/80"
