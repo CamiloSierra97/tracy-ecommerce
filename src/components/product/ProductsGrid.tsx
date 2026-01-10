@@ -327,24 +327,17 @@ function ProductCard({
 
             {/* Superposición Oscura al Hover */}
             <div className="product-card__overlay absolute inset-0 bg-black/5 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 z-10" />
-
-            {/* Ver Detalles Button - Renderizado dentro del Link principal para mejor respuesta en móvil */}
-            <div className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 px-4 flex justify-center translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300">
-              <span className="product-card__btn-text w-2/3 text-[rgba(0,0,0,0.8)] font-medium py-2 px-3 md:py-3 md:px-4 rounded-md shadow-lg text-center text-sm transform active:scale-95 lg:hover:scale-105 lg:hover:text-[rgba(0,0,0,1)] lg:hover:border lg:hover:border-[rgba(0,0,0,1)] lg:hover:backdrop-blur-md transition-all">
-                Ver Detalles
-              </span>
-            </div>
           </Link>
 
           {/* Botones de Acción Flotantes - Fuera del Link principal para evitar conflictos de navegación */}
-          <div className="product-card__actions absolute top-4 right-4 flex flex-col gap-2 z-30 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 lg:translate-x-4 lg:group-hover:translate-x-0">
+          <div className="product-card__actions absolute top-4 right-4 flex flex-col gap-2 z-30 pointer-events-none lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 lg:translate-x-4 lg:group-hover:translate-x-0">
             <button
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 onOpenQuickView();
               }}
-              className="product-card__btn-icon glassmorphism text-black p-3 size-10 rounded-full lg:hover:bg-white lg:hover:text-burgundy transition-all flex justify-center items-center shadow-sm text-burgundy bg-white/80"
+              className="product-card__btn-icon pointer-events-auto glassmorphism text-black p-3 size-10 rounded-full lg:hover:bg-ivory lg:hover:text-burgundy transition-all flex justify-center items-center shadow-sm bg-ivory/80"
               aria-label="Vista rápida"
               type="button"
             >
@@ -356,13 +349,23 @@ function ProductCard({
                 e.stopPropagation();
                 addToCart(product);
               }}
-              className="product-card__btn-icon glassmorphism text-black p-3 size-10 rounded-full lg:hover:bg-white lg:hover:text-burgundy transition-all flex justify-center items-center shadow-sm text-burgundy bg-white/80"
+              className="product-card__btn-icon pointer-events-auto glassmorphism text-black p-3 size-10 rounded-full lg:hover:bg-ivory lg:hover:text-burgundy transition-all flex justify-center items-center shadow-sm bg-ivory/80"
               aria-label="Agregar al carrito"
               type="button"
             >
               <Icon name="icon-bag" size={18} />
             </button>
           </div>
+
+          {/* Ver Detalles Button - Enlace Independiente Superpuesto */}
+          <Link
+            href={`/productos/${product.slug ?? product.id}`}
+            className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 px-4 flex justify-center translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300"
+          >
+            <span className="product-card__btn-text w-2/3 text-[rgba(0,0,0,0.8)] font-medium py-2 px-3 md:py-3 md:px-4 rounded-md shadow-lg text-center text-sm transform active:scale-95 lg:hover:scale-105 lg:hover:text-[rgba(0,0,0,1)] lg:hover:border lg:hover:border-[rgba(0,0,0,1)] lg:hover:backdrop-blur-md transition-all">
+              Ver Detalles
+            </span>
+          </Link>
         </div>
 
         <div className="product-card__info mt-5 px-2 space-y-2">

@@ -157,24 +157,28 @@ const WooCommerceService = {
     }
 
     // LADO DEL CLIENTE (o fallback): Petición vía API Interna
-    const params = new URLSearchParams({
-      page: String(page),
-      per_page: String(per_page),
-    });
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams({
+        page: String(page),
+        per_page: String(per_page),
+      });
 
-    const response = await fetch(`/api/products?${params.toString()}`);
+      const response = await fetch(`/api/products?${params.toString()}`);
 
-    if (!response.ok) {
-      throw new Error(`Error obteniendo productos: ${response.statusText}`);
+      if (!response.ok) {
+        throw new Error(`Error obteniendo productos: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const totalPagesHeader = response.headers.get("x-wp-totalpages") || "0";
+
+      return {
+        products: data,
+        totalPages: parseInt(totalPagesHeader, 10),
+      };
     }
 
-    const data = await response.json();
-    const totalPagesHeader = response.headers.get("x-wp-totalpages") || "0";
-
-    return {
-      products: data,
-      totalPages: parseInt(totalPagesHeader, 10),
-    };
+    return { products: [], totalPages: 0 };
   },
 
   getProductBySlug: async (slug: string): Promise<Product | null> => {
@@ -208,13 +212,17 @@ const WooCommerceService = {
     }
 
     // LADO DEL CLIENTE (o fallback): Petición vía API Interna
-    const params = new URLSearchParams({ slug });
-    const response = await fetch(`/api/products?${params.toString()}`);
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams({ slug });
+      const response = await fetch(`/api/products?${params.toString()}`);
 
-    if (!response.ok) return null;
+      if (!response.ok) return null;
 
-    const data = await response.json();
-    return data && data.length > 0 ? data[0] : null;
+      const data = await response.json();
+      return data && data.length > 0 ? data[0] : null;
+    }
+
+    return null;
   },
 
   registerCustomer: async (
