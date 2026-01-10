@@ -1,11 +1,17 @@
 import Image from "next/image";
 import WooCommerceService from "@/services/WooCommerceService";
-import HeroCarousel from "@/components/layout/HeroCarousel";
+import HeroCarousel from "@/components/marketing/HeroCarousel";
 
 import dynamic from "next/dynamic";
 const Products = dynamic(() => import("@/components/product/Products"), {
   loading: () => <div className="min-h-screen"></div>,
 });
+const BrandManifesto = dynamic(
+  () => import("@/components/marketing/BrandManifesto")
+);
+const NewsletterSection = dynamic(
+  () => import("@/components/marketing/NewsletterSection")
+);
 
 import {
   dehydrate,
@@ -40,9 +46,14 @@ export default async function Page() {
         <section className="hero-section-wrapper">
           <HeroCarousel />
         </section>
+
+        <BrandManifesto />
+
         <section className="page-products">
           <Products title="Nuestra Colección" basePath="/"></Products>
         </section>
+
+        <NewsletterSection />
       </div>
     </HydrationBoundary>
   );

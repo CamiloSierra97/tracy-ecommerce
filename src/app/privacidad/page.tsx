@@ -12,7 +12,7 @@ export default function PrivacyPage() {
         Política de Privacidad
       </h1>
 
-      <div className="privacy__content space-y-8 text-gray-700 leading-relaxed text-lg">
+      <div className="privacy__content space-y-8 text-black leading-relaxed text-lg">
         <p className="privacy__content-text">
           En Tracy Lencería valoramos tu privacidad y nos comprometemos a
           proteger tus datos personales. Esta política explica cómo tratamos la

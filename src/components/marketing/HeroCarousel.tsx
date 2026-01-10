@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import HeroSection from "@/components/layout/HeroSection";
-import TripleBanner from "@/components/layout/TripleBanner";
 import Icon from "../ui/Icon";
+import TripleBanner from "./TripleBanner";
+import HeroSection from "./HeroSection";
 
 const SLIDES_COUNT = 2;
 const SLIDE_DURATION = 8000; // 8 segundos por diapositiva para mejor legibilidad

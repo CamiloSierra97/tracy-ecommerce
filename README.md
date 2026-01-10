@@ -25,6 +25,37 @@ Este repositorio contiene el código del cliente web que muestra los productos, 
 - Marfil: `#f4f1ec`
 - Negro: `#1c1c1c`
 
+## 🏗️ Arquitectura del Proyecto
+
+Este proyecto sigue una **Arquitectura Híbrida** optimizada para Next.js App Router, combinando **Rutas por Sistema de Archivos** para la navegación y **Diseño Guiado por Dominio (DDD)** para la lógica de negocio.
+
+### 1. Capa de Rutas (`src/app`)
+
+Sigue el patrón **File-System Based Routing**. Cada carpeta aquí representa una URL pública accesible por el usuario.
+
+- `src/app/privacidad`: Ruta `/privacidad`
+- `src/app/envios`: Ruta `/envios`
+- `src/app/tienda`: Ruta `/tienda`
+
+Esta capa actúa solo como **Punto de Entrada**. No debe contener lógica compleja, solo composición de páginas.
+
+### 2. Capa de Componentes (`src/components`)
+
+Organizada por **Dominio Funcional**. Aquí reside la lógica de negocio y UI, agrupada por responsabilidad y no por ruta.
+
+| Dominio          | Responsabilidad                     | Ejemplos                                       |
+| :--------------- | :---------------------------------- | :--------------------------------------------- |
+| 📂 **auth**      | Autenticación y gestión de usuarios | `LoginForm`, `UserDropdown`                    |
+| 📂 **cart**      | Lógica del carrito de compras       | `CartDrawer`, `CartItem`                       |
+| 📂 **catalog**   | Presentación de productos           | `ProductGrid`, `ProductCard`                   |
+| 📂 **marketing** | Landing pages y promoción           | `HeroCarousel`, `BrandManifesto`, `Newsletter` |
+| 📂 **layout**    | Elementos estructurales globales    | `Header`, `Footer`, `FloatingButtons`          |
+| 📂 **ui**        | Componentes base reutilizables      | `Button`, `Icon`, `Input`                      |
+
+### 3. Capa de Aplicación (`src/lib`, `src/services`)
+
+Contiene utilidades puras y comunicación con servicios externos (como WooCommerce), desacoplando la UI de los datos.
+
 ## Estructura del código
 
 La estructura sigue el patrón del **App Router** de Next.js, con una organización clara para la lógica de la aplicación:
