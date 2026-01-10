@@ -2,14 +2,17 @@
 
 import { useState, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Session } from "next-auth";
 import Icon from "@/components/ui/Icon";
 import WhatsAppMenu from "./WhatsAppMenu";
 import PromoModal from "./PromoModal";
 
 export default function FloatingButtons({
   bottomOffset = 0,
+  session,
 }: {
   bottomOffset?: number;
+  session: Session | null;
 }) {
   const [isWhatsAppOpen, setIsWhatsAppOpen] = useState(false);
   const [isPromoOpen, setIsPromoOpen] = useState(false);
@@ -65,21 +68,24 @@ export default function FloatingButtons({
         {/* Capa de Botones de Acción */}
         <div className="floating-buttons__actions flex flex-col gap-4 pointer-events-auto items-center">
           {/* Botón de Promociones */}
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIsPromoOpen(true)}
-            className="floating-buttons__btn floating-buttons__btn--promo sm:size-12 md:size-14 lg:size-16 rounded-full opacity-60 xl:opacity-100 hover:opacity-100 bg-gray text-black flex items-center justify-center shadow-lg relative group transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
-            aria-label="Promociones y Regalos"
-          >
-            {/* Indicador de Notificación (Punto rojo) */}
-            <span className="absolute top-0 right-0 size-3 md:size-4 font-bold flex items-center justify-center rounded-full border bg-burgundy-light border-burgundy text-burgundy text-[10px] md:text-xs">
-              1
-            </span>
-            <div className="size-6 md:size-8 transition-transform duration-300 group-hover:rotate-15">
-              <Icon name="icon-gift-float" className="size-full text-black" />
-            </div>
-          </motion.button>
+          {/* Botón de Promociones */}
+          {!session?.user && (
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => setIsPromoOpen(true)}
+              className="floating-buttons__btn floating-buttons__btn--promo sm:size-12 md:size-14 lg:size-16 rounded-full opacity-60 xl:opacity-100 hover:opacity-100 bg-gray text-black flex items-center justify-center shadow-lg relative group transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold"
+              aria-label="Promociones y Regalos"
+            >
+              {/* Indicador de Notificación (Punto rojo) */}
+              <span className="absolute top-0 right-0 size-3 md:size-4 font-bold flex items-center justify-center rounded-full border bg-burgundy-light border-burgundy text-burgundy text-[10px] md:text-xs">
+                1
+              </span>
+              <div className="size-6 md:size-8 transition-transform duration-300 group-hover:rotate-15">
+                <Icon name="icon-gift-float" className="size-full text-black" />
+              </div>
+            </motion.button>
+          )}
 
           {/* Botón de WhatsApp */}
           <motion.button

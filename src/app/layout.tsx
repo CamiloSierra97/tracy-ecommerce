@@ -2,6 +2,7 @@ import { Metadata, Viewport } from "next";
 import { CartProvider } from "@/context/CartContext";
 import { playfair, roboto_serif, roboto } from "@/lib/fonts";
 import { UIProvider } from "@/context/UIContext";
+import { auth } from "@/auth";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ReactQueryProvider from "../providers/ReactQueryProvider";
@@ -41,7 +42,8 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "Tracy Lencería Colección",
+        alt: "Colección exclusiva de Tracy Lencería - Ropa Interior de Lujo",
+        type: "image/png",
       },
     ],
   },
@@ -52,11 +54,13 @@ export const viewport: Viewport = {
   initialScale: 1.0,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html
       lang="es"
@@ -74,7 +78,7 @@ export default function RootLayout({
               <Analytics />
               <SpeedInsights />
               <Footer />
-              <DynamicLayoutElements />
+              <DynamicLayoutElements session={session} />
             </CartProvider>
           </UIProvider>
         </ReactQueryProvider>

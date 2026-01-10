@@ -89,8 +89,8 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
         </div>
 
         <div className="page-products__actions flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
-          {/* Selector de Columnas */}
-          <div className="page-products__layout-switch flex items-center gap-2">
+          {/* Selector de Columnas - Oculto en m\u00f3vil */}
+          <div className="page-products__layout-switch hidden md:flex items-center gap-2">
             <button
               onClick={() => setGridCols(2)}
               className={`page-products__layout-btn hover:text-burgundy transition-colors ${
@@ -288,11 +288,11 @@ function ProductCard({
         transition={{ duration: 0.4 }}
         className="product-card__content h-full flex flex-col relative"
       >
-        {/* Área de Imagen */}
+        {/* Área de Imagen e Interacción */}
         <div className="product-card__image-container relative aspect-3/4 overflow-hidden rounded-3xl shadow-sm transition-all duration-500 ease-out group-hover:shadow-premium group-hover:border-gold border border-transparent group-hover:scale-[1.02] transform">
           <Link
             href={`/productos/${product.slug ?? product.id}`}
-            className="product-card__link block size-full relative"
+            className="product-card__main-link block size-full relative z-10"
           >
             {/* Skeleton Loader */}
             {isImageLoading && (
@@ -321,20 +321,23 @@ function ProductCard({
                 width={500}
                 height={667}
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="product-card__image-hover absolute inset-0 size-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-in-out z-10"
+                className="product-card__image-hover absolute inset-0 size-full object-cover opacity-0 lg:group-hover:opacity-100 transition-all duration-500 ease-in-out z-10"
               />
             )}
 
             {/* Superposición Oscura al Hover */}
-            <div className="product-card__overlay absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
+            <div className="product-card__overlay absolute inset-0 bg-black/5 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-300 z-10" />
+
+            {/* Ver Detalles Button - Renderizado dentro del Link principal para mejor respuesta en móvil */}
+            <div className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 px-4 flex justify-center translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300">
+              <span className="product-card__btn-text w-2/3 text-[rgba(0,0,0,0.8)] font-medium py-2 px-3 md:py-3 md:px-4 rounded-md shadow-lg text-center text-sm transform active:scale-95 hover:scale-105 hover:text-[rgba(0,0,0,1)] hover:border hover:border-[rgba(0,0,0,1)] hover:backdrop-blur-md transition-all">
+                Ver Detalles
+              </span>
+            </div>
           </Link>
 
-          <div className="product-card__action-zoom absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 z-30">
-            {/* Ocultamos el botón de zoom si hay badge, o lo movemos? Mejor lo ponemos abajo del badge o a la derecha */}
-          </div>
-
-          {/* Botones de Acción Flotantes (Centrados o en esquina) - Diseño Moderno */}
-          <div className="product-card__actions absolute top-4 right-4 flex flex-col gap-2 z-30 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-4 group-hover:translate-x-0">
+          {/* Botones de Acción Flotantes - Fuera del Link principal para evitar conflictos de navegación */}
+          <div className="product-card__actions absolute top-4 right-4 flex flex-col gap-2 z-30 lg:opacity-0 lg:group-hover:opacity-100 transition-all duration-300 lg:translate-x-4 lg:group-hover:translate-x-0">
             <button
               onClick={(e) => {
                 e.preventDefault();
@@ -353,26 +356,12 @@ function ProductCard({
                 e.stopPropagation();
                 addToCart(product);
               }}
-              className="product-card__btn-icon glassmorphism text-black p-3 size-10 rounded-full hover:bg-white hover:text-burgundy transition-all flex justify-center items-center shadow-sm delay-75"
+              className="product-card__btn-icon glassmorphism text-black p-3 size-10 rounded-full hover:bg-white hover:text-burgundy transition-all flex justify-center items-center shadow-sm"
               aria-label="Agregar al carrito"
               type="button"
             >
               <Icon name="icon-bag" size={18} />
             </button>
-          </div>
-
-          {/* Ver Detalles Button - Bottom */}
-          {/* Ver Detalles Button - Bottom */}
-          <div className="product-card__action-details absolute bottom-4 left-0 right-0 z-20 pointer-events-none px-4 flex justify-center">
-            <Link
-              href={`/productos/${product.slug ?? product.id}`}
-              aria-label={`Ver detalles de ${product.name}`}
-              className="product-card__details-wrapper pointer-events-auto w-3/4 flex justify-center opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-4 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300"
-            >
-              <span className="product-card__btn-text w-full backdrop-blur-sm text-[rgba(0,0,0,0.8)] font-medium py-2 px-3 md:py-3 md:px-4 rounded-md shadow-lg text-center text-sm transform active:scale-95 hover:scale-105 hover:text-[rgba(0,0,0,1)] hover:border hover:border-[rgba(0,0,0,1)] transition-all">
-                Ver Detalles
-              </span>
-            </Link>
           </div>
         </div>
 

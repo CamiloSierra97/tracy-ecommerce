@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useState, useEffect } from "react";
+import { Session } from "next-auth";
 import { useCart } from "@/context/CartContext";
 import { useUI } from "@/context/UIContext";
 
@@ -14,15 +15,16 @@ const CookieBanner = dynamic(() => import("@/components/layout/CookieBanner"), {
 });
 
 const FloatingButtons = dynamic(
-  () => import("@/components/layout/FloatingButtons"),
-  {
-    ssr: false,
-  }
+  () => import("@/components/layout/FloatingButtons")
 );
 
 const Toast = dynamic(() => import("@/components/ui/Toast"), { ssr: false });
 
-export default function DynamicLayoutElements() {
+export default function DynamicLayoutElements({
+  session,
+}: {
+  session: Session | null;
+}) {
   const { isOpen: isCartOpen } = useCart();
   const { isAuthOpen, toast, hideToast } = useUI();
   const [bannerHeight, setBannerHeight] = useState(0);
@@ -40,8 +42,8 @@ export default function DynamicLayoutElements() {
     <>
       <CartDrawer />
       <CookieBanner onHeightChange={setBannerHeight} />
-      {isMounted && shouldShowFloating && (
-        <FloatingButtons bottomOffset={bannerHeight} />
+      {shouldShowFloating && (
+        <FloatingButtons bottomOffset={bannerHeight} session={session} />
       )}
       <Toast
         message={toast.message}

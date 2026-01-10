@@ -7,7 +7,7 @@
     width: 100%;
     margin: 0;
     padding: 0;
-    /* Fondo sofisticado: Gradiente radial profundo + Sutil patrón de cuadrícula dorada */
+    /* Fondo sofisticado */
     background-color: #f4f1ec;
     background-image: linear-gradient(
         to right,
@@ -30,22 +30,20 @@
   }
 
   ::selection {
-    background-color: var(--color-burgundy-light);
-    color: var(--color-ivory);
+    background-color: var(--color-gold);
+    color: var(--color-burgundy);
   }
 }
 
 @layer components {
-  .input-base {
-    @apply w-full p-2 border border-black/30 focus:outline-none focus:border-burgundy transition-colors bg-ivory;
-  }
-
+  /* Utility for disabling scroll */
   .no-scroll {
     overflow: hidden !important;
     height: 100vh !important;
     touch-action: none;
   }
 
+  /* Logo Mask for Color Control */
   .header__logo-mask {
     background-color: var(--color-gold);
     -webkit-mask-image: url(/LogoTracy.webp);
@@ -58,14 +56,9 @@
     mask-position: center;
   }
 
-  /* Design Enhancements */
+  /* Interactive Enhancements */
   .btn-animate {
     @apply transition-transform duration-150 ease-out hover:scale-[1.02] active:scale-[0.98];
-  }
-
-  .icon-rotate-hover:hover {
-    transform: rotate(15deg);
-    transition: transform 0.3s ease-in-out;
   }
 
   .glassmorphism {
@@ -79,29 +72,25 @@
       0 4px 6px -2px rgba(88, 10, 30, 0.2);
   }
 
-  /* Optimized Backgrounds (Mobile: No Download / Desktop: Image) */
-  .bg-patron-desktop {
+  /* Responsive Backgrounds */
+  .bg-patron-desktop,
+  .bg-triple-women,
+  .bg-triple-men,
+  .bg-triple-junior,
+  .bg-hero-main {
     background-image: none;
   }
 
   .bg-triple-women {
-    background-color: var(--color-burgundy);
-    background-image: none;
+    background-color: color-mix(in lab, var(--color-burgundy) 60%, transparent);
   }
 
   .bg-triple-men {
-    background-color: #000000;
-    background-image: none;
+    background-color: color-mix(in lab, var(--color-black) 60%, transparent);
   }
 
   .bg-triple-junior {
-    background-color: var(--color-pink);
-    background-image: none;
-  }
-
-  .bg-hero-main {
-    background-color: var(--color-burgundy);
-    background-image: none;
+    background-color: color-mix(in lab, var(--color-pink) 60%, transparent);
   }
 
   @media (min-width: 768px) {
@@ -134,9 +123,8 @@
   --color-burgundy: #580a1e;
   --color-burgundy-light: #8a505e;
   --color-gray: #5a5856;
-  --color-gray-300: #d1d5db;
-  --color-golden: #ffdc5d;
   --color-gold: #d9b338;
+  --color-golden: #ffdc5d;
   --color-light-gold: #ffe895;
   --color-ivory: #f4f1ec;
   --color-light-pink: #ffe4e6;

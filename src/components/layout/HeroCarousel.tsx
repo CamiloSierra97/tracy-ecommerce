@@ -103,7 +103,7 @@ export default function HeroCarousel() {
       </button>
 
       {/* Indicadores de Paginación */}
-      <div className="hero-carousel__pagination absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-3 px-4 py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10 shadow-2xl">
+      <div className="hero-carousel__pagination absolute bottom-4 md:bottom-12 left-1/2 transform -translate-x-1/2 z-30 flex items-center gap-3 px-3 py-1.5 md:px-4 md:py-2 rounded-full bg-black/20 backdrop-blur-md border border-white/10 shadow-2xl scale-90 md:scale-100">
         {[...Array(SLIDES_COUNT)].map((_, index) => (
           <button
             key={index}

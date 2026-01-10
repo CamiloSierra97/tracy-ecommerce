@@ -16,7 +16,7 @@ const HeroSection: React.FC = () => {
 
         {/* 🌟 Aplicación del Lema 🌟 */}
         <p
-          className={`hero-section__slogan text-xl md:text-2xl font-serif italic pb-2 text-golden drop-shadow-sm`}
+          className={`hero-section__slogan text-xl md:text-2xl font-serif italic pb-2 text-golden drop-shadow-md`}
         >
           {BRAND_SLOGAN}
         </p>
