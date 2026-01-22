@@ -131,6 +131,7 @@ export default function CartDrawer() {
                         src={item.images?.[0]?.src ?? "/placeholder-v3.png"}
                         alt={item.name}
                         fill
+                        sizes="96px"
                         className="cart-item__image object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
                     </div>

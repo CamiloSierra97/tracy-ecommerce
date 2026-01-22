@@ -1,9 +1,9 @@
 "use client";
 
+import Icon from "@/components/ui/Icon";
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
-import Icon from "@/components/ui/Icon";
 
 // Mock de sugerencias para demostración
 const SUGGESTIONS = [
@@ -108,7 +108,7 @@ export default function AnimatedSearch() {
               )}
             </motion.div>
 
-            {/* INVISIBLE BACKDROP to close when clicking outside */}
+            {/* FONDO INVISIBLE para cerrar al hacer clic fuera */}
             <div
               className="fixed inset-0 z-40 bg-transparent"
               onClick={() => {
@@ -127,11 +127,11 @@ export default function AnimatedSearch() {
             setSearchTerm("");
           } else {
             setIsSearchOpen(true);
-            // Focus logic handled by autoFocus prop, but fallback relies on ref if needed
+            // Lógica de enfoque manejada por la prop autoFocus, pero el respaldo se basa en ref si es necesario
           }
         }}
         onMouseDown={(e) => {
-          // Prevent focus loss on input when clicking toggle button
+          // Prevenir pérdida de enfoque en el input al hacer clic en el botón de alternar
           if (isSearchOpen) e.preventDefault();
         }}
         aria-label={isSearchOpen ? "Cerrar búsqueda" : "Buscar"}

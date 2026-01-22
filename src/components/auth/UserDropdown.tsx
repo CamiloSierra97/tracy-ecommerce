@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useUI } from "@/context/UIContext";
 import Link from "next/link";
 import Icon from "@/components/ui/Icon";
 import Image from "next/image";
 import ButtonSpinner from "@/components/ui/ButtonSpinner";
+import { useState, useRef, useEffect } from "react";
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useUI } from "@/context/UIContext";
 
 interface UserDropdownProps {
   user: {
@@ -100,7 +100,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
         />
       </button>
 
-      {/* BACKDROP MOBILE ONLY */}
+      {/* FONDO SOLO EN MÓVIL */}
       <div
         className={`fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 md:hidden ${
           isOpen
@@ -111,7 +111,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
         aria-hidden="true"
       />
 
-      {/* DRAWER (Mobile) / DROPDOWN (Desktop) */}
+      {/* CAJÓN (Móvil) / DESPLEGABLE (Escritorio) */}
       <div
         className={`
           user-dropdown__menu
@@ -124,7 +124,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
           }
         `}
       >
-        {/* Encabezado Mobile (Botón Cerrar y Saludo) */}
+        {/* Encabezado Móvil (Botón Cerrar y Saludo) */}
         <div className="user-dropdown__menu-header p-6 border-b border-gold/10 md:hidden bg-burgundy/5 flex flex-col gap-4">
           <button
             onClick={() => setIsOpen(false)}
@@ -146,7 +146,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
         {/* Links */}
         <div className="user-dropdown__links p-2 md:p-1 flex flex-col gap-1 mt-2 md:mt-0">
           <Link
-            href="/mi-cuenta"
+            href="/perfil"
             className="user-dropdown__link flex items-center gap-4 px-6 py-4 md:px-4 md:py-3 text-base md:text-sm font-medium text-burgundy hover:bg-gold/10 hover:text-burgundy transition-colors rounded-md mx-2 md:mx-0 group"
             onClick={() => setIsOpen(false)}
           >
@@ -158,7 +158,7 @@ export default function UserDropdown({ user }: UserDropdownProps) {
             Mi Perfil
           </Link>
           <Link
-            href="/mi-cuenta/pedidos"
+            href="/perfil"
             className="user-dropdown__link flex items-center gap-4 px-6 py-4 md:px-4 md:py-3 text-base md:text-sm font-medium text-burgundy hover:bg-gold/10 hover:text-burgundy transition-colors rounded-md mx-2 md:mx-0 group"
             onClick={() => setIsOpen(false)}
           >
@@ -169,21 +169,21 @@ export default function UserDropdown({ user }: UserDropdownProps) {
             />
             Mis Pedidos
           </Link>
-          <Link
-            href="/mi-cuenta/favoritos"
-            className="user-dropdown__link flex items-center gap-4 px-6 py-4 md:px-4 md:py-3 text-base md:text-sm font-medium text-burgundy hover:bg-gold/10 hover:text-burgundy transition-colors rounded-md mx-2 md:mx-0 group"
-            onClick={() => setIsOpen(false)}
+          <button
+            className="user-dropdown__link flex items-center gap-4 px-6 py-4 md:px-4 md:py-3 text-base md:text-sm font-medium text-gray-400 cursor-not-allowed rounded-md mx-2 md:mx-0 group opacity-60"
+            disabled
+            title="Próximamente"
           >
             <Icon
               name="icon-notfilled-star"
               size={20}
-              className="text-gold group-hover:scale-110 transition-transform"
+              className="text-gray-400"
             />
             Lista de Deseos
-          </Link>
+          </button>
         </div>
 
-        {/* Logout (Mobile: Bottom / Desktop: Bottom of dropdown) */}
+        {/* Cerrar Sesión (Móvil: Abajo / Escritorio: Abajo del desplegable) */}
         <div className="user-dropdown__logout-section p-4 md:p-1 mt-auto border-t border-gold/10 md:mt-0">
           <button
             onClick={handleLogout}

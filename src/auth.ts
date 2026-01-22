@@ -13,18 +13,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
+        console.log("Authorize called with:", credentials?.email);
         if (!credentials?.email || !credentials?.password) return null;
 
-        const result = await WooCommerceService.loginCustomer({
-          email: credentials.email as string,
-          password: credentials.password as string,
-        });
+        try {
+          const result = await WooCommerceService.loginCustomer({
+            email: credentials.email as string,
+            password: credentials.password as string,
+          });
 
-        if (result.success && result.user) {
-          return result.user;
+          console.log("WooCommerce Login Result:", result);
+
+          if (result.success && result.user) {
+            return result.user;
+          }
+
+          return null;
+        } catch (error) {
+          console.error("Authorize Error:", error);
+          return null;
         }
-
-        return null;
       },
     }),
   ],
@@ -36,7 +44,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           // 1. Verificar si el usuario ya existe en WooCommerce
           const existingCustomer = await WooCommerceService.getCustomerByEmail(
-            user.email
+            user.email,
           );
 
           if (existingCustomer) {
@@ -71,7 +79,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           } else {
             console.error(
               "Error creating WC customer from Google Login:",
-              registerResult
+              registerResult,
             );
             return false;
           }

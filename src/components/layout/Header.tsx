@@ -1,11 +1,14 @@
 // Componente Header (movido a la carpeta layout)
-import React from "react";
 import Link from "next/link";
 import CartTrigger from "@/components/cart/CartTrigger";
 import UserMenu from "@/components/auth/UserMenu";
 import AnimatedSearch from "./AnimatedSearch";
+import CategoryDropdown from "./CategoryDropdown";
+import WooCommerceService from "@/services/WooCommerceService";
 
-const Header: React.FC = () => {
+const Header = async () => {
+  // Obtener categorías del servidor para SSR
+  const categories = await WooCommerceService.getProductCategories();
   const mainLinks = [
     { href: "/mujer", label: "Mujer" },
     { href: "/hombre", label: "Hombre" },
@@ -60,6 +63,11 @@ const Header: React.FC = () => {
                     </Link>
                   </li>
                 ))}
+
+                {/* Dropdown de Categorías (Desktop) */}
+                <li className="hidden lg:block">
+                  <CategoryDropdown categories={categories} />
+                </li>
               </ul>
 
               {/* Opcional: Info extra en el menú */}

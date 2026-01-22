@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import Icon from "../ui/Icon";
 import TripleBanner from "./TripleBanner";
 import HeroSection from "./HeroSection";
@@ -50,7 +51,16 @@ export default function HeroCarousel() {
             : "opacity-0 z-0 pointer-events-none"
         }`}
       >
-        <div className="hero-carousel__pattern bg-patron-desktop absolute inset-0 z-0 max-md:hidden blur-xs scale-110 bg-cover bg-center" />
+        <Image
+          src="/Patron.svg"
+          alt=""
+          fill
+          priority
+          quality={90}
+          className="hero-carousel__pattern absolute inset-0 z-0 max-md:hidden blur-xs scale-110 object-cover object-center"
+          sizes="100vw"
+          aria-hidden="true"
+        />
         <div className="hero-carousel__content relative z-10 w-full h-full">
           <HeroSection />
         </div>

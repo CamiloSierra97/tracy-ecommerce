@@ -1,12 +1,12 @@
 "use client";
 
-import { useRef, useEffect } from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { useProducts } from "@/hooks/useProducts";
 import ProductsGrid from "./ProductsGrid";
 import ThreeRingLoader from "@/components/ui/ThreeRingLoader";
-import { ProductsPage } from "@/services/WooCommerceService";
+import { useRef, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useProducts } from "@/hooks/useProducts";
+import { ProductsPage, Category } from "@/services/WooCommerceService";
 
 // 🛑 TS CORRECCIÓN: Definimos las props requeridas para la reutilización.
 interface ProductsProps {
@@ -14,6 +14,7 @@ interface ProductsProps {
   basePath: string;
   initialData?: ProductsPage;
   headingLevel?: "h1" | "h2"; // Permitir nivel de encabezado dinámico
+  categories?: Category[]; // Categorías para filtros
 }
 
 // Nota: Asumo que useProducts devuelve la estructura necesaria (pages, totalPages).
@@ -22,6 +23,7 @@ export default function Products({
   basePath,
   initialData,
   headingLevel = "h2", // Por defecto h2
+  categories = [], // Por defecto array vacío
 }: ProductsProps) {
   // Construir la estructura de consulta infinita inicial si se proporcionan datos iniciales
   const infiniteInitialData = initialData
@@ -102,7 +104,7 @@ export default function Products({
         </div>
 
         <div className="page-products__grid-container">
-          <ProductsGrid products={allProducts} />
+          <ProductsGrid products={allProducts} categories={categories} />
         </div>
 
         {/* Loader del Scroll Infinito (UX) */}

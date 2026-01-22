@@ -1,15 +1,22 @@
-import { Product } from "@/services/WooCommerceService";
-import { formatPrice } from "@/lib/utils/currency";
 import Icon from "@/components/ui/Icon";
 import ProductGallery from "./ProductGallery";
-import AddToCartBtn from "./AddToCartBtn";
+import ProductInteraction from "./ProductInteraction"; // Componente orquestador
+import ProductPrice from "./ProductPrice"; // Nuevo componente cliente para precio dinámico
 import sanitizeHtml from "sanitize-html";
+import WooCommerceService from "@/services/WooCommerceService";
+import { Product, ProductVariation } from "@/services/WooCommerceService";
 
 interface ProductDetailsProps {
   product: Product;
 }
 
-export default function ProductDetails({ product }: ProductDetailsProps) {
+export default async function ProductDetails({ product }: ProductDetailsProps) {
+  // SSR: Obtener variaciones si el producto es variable
+  let variations: ProductVariation[] = [];
+  if (product.type === "variable") {
+    variations = await WooCommerceService.getProductVariations(product.id);
+  }
+
   const images =
     product.images && product.images.length > 0
       ? product.images
@@ -18,10 +25,10 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
   return (
     <article className="product-details max-w-[1400px] mx-auto px-4 md:px-8 py-10">
       <div className="product-details__grid grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20">
-        {/* --- Columna Izquierda: Imágenes (Componente Cliente) --- */}
+        {/* --- Columna Izquierda: Imágenes --- */}
         <ProductGallery images={images} productName={product.name} />
 
-        {/* --- Columna Derecha: Información (Componente Servidor) --- */}
+        {/* --- Columna Derecha: Información --- */}
         <div className="product-details__info flex flex-col sticky top-24 self-start">
           <div className="product-details__badge-container mb-2">
             <span className="product-details__badge text-sm uppercase tracking-widest text-gray-500 font-medium font-secondary">
@@ -33,9 +40,8 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             {product.name}
           </h1>
 
-          <div className="product-details__price text-2xl md:text-3xl font-bold text-gray-900 mb-8 font-secondary">
-            {formatPrice(product.price)}
-          </div>
+          {/* Precio Dinámico (Componente Cliente para actualizar con variación) */}
+          <ProductPrice basePrice={product.price} />
 
           <div className="product-details__description prose prose-stone mb-10 text-gray-600 leading-relaxed max-w-none">
             <div
@@ -47,10 +53,8 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
             />
           </div>
 
-          <div className="product-details__actions flex flex-col gap-6 border-t border-gray-100 pt-8">
-            {/* Botón Agregar al Carrito (Componente Cliente) */}
-            <AddToCartBtn product={product} />
-          </div>
+          {/* Lógica de Selección y Compra (Componente Cliente wrapper) */}
+          <ProductInteraction product={product} variations={variations} />
 
           {/* Información Adicional / Insignias de Confianza */}
           <div className="product-details__trust-badges grid grid-cols-2 gap-4 mt-10 p-6 bg-gray-50 rounded-xl border border-gray-100">

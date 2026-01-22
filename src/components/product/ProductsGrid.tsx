@@ -1,23 +1,30 @@
 "use client";
 
+import Image from "next/image";
+import Link from "next/link";
+import Icon from "@/components/ui/Icon";
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useCart } from "@/context/CartContext";
 import { Product } from "@/services/WooCommerceService";
 import { formatPrice } from "@/lib/utils/currency";
-import Image from "next/image";
-import Link from "next/link";
-import Icon from "@/components/ui/Icon";
+
+import type { Category } from "@/services/WooCommerceService";
 
 interface ProductsGridProps {
   products: Product[];
   title?: string;
+  categories?: Category[]; // Categorías para filtrado
 }
 
 type SortOption = "date" | "price_asc" | "price_desc";
 
-export default function ProductsGrid({ products, title }: ProductsGridProps) {
+export default function ProductsGrid({
+  products,
+  title,
+  categories = [],
+}: ProductsGridProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [gridCols, setGridCols] = useState<2 | 4>(4);
   const [sortBy, setSortBy] = useState<SortOption>("date");
@@ -185,23 +192,31 @@ export default function ProductsGrid({ products, title }: ProductsGridProps) {
             className="page-products__filters overflow-hidden mb-8 bg-ivory/50 backdrop-blur-sm border border-gold/10 rounded-xl"
           >
             <div className="page-products__filters-content p-6 grid grid-cols-1 md:grid-cols-4 gap-8">
-              {/* Filtros de Marcador de Posición */}
-              <div className="filter-group">
-                <h4 className="filter-group__title font-serif text-burgundy mb-3">
-                  Categoría
-                </h4>
-                <ul className="filter-group__list space-y-2 text-sm text-gray-600">
-                  <li className="filter-group__item cursor-pointer hover:text-burgundy transition-colors">
-                    Brasieres
-                  </li>
-                  <li className="filter-group__item cursor-pointer hover:text-burgundy transition-colors">
-                    Panties
-                  </li>
-                  <li className="filter-group__item cursor-pointer hover:text-burgundy transition-colors">
-                    Sets Completos
-                  </li>
-                </ul>
-              </div>
+              {/* Filtros de Categoría Reales */}
+              {categories.length > 0 && (
+                <div className="filter-group">
+                  <h4 className="filter-group__title font-serif text-burgundy mb-3">
+                    Categoría
+                  </h4>
+                  <ul className="filter-group__list space-y-2 text-sm text-gray-600">
+                    {categories
+                      .filter((cat) => cat.parent === 0)
+                      .map((category) => (
+                        <li key={category.id}>
+                          <Link
+                            href={`/tienda/${category.slug}`}
+                            className="filter-group__item cursor-pointer hover:text-burgundy transition-colors flex items-center justify-between"
+                          >
+                            <span>{category.name}</span>
+                            <span className="text-xs text-gray-400">
+                              ({category.count})
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              )}
               <div className="filter-group">
                 <h4 className="filter-group__title font-serif text-burgundy mb-3">
                   Talla
@@ -502,7 +517,7 @@ function QuickViewModal({
               <Icon name="icon-close" size={24} />
             </button>
 
-            {/* Left Side: Zoomable Image */}
+            {/* Lado Izquierdo: Imagen Ampliable */}
             <div
               className="quick-view-modal__image-section relative h-[400px] md:h-full overflow-hidden bg-gray-50 cursor-zoom-in group"
               onMouseEnter={handleMouseEnter}
@@ -530,7 +545,7 @@ function QuickViewModal({
                 </div>
               </motion.div>
 
-              {/* Zoom Hint Overlay */}
+              {/* Superposición de Sugerencia de Zoom */}
               <div className="quick-view-modal__zoom-hint absolute bottom-6 left-0 right-0 text-center pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <span className="quick-view-modal__zoom-text bg-black/40 text-ivory text-xs px-4 py-2 rounded-full backdrop-blur-sm tracking-wide">
                   Rueda del mouse para zoom
@@ -538,7 +553,7 @@ function QuickViewModal({
               </div>
             </div>
 
-            {/* Right Side: Product Details */}
+            {/* Lado Derecho: Detalles del Producto */}
             <div className="quick-view-modal__details-section p-8 md:p-12 flex flex-col justify-center bg-ivory">
               <h2
                 id="quick-view-title"
