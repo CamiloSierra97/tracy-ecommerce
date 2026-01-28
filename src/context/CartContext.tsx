@@ -2,13 +2,13 @@
 
 import Toast from "@/components/ui/Toast";
 import { Product, Coupon } from "@/services/WooCommerceService";
+import { createContext, useContext, useState, ReactNode } from "react";
+import { useCartPersistence } from "@/hooks/useCartPersistence";
 import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
+  calculateCartCount,
+  calculateCartTotal,
+  calculateDiscount,
+} from "@/utils/cartCalculations";
 
 // Extender Product para incluir cantidad para CartItem
 export interface CartItem extends Product {
@@ -16,6 +16,7 @@ export interface CartItem extends Product {
   variation_id?: number;
   selected_attributes?: Record<string, string>; // { Size: "M", Color: "Red" }
 }
+
 interface CartContextType {
   isOpen: boolean;
   cartItems: CartItem[];
@@ -26,13 +27,13 @@ interface CartContextType {
     product: Product & {
       variation_id?: number;
       selected_attributes?: Record<string, string>;
-    }
+    },
   ) => void;
   removeFromCart: (productId: number, variationId?: number) => void;
   updateQuantity: (
     productId: number,
     newQuantity: number,
-    variationId?: number
+    variationId?: number,
   ) => void;
   clearCart: () => void;
   cartCount: number;
@@ -48,32 +49,12 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const { cartItems, setCartItems } = useCartPersistence([]);
   const [coupon, setCoupon] = useState<Coupon | null>(null);
+
+  // Toast state could also be extracted to useToast if reused elsewhere
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [showToast, setShowToast] = useState(false);
-
-  const [isLoaded, setIsLoaded] = useState(false);
-
-  // Cargar carrito desde localStorage al montar
-  useEffect(() => {
-    const savedCart = localStorage.getItem("tracy_cart");
-    if (savedCart) {
-      try {
-        setCartItems(JSON.parse(savedCart));
-      } catch (error) {
-        console.error("Error al analizar el carrito de localStorage", error);
-      }
-    }
-    setIsLoaded(true);
-  }, []);
-
-  // Guardar carrito en localStorage cuando cambie
-  useEffect(() => {
-    if (isLoaded) {
-      localStorage.setItem("tracy_cart", JSON.stringify(cartItems));
-    }
-  }, [cartItems, isLoaded]);
 
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
@@ -84,7 +65,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       variation_id?: number;
       selected_attributes?: Record<string, string>;
     },
-    callbacks?: { onAdd?: () => void }
+    callbacks?: { onAdd?: () => void },
   ) => {
     setCartItems((prevItems) => {
       // Identificar item único por ID de producto Y variación
@@ -113,7 +94,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const removeFromCart = (
     productId: number,
     variationId?: number,
-    callbacks?: { onRemove?: () => void }
+    callbacks?: { onRemove?: () => void },
   ) => {
     setCartItems((prevItems) => {
       const newItems = prevItems.filter((item) => {
@@ -137,7 +118,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const updateQuantity = (
     productId: number,
     newQuantity: number,
-    variationId?: number
+    variationId?: number,
   ) => {
     if (newQuantity < 1) {
       removeFromCart(productId, variationId);
@@ -150,42 +131,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           (variationId === undefined || item.variation_id === variationId);
 
         return isMatch ? { ...item, quantity: newQuantity } : item;
-      })
+      }),
     );
   };
 
-  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-  const cartTotal = cartItems.reduce(
-    (total, item) => total + (parseInt(item.price) || 0) * item.quantity,
-    0
-  );
-
-  // Calcular descuento
-  const calculateDiscount = () => {
-    if (!coupon) return 0;
-
-    // Validar monto mínimo
-    if (
-      coupon.minimum_amount &&
-      cartTotal < parseFloat(coupon.minimum_amount)
-    ) {
-      return 0; // Deshabilitar si no cumple mínimo
-    }
-
-    const amount = parseFloat(coupon.amount);
-
-    if (coupon.discount_type === "percent") {
-      return (cartTotal * amount) / 100;
-    }
-
-    if (coupon.discount_type === "fixed_cart") {
-      return Math.min(amount, cartTotal);
-    }
-
-    return 0;
-  };
-
-  const discountTotal = calculateDiscount();
+  const cartCount = calculateCartCount(cartItems);
+  const cartTotal = calculateCartTotal(cartItems);
+  const discountTotal = calculateDiscount(cartTotal, coupon);
   const grandTotal = Math.max(0, cartTotal - discountTotal);
 
   const applyCoupon = async (code: string): Promise<boolean> => {
@@ -205,7 +157,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             data.coupon.discount_type === "percent"
               ? data.coupon.amount + "%"
               : "$" + data.coupon.amount
-          }!`
+          }!`,
         );
         setShowToast(true);
         return true;

@@ -16,6 +16,11 @@ const config = {
       "prv_test_H61B72dc54E1430094C69188F356D332", // Sandbox Default or Placeholder
     currency: "COP",
   },
+  epayco: {
+    publicKey: process.env.EPAYCO_PUBLIC_KEY || "",
+    privateKey: process.env.EPAYCO_PRIVATE_KEY || "",
+    isTest: process.env.EPAYCO_IS_TEST === "true",
+  },
 };
 
 export default config;
