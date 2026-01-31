@@ -18,11 +18,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const { email, firstName, lastName, username, password } =
+    const { email, firstName, lastName, username, password, phone } =
       await request.json();
 
     // Validar campos requeridos
-    if (!email || !firstName || !lastName || !username || !password) {
+    if (!email || !firstName || !lastName || !username || !password || !phone) {
       return NextResponse.json(
         {
           success: false,
@@ -39,6 +39,9 @@ export async function POST(request: Request) {
       last_name: lastName,
       username,
       password,
+      billing: {
+        phone: phone,
+      },
     });
 
     if (result.success) {

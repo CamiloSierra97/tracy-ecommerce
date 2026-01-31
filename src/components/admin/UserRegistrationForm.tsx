@@ -10,6 +10,8 @@ interface FormData {
   lastName: string;
   username: string;
   password: string;
+  confirmPassword: string;
+  phone: string;
 }
 
 export default function UserRegistrationForm() {
@@ -19,6 +21,8 @@ export default function UserRegistrationForm() {
     lastName: "",
     username: "",
     password: "",
+    confirmPassword: "",
+    phone: "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -39,6 +43,13 @@ export default function UserRegistrationForm() {
     e.preventDefault();
     setError("");
     setSuccess("");
+
+    // Validar que las contraseñas coincidan
+    if (formData.password !== formData.confirmPassword) {
+      setError("Las contraseñas no coinciden");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -59,6 +70,8 @@ export default function UserRegistrationForm() {
           lastName: "",
           username: "",
           password: "",
+          confirmPassword: "",
+          phone: "",
         });
       } else {
         setError(data.message || "Error al crear usuario");
@@ -183,6 +196,28 @@ export default function UserRegistrationForm() {
         </p>
       </div>
 
+      {/* Phone */}
+      <div>
+        <label
+          htmlFor="phone"
+          className="block text-sm font-medium text-black/80 mb-2"
+        >
+          Teléfono *
+        </label>
+        <input
+          id="phone"
+          type="tel"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+          pattern="[0-9+\s()-]{7,}"
+          className="w-full px-4 py-3 rounded-xl border border-black/10 bg-ivory/50 focus:outline-none focus:ring-2 focus:ring-burgundy/50 focus:border-burgundy transition-all"
+          placeholder="+57 300 123 4567"
+        />
+        <p className="text-xs text-black/50 mt-1">Incluye código de país</p>
+      </div>
+
       {/* Password */}
       <div>
         <label
@@ -203,6 +238,38 @@ export default function UserRegistrationForm() {
           placeholder="••••••••"
         />
         <p className="text-xs text-black/50 mt-1">Mínimo 6 caracteres</p>
+      </div>
+
+      {/* Confirm Password */}
+      <div>
+        <label
+          htmlFor="confirmPassword"
+          className="block text-sm font-medium text-black/80 mb-2"
+        >
+          Confirmar Contraseña *
+        </label>
+        <input
+          id="confirmPassword"
+          type="password"
+          name="confirmPassword"
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          required
+          minLength={6}
+          className={`w-full px-4 py-3 rounded-xl border bg-ivory/50 focus:outline-none focus:ring-2 focus:ring-burgundy/50 focus:border-burgundy transition-all ${
+            formData.confirmPassword &&
+            formData.password !== formData.confirmPassword
+              ? "border-red-400"
+              : "border-black/10"
+          }`}
+          placeholder="••••••••"
+        />
+        {formData.confirmPassword &&
+          formData.password !== formData.confirmPassword && (
+            <p className="text-xs text-red-500 mt-1">
+              Las contraseñas no coinciden
+            </p>
+          )}
       </div>
 
       {/* Submit Button */}

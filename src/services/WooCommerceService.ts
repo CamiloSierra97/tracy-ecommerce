@@ -74,6 +74,17 @@ export interface RegisterCustomerData {
   first_name: string;
   last_name: string;
   password: string;
+  billing?: {
+    phone?: string;
+    first_name?: string;
+    last_name?: string;
+    address_1?: string;
+    address_2?: string;
+    city?: string;
+    state?: string;
+    postcode?: string;
+    country?: string;
+  };
 }
 
 export interface BillingAddress {
@@ -416,7 +427,12 @@ const WooCommerceService = {
 
   registerCustomer: async (
     data: RegisterCustomerData,
-  ): Promise<{ success: boolean; message?: string; error?: string }> => {
+  ): Promise<{
+    success: boolean;
+    message?: string;
+    error?: string;
+    customer?: any;
+  }> => {
     // SOLO LADO DEL SERVIDOR
     if (typeof window === "undefined") {
       const { url, consumerKey, consumerSecret } = config.woocommerce;
@@ -464,6 +480,7 @@ const WooCommerceService = {
           return {
             success: true,
             message: "Cuenta creada exitosamente. Por favor inicia sesión.",
+            customer: responseData,
           };
         } catch (error) {
           console.error("Excepción en registro:", error);
