@@ -21,12 +21,27 @@ export default function AboutPage() {
           {/* Main Content */}
           <article className="space-y-6 text-black leading-relaxed text-lg">
             <p>
-              En <strong>Tracy Lencería</strong>, creemos que la lencería es
-              mucho más que ropa interior; es una expresión de confianza,
-              belleza y amor propio. Fundada en Colombia, nuestra marca nació
-              con el deseo de ofrecer piezas que combinen la delicadeza del
-              encaje, la suavidad de las telas premium y diseños que realzan la
-              figura natural de cada mujer.
+              En <strong>Tracy</strong>, rompemos los moldes de la ropa íntima
+              tradicional. Somos una marca multilínea diseñada para acompañar
+              cada etapa y estilo de vida, fusionando el arte del diseño con la
+              ingeniería del confort.
+              <ul className="list-disc">
+                <p>
+                  <strong>Un Universo para Todos</strong>
+                </p>
+                <li>
+                  Mujer (Lencería y Ropa Interior): Desde básicos de algodón
+                  hasta nuestra icónica lencería de blonda con "efecto tatuaje".
+                </li>
+                <li>
+                  Hombre (Lencería Masculina): Diseños audaces en tull y encaje
+                  para el hombre que no teme explorar su sensualidad.
+                </li>
+                <li>
+                  Niña (Ropa Interior): Pack de básicos en algodón licrado que
+                  garantizan frescura y libertad de movimiento.
+                </li>
+              </ul>
             </p>
 
             <h2 className="text-2xl font-serif text-burgundy mt-10 mb-4">

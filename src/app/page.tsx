@@ -1,4 +1,3 @@
-import Image from "next/image";
 import WooCommerceService from "@/services/WooCommerceService";
 import HeroCarousel from "@/components/marketing/HeroCarousel";
 
@@ -7,10 +6,10 @@ const Products = dynamic(() => import("@/components/product/Products"), {
   loading: () => <div className="min-h-screen"></div>,
 });
 const BrandManifesto = dynamic(
-  () => import("@/components/marketing/BrandManifesto")
+  () => import("@/components/marketing/BrandManifesto"),
 );
 const NewsletterSection = dynamic(
-  () => import("@/components/marketing/NewsletterSection")
+  () => import("@/components/marketing/NewsletterSection"),
 );
 
 import {

@@ -7,7 +7,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "shop.glowcosmeticoscol.com",
+        hostname: "db.tracystore.com",
         pathname: "/**",
       },
       {
@@ -23,7 +23,7 @@ const nextConfig = {
           {
             source: "/api/products/:path*",
             destination:
-              "https://shop.glowcosmeticoscol.com/wp-json/wc/v3/products/:path*",
+              "https://db.tracystore.com/wp-json/wc/v3/products/:path*",
           },
         ]
       : [];
@@ -48,9 +48,9 @@ const nextConfig = {
               default-src 'self';
               script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com;
               style-src 'self' 'unsafe-inline';
-              img-src 'self' blob: data: https://shop.glowcosmeticoscol.com https://*.googleusercontent.com;
+              img-src 'self' blob: data: https://db.tracystore.com https://*.googleusercontent.com;
               font-src 'self' data:;
-              connect-src 'self' https://shop.glowcosmeticoscol.com https://vitals.vercel-insights.com;
+              connect-src 'self' https://db.tracystore.com https://vitals.vercel-insights.com;
               object-src 'none';
               base-uri 'self';
               form-action 'self';

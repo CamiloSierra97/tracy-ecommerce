@@ -44,18 +44,18 @@ export default function ProductsGrid({
         (p) =>
           p.name.toLowerCase().includes(searchTerm) ||
           (p.short_description &&
-            p.short_description.toLowerCase().includes(searchTerm))
+            p.short_description.toLowerCase().includes(searchTerm)),
       );
     }
 
     // 2. Ordenar
     if (sortBy === "price_asc") {
       return items.sort(
-        (a, b) => (Number(a.price) || 0) - (Number(b.price) || 0)
+        (a, b) => (Number(a.price) || 0) - (Number(b.price) || 0),
       );
     } else if (sortBy === "price_desc") {
       return items.sort(
-        (a, b) => (Number(b.price) || 0) - (Number(a.price) || 0)
+        (a, b) => (Number(b.price) || 0) - (Number(a.price) || 0),
       );
     }
 
@@ -243,7 +243,7 @@ export default function ProductsGrid({
                         key={i}
                         className={`filter-group__color-swatch w-6 h-6 rounded-full border border-gray-100 shadow-sm cursor-pointer hover:scale-110 transition-transform ${color}`}
                       ></span>
-                    )
+                    ),
                   )}
                 </div>
               </div>

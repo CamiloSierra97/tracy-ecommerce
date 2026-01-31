@@ -1,4 +1,3 @@
-import React from "react";
 import ScrollButton from "@/components/ui/ScrollButton";
 
 const BRAND_SLOGAN = "Libera tu cuerpo, abraza tu libertad.";
