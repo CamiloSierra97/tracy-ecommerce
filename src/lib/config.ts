@@ -21,6 +21,10 @@ const config = {
     privateKey: process.env.EPAYCO_PRIVATE_KEY || "",
     isTest: process.env.EPAYCO_IS_TEST === "true",
   },
+  admin: {
+    email: process.env.ADMIN_EMAIL || "admin@tracystore.com",
+    password: process.env.ADMIN_PASSWORD || "admin123", // Cambiar en producción
+  },
 };
 
 export default config;
