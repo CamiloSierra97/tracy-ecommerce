@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     const slug = searchParams.get("slug");
 
     if (!url || !consumerKey || !consumerSecret) {
-      console.error("❌ ERROR: Faltan variables de entorno de WooCommerce");
+      console.error("WooCommerce environment variables are missing");
       return NextResponse.json(
         {
           error: "Configuración del servidor incompleta (Faltan credenciales)",
@@ -20,46 +20,34 @@ export async function GET(request: Request) {
       );
     }
 
-    // Cabecera de Autenticación
     const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
       "base64"
     );
 
-    let apiUrl = `${url}/wp-json/wc/v3/products?per_page=${per_page}&page=${page}`;
-    if (slug) {
-      apiUrl += `&slug=${slug}`;
-    }
+    const params = new URLSearchParams({ per_page, page });
+    if (slug) params.append("slug", slug);
 
-    // Configurar opciones de petición
-    const options: RequestInit = {
-      headers: {
-        Authorization: `Basic ${auth}`,
-      },
-      // En desarrollo, si hay problemas de certificado auto-firmado,
-      // Node.js nativo (v18+) requiere un dispatcher personalizado o
-      // simplemente configurar NODE_TLS_REJECT_UNAUTHORIZED=0 en .env.local si es crítico.
-      // Por ahora usamos fetch estándar.
-    };
-
-    const response = await fetch(apiUrl, options);
+    const response = await fetch(
+      `${url}/wp-json/wc/v3/products?${params.toString()}`,
+      { headers: { Authorization: `Basic ${auth}` } }
+    );
 
     if (!response.ok) {
       throw new Error(
-        `Error API WooCommerce: ${response.status} ${response.statusText}`
+        `WooCommerce API error: ${response.status} ${response.statusText}`
       );
     }
 
     const data = await response.json();
 
-    // 🛑 SANITIZACIÓN DE IMÁGENES: Filtrar URLs rotas de IA
+    // Sanitize images: filter out broken AI-generated URLs
     const sanitizedData = Array.isArray(data)
-      ? data.map((product: any) => ({
+      ? data.map((product: Record<string, unknown>) => ({
           ...product,
           images:
-            product.images?.filter(
-              (img: any) =>
-                img.src && !img.src.includes("Gemini_Generated_Image")
-            ) || [],
+            (product.images as { src?: string }[] | undefined)?.filter(
+              (img) => img.src && !img.src.includes("Gemini_Generated_Image")
+            ) ?? [],
         }))
       : data;
 
@@ -72,16 +60,7 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error("=====================================");
-    console.error("=====================================");
-    console.error("🔥 ERROR DE WOOCOMMERCE:", error);
-    // Loguear intento para depuración
-    console.error(
-      "Intento de conexión a:",
-      config.woocommerce.url ? config.woocommerce.url : "URL NO DEFINIDA"
-    );
-    console.error("=====================================");
-    console.error("=====================================");
+    console.error("WooCommerce API error:", error);
 
     return NextResponse.json(
       { error: "Error al obtener productos" },

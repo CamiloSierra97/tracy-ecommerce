@@ -1,7 +1,7 @@
-// Componente Footer (movido a la carpeta layout)
 import Link from "next/link";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <footer
       role="contentinfo"
@@ -114,7 +114,7 @@ export default function Footer() {
         </div>
         <div className="footer__bottom border-t-2 border-burgundy-light/50 pt-8">
           <p className="footer__copyright text-center text-ivory/60 text-sm">
-            © 2025 Tracy Lencería®. Todos los derechos reservados.
+            {`© ${currentYear} Tracy Lencería®. Todos los derechos reservados.`}
           </p>
           <p className="footer__credit text-center text-ivory/60 text-sm mt-2">
             Made with 💖 by SierraDev

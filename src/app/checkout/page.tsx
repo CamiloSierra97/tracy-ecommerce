@@ -19,9 +19,7 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
           {/* Formulario (Izquierda) */}
           <div className="lg:col-span-7 xl:col-span-8">
-            <CheckoutForm
-              onSuccess={(id) => console.log("Order success:", id)}
-            />
+            <CheckoutForm />
           </div>
 
           {/* Resumen (Derecha Sticky) */}

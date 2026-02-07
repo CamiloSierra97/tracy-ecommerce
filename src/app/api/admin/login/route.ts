@@ -32,15 +32,6 @@ export async function POST(request: Request) {
         if (wpUserRes.ok) {
           const wpUser = await wpUserRes.json();
           userRoles = wpUser.roles || [];
-          console.log("[AdminLogin] Raw WP Me User:", wpUser);
-          console.log("[AdminLogin] Roles found in WP Me:", userRoles);
-        } else {
-          console.warn(
-            "[AdminLogin] JWT User Me failed with status:",
-            wpUserRes.status,
-          );
-          const errorBody = await wpUserRes.text();
-          console.warn("[AdminLogin] JWT User Me error body:", errorBody);
         }
       } catch (wpError) {
         console.error("[AdminLogin] Error fetching WP roles via JWT:", wpError);
@@ -49,39 +40,16 @@ export async function POST(request: Request) {
       // Fallback 1: Buscar por email usando API Keys en endpoint de Usuarios de WP
       if (userRoles.length === 0) {
         const wpUser = await WooCommerceService.getWPUserByEmail(email);
-        if (wpUser) {
-          console.log("[AdminLogin] Raw WP User via API Keys:", wpUser);
-          if (wpUser.roles) {
-            userRoles = wpUser.roles;
-            console.log("[AdminLogin] Roles found in WP API Keys:", userRoles);
-          } else {
-            console.warn(
-              "[AdminLogin] WP User found via API Keys, but has NO roles property.",
-            );
-          }
-        } else {
-          console.warn(
-            "[AdminLogin] WP User NOT found via API Keys for email:",
-            email,
-          );
+        if (wpUser?.roles) {
+          userRoles = wpUser.roles;
         }
       }
 
       // Fallback 2: Buscar por email usando API Keys en endpoint de Clientes de WooCommerce
       if (userRoles.length === 0) {
         const customer = await WooCommerceService.getCustomerByEmail(email);
-        if (customer) {
-          console.log("[AdminLogin] Raw WC Customer:", customer);
-          if (customer.role) {
-            userRoles = [customer.role];
-            console.log("[AdminLogin] Role found in WC Customer:", userRoles);
-          } else {
-            console.warn(
-              "[AdminLogin] WC Customer found, but has NO role property.",
-            );
-          }
-        } else {
-          console.warn("[AdminLogin] WC Customer NOT found for email:", email);
+        if (customer?.role) {
+          userRoles = [customer.role];
         }
       }
 

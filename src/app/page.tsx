@@ -1,4 +1,6 @@
-import WooCommerceService from "@/services/WooCommerceService";
+import WooCommerceService, {
+  ProductsPage,
+} from "@/services/WooCommerceService";
 import HeroCarousel from "@/components/marketing/HeroCarousel";
 
 import dynamic from "next/dynamic";
@@ -21,21 +23,18 @@ import {
 export default async function Page() {
   const queryClient = new QueryClient();
 
-  // Pre-cargar datos en el servidor
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["products"],
     queryFn: async ({ pageParam = 1 }) => {
-      // Llamada directa del lado del servidor a WooCommerce
       return await WooCommerceService.getProducts({
         page: pageParam as number,
         per_page: 12,
       });
     },
     initialPageParam: 1,
-    getNextPageParam: (lastPage: any, allPages: any) => {
-      const currentTotalPages = lastPage.totalPages;
+    getNextPageParam: (lastPage: ProductsPage, allPages: ProductsPage[]) => {
       const nextPage = allPages.length + 1;
-      return nextPage <= currentTotalPages ? nextPage : undefined;
+      return nextPage <= lastPage.totalPages ? nextPage : undefined;
     },
   });
 
