@@ -1,13 +1,14 @@
 "use client";
 
+import Icon from "@/components/ui/Icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Icon from "@/components/ui/Icon";
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -86,7 +87,7 @@ export default function AdminLoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="w-full px-4 py-3 rounded-xl border border-black/10 bg-ivory/50 focus:outline-none focus:ring-2 focus:ring-burgundy/50 focus:border-burgundy transition-all"
-                placeholder="admin@tracystore.com"
+                placeholder="Correo admin"
               />
             </div>
 
@@ -97,15 +98,30 @@ export default function AdminLoginPage() {
               >
                 Contraseña
               </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="w-full px-4 py-3 rounded-xl border border-black/10 bg-ivory/50 focus:outline-none focus:ring-2 focus:ring-burgundy/50 focus:border-burgundy transition-all"
-                placeholder="••••••••"
-              />
+              <div className="relative">
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  className="w-full px-4 py-3 rounded-xl border border-black/10 bg-ivory/50 focus:outline-none focus:ring-2 focus:ring-burgundy/50 focus:border-burgundy transition-all pr-12"
+                  placeholder="••••••••"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 hover:text-burgundy transition-colors"
+                  aria-label={
+                    showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+                  }
+                >
+                  <Icon
+                    name={showPassword ? "icon-eye-off" : "icon-eye"}
+                    size={20}
+                  />
+                </button>
+              </div>
             </div>
 
             <button

@@ -1,12 +1,12 @@
 "use client";
 
+import ButtonSpinner from "@/components/ui/ButtonSpinner";
+import Icon from "@/components/ui/Icon";
 import { useState } from "react";
 import { registerUser } from "@/actions/auth-actions";
 import { useUI } from "@/context/UIContext";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import ButtonSpinner from "@/components/ui/ButtonSpinner";
-import Icon from "@/components/ui/Icon";
 
 export default function RegisterForm() {
   const { closeAuth, showToast } = useUI();
@@ -23,6 +23,13 @@ export default function RegisterForm() {
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
+
+    if (password !== confirmPassword) {
+      setError("Las contraseñas no coinciden");
+      setIsLoading(false);
+      return;
+    }
 
     const result = await registerUser(null, formData);
 
@@ -122,6 +129,17 @@ export default function RegisterForm() {
         </div>
         <div className="register-form__field">
           <label className="register-form__label block text-sm font-medium text-gray-700 mb-1">
+            Teléfono
+          </label>
+          <input
+            name="phone"
+            type="tel"
+            className="register-form__input input-base"
+            placeholder="Teléfono móvil"
+          />
+        </div>
+        <div className="register-form__field">
+          <label className="register-form__label block text-sm font-medium text-gray-700 mb-1">
             Contraseña
           </label>
           <div className="relative">
@@ -146,6 +164,18 @@ export default function RegisterForm() {
               />
             </button>
           </div>
+        </div>
+        <div className="register-form__field">
+          <label className="register-form__label block text-sm font-medium text-gray-700 mb-1">
+            Confirmar Contraseña
+          </label>
+          <input
+            name="confirmPassword"
+            type="password"
+            required
+            className="register-form__input input-base"
+            placeholder="Repite tu contraseña"
+          />
         </div>
 
         <button

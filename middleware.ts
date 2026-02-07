@@ -23,9 +23,15 @@ export function middleware(request: NextRequest) {
     userAgent.includes("chrome-lighthouse") ||
     userAgent.includes("insights");
 
-  // Permitir acceso solo desde Colombia (código país CO) y Estados Unidos (US) para pruebas
+  // Permitir acceso solo desde Colombia (código país CO), Estados Unidos (US) y España (ES) para pruebas
   // Si no hay información de país (desarrollo local), permitir acceso
-  if (!isBot && country && country !== "CO" && country !== "US") {
+  if (
+    !isBot &&
+    country &&
+    country !== "CO" &&
+    country !== "US" &&
+    country !== "ES"
+  ) {
     // Redirigir a página de región no disponible
     return NextResponse.redirect(new URL("/region-no-disponible", request.url));
   }

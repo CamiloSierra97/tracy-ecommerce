@@ -1,8 +1,8 @@
 "use client";
 
+import Icon from "@/components/ui/Icon";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Icon from "@/components/ui/Icon";
 
 interface FormData {
   email: string;
@@ -27,6 +27,8 @@ export default function UserRegistrationForm() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -226,17 +228,29 @@ export default function UserRegistrationForm() {
         >
           Contraseña *
         </label>
-        <input
-          id="password"
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-          minLength={6}
-          className="w-full px-4 py-3 rounded-xl border border-black/10 bg-ivory/50 focus:outline-none focus:ring-2 focus:ring-burgundy/50 focus:border-burgundy transition-all"
-          placeholder="••••••••"
-        />
+        <div className="relative">
+          <input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            required
+            minLength={6}
+            className="w-full px-4 py-3 rounded-xl border border-black/10 bg-ivory/50 focus:outline-none focus:ring-2 focus:ring-burgundy/50 focus:border-burgundy transition-all pr-12"
+            placeholder="••••••••"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 hover:text-burgundy transition-colors"
+            aria-label={
+              showPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+            }
+          >
+            <Icon name={showPassword ? "icon-eye-off" : "icon-eye"} size={20} />
+          </button>
+        </div>
         <p className="text-xs text-black/50 mt-1">Mínimo 6 caracteres</p>
       </div>
 
@@ -248,22 +262,37 @@ export default function UserRegistrationForm() {
         >
           Confirmar Contraseña *
         </label>
-        <input
-          id="confirmPassword"
-          type="password"
-          name="confirmPassword"
-          value={formData.confirmPassword}
-          onChange={handleChange}
-          required
-          minLength={6}
-          className={`w-full px-4 py-3 rounded-xl border bg-ivory/50 focus:outline-none focus:ring-2 focus:ring-burgundy/50 focus:border-burgundy transition-all ${
-            formData.confirmPassword &&
-            formData.password !== formData.confirmPassword
-              ? "border-red-400"
-              : "border-black/10"
-          }`}
-          placeholder="••••••••"
-        />
+        <div className="relative">
+          <input
+            id="confirmPassword"
+            type={showConfirmPassword ? "text" : "password"}
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+            minLength={6}
+            className={`w-full px-4 py-3 rounded-xl border bg-ivory/50 focus:outline-none focus:ring-2 focus:ring-burgundy/50 focus:border-burgundy transition-all pr-12 ${
+              formData.confirmPassword &&
+              formData.password !== formData.confirmPassword
+                ? "border-red-400"
+                : "border-black/10"
+            }`}
+            placeholder="••••••••"
+          />
+          <button
+            type="button"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-black/40 hover:text-burgundy transition-colors"
+            aria-label={
+              showConfirmPassword ? "Ocultar contraseña" : "Mostrar contraseña"
+            }
+          >
+            <Icon
+              name={showConfirmPassword ? "icon-eye-off" : "icon-eye"}
+              size={20}
+            />
+          </button>
+        </div>
         {formData.confirmPassword &&
           formData.password !== formData.confirmPassword && (
             <p className="text-xs text-red-500 mt-1">

@@ -524,10 +524,51 @@ const WooCommerceService = {
 
           if (response.ok) {
             const data = await response.json();
+            console.log("[WooCommerceService] Customer found:", data);
             return data && data.length > 0 ? data[0] : null;
           }
         } catch (error) {
           console.error("Error al buscar cliente por email:", error);
+        }
+      }
+    }
+    return null;
+  },
+
+  getWPUserByEmail: async (email: string): Promise<any | null> => {
+    // SOLO LADO DEL SERVIDOR - Busca en /wp/v2/users (WordPress nativo)
+    if (typeof window === "undefined") {
+      const { url, consumerKey, consumerSecret } = config.woocommerce;
+      if (url && consumerKey && consumerSecret) {
+        try {
+          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
+            "base64",
+          );
+          // Intentamos buscar por email en el endpoint de usuarios nativo de WP
+          // Agregamos context=edit para que nos devuelva todos los campos y usuarios (requiere permisos de API Key)
+          const endpoint = `${url.replace(/\/$/, "")}/wp-json/wp/v2/users?search=${email}&context=edit`;
+
+          const response = await fetch(endpoint, {
+            headers: { Authorization: `Basic ${auth}` },
+            next: { revalidate: 0 },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            // Filtrar por email exacto por si acaso search devuelve parciales
+            const user = data.find(
+              (u: any) => u.email === email || u.user_email === email,
+            );
+            if (user) {
+              console.log(
+                "[WooCommerceService] WP User found via API:",
+                user.id,
+              );
+              return user;
+            }
+          }
+        } catch (error) {
+          console.error("Error al buscar WP user por email:", error);
         }
       }
     }
@@ -539,7 +580,14 @@ const WooCommerceService = {
     password: string;
   }): Promise<{
     success: boolean;
-    user?: { id: string; name: string; email: string; image?: string };
+    user?: {
+      id: string;
+      name: string;
+      email: string;
+      image?: string;
+      roles?: string[];
+    };
+    token?: string;
     message?: string;
   }> => {
     if (typeof window === "undefined") {
@@ -561,11 +609,12 @@ const WooCommerceService = {
           if (res.ok && data?.token) {
             return {
               success: true,
+              token: data.token,
               user: {
-                id: data.user_email, // Usando email como ID o podría usar data.user_id si está disponible y es consistente
+                id: data.user_email,
                 name: data.user_display_name,
                 email: data.user_email,
-                // image: data.user_avatar // Agregar si está disponible
+                // roles is not always returned by JWT Auth by default
               },
             };
           }

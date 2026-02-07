@@ -1,6 +1,6 @@
+import AdminRegisterClient from "./AdminRegisterClient";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import AdminRegisterClient from "./AdminRegisterClient";
 
 async function checkAdminAuth() {
   const cookieStore = await cookies();

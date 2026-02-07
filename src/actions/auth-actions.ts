@@ -9,6 +9,7 @@ const RegisterSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
   password: z.string().min(6),
+  phone: z.string().optional(),
 });
 
 export async function registerUser(prevState: any, formData: FormData) {
@@ -18,6 +19,7 @@ export async function registerUser(prevState: any, formData: FormData) {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
     password: formData.get("password"),
+    phone: formData.get("phone"),
   });
 
   if (!validatedFields.success) {
@@ -27,7 +29,7 @@ export async function registerUser(prevState: any, formData: FormData) {
     };
   }
 
-  const { email, username, firstName, lastName, password } =
+  const { email, username, firstName, lastName, password, phone } =
     validatedFields.data;
 
   try {
@@ -37,6 +39,7 @@ export async function registerUser(prevState: any, formData: FormData) {
       first_name: firstName,
       last_name: lastName,
       password,
+      billing: phone ? { phone } : undefined,
     });
 
     if (!result.success) {
