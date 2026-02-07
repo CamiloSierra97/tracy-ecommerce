@@ -5,11 +5,7 @@ import { useCheckout } from "@/hooks/useCheckout";
 import InputGroup from "@/components/ui/InputGroup";
 import PaymentMethodSelector from "./PaymentMethodSelector";
 
-interface CheckoutFormProps {
-  onSuccess?: (orderId: number) => void; // Optional now as hook handles routing
-}
-
-export default function CheckoutForm({ onSuccess }: CheckoutFormProps) {
+export default function CheckoutForm() {
   const {
     formData,
     handleChange,

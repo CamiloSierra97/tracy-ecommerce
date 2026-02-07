@@ -13,7 +13,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        console.log("Authorize called with:", credentials?.email);
         if (!credentials?.email || !credentials?.password) return null;
 
         try {
@@ -21,8 +20,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: credentials.email as string,
             password: credentials.password as string,
           });
-
-          console.log("WooCommerce Login Result:", result);
 
           if (result.success && result.user) {
             return result.user;

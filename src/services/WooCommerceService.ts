@@ -19,7 +19,7 @@ export interface Product {
     variation: boolean;
     options: string[];
   }[];
-  variations: number[]; // IDs de las variaciones
+  variations: number[];
   stock_status: "instock" | "outofstock" | "onbackorder";
   stock_quantity: number | null;
 }
@@ -128,6 +128,18 @@ export interface OrderData {
   coupon_lines?: { code: string }[];
 }
 
+export interface OrderLineItem {
+  id: number;
+  name: string;
+  product_id: number;
+  variation_id: number;
+  quantity: number;
+  subtotal: string;
+  total: string;
+  price: number;
+  image?: { id: number; src: string };
+}
+
 export interface Order {
   id: number;
   number: string;
@@ -144,7 +156,7 @@ export interface Order {
   total: string;
   billing: BillingAddress;
   shipping: ShippingAddress;
-  line_items: any[];
+  line_items: OrderLineItem[];
   coupon_lines?: { code: string }[];
 }
 
@@ -158,98 +170,119 @@ export interface Coupon {
   status: string;
 }
 
+export interface WPUser {
+  id: number;
+  email?: string;
+  user_email?: string;
+  roles?: string[];
+  role?: string;
+}
+
+export interface WCCustomer {
+  id: number;
+  email: string;
+  first_name: string;
+  last_name: string;
+  role?: string;
+  billing?: BillingAddress;
+}
+
 import config from "@/lib/config";
 
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+
+function isServer(): boolean {
+  return typeof window === "undefined";
+}
+
+/**
+ * Returns the WooCommerce config if all required fields are present, or null.
+ */
+function getWCConfig() {
+  const { url, consumerKey, consumerSecret } = config.woocommerce;
+  if (!url || !consumerKey || !consumerSecret) return null;
+  return { url: url.replace(/\/$/, ""), consumerKey, consumerSecret };
+}
+
+/**
+ * Creates the Basic auth header value for WooCommerce API calls.
+ */
+function getAuthHeader(consumerKey: string, consumerSecret: string): string {
+  return `Basic ${Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64")}`;
+}
+
+/**
+ * Wrapper around fetch for authenticated WooCommerce REST API calls.
+ * Returns the Response object, or null if config is missing or not on server.
+ */
+async function wcFetch(
+  path: string,
+  options?: RequestInit & { next?: { revalidate: number } },
+): Promise<Response | null> {
+  if (!isServer()) return null;
+  const wc = getWCConfig();
+  if (!wc) return null;
+
+  const url = `${wc.url}${path}`;
+  const auth = getAuthHeader(wc.consumerKey, wc.consumerSecret);
+
+  return fetch(url, {
+    ...options,
+    headers: {
+      Authorization: auth,
+      ...options?.headers,
+    },
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Service
+// ---------------------------------------------------------------------------
+
 const WooCommerceService = {
-  // Obtener variaciones de un producto
   getProductVariations: async (
     productId: number,
   ): Promise<ProductVariation[]> => {
-    // SOLO LADO DEL SERVIDOR: Petición directa a WooCommerce
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
-          const response = await fetch(
-            `${url}/wp-json/wc/v3/products/${productId}/variations`,
-            {
-              headers: { Authorization: `Basic ${auth}` },
-              next: { revalidate: 3600 },
-            },
-          );
-
-          if (response.ok) {
-            return await response.json();
-          }
-        } catch (error) {
-          console.error(
-            `Error al obtener variaciones del producto ${productId}:`,
-            error,
-          );
-        }
-      }
+    try {
+      const response = await wcFetch(
+        `/wp-json/wc/v3/products/${productId}/variations`,
+        { next: { revalidate: 3600 } },
+      );
+      if (response?.ok) return await response.json();
+    } catch (error) {
+      console.error(
+        `Error fetching variations for product ${productId}:`,
+        error,
+      );
     }
     return [];
   },
 
-  // Obtener categorías de productos
   getProductCategories: async (): Promise<Category[]> => {
-    // SOLO LADO DEL SERVIDOR: Petición directa a WooCommerce
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
-          const response = await fetch(
-            `${url}/wp-json/wc/v3/products/categories?per_page=100&hide_empty=true&orderby=name&order=asc`,
-            {
-              headers: { Authorization: `Basic ${auth}` },
-              next: { revalidate: 3600 }, // Cache 1 hora para categorías
-            },
-          );
-
-          if (response.ok) {
-            return await response.json();
-          }
-        } catch (error) {
-          console.error("Error al obtener categorías de WooCommerce:", error);
-        }
-      }
+    try {
+      const response = await wcFetch(
+        `/wp-json/wc/v3/products/categories?per_page=100&hide_empty=true&orderby=name&order=asc`,
+        { next: { revalidate: 3600 } },
+      );
+      if (response?.ok) return await response.json();
+    } catch (error) {
+      console.error("Error fetching categories:", error);
     }
-    // Fallback vacío en cliente
     return [];
   },
-  getProductReviews: async (productId: number): Promise<Review[]> => {
-    // SOLO LADO DEL SERVIDOR: Petición directa a WooCommerce
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
-          const response = await fetch(
-            `${url}/wp-json/wc/v3/products/reviews?product=${productId}`,
-            {
-              headers: { Authorization: `Basic ${auth}` },
-              next: { revalidate: 60 },
-            },
-          );
 
-          if (response.ok) {
-            return await response.json();
-          }
-        } catch (error) {
-          console.error("Error al obtener reseñas de WooCommerce:", error);
-        }
-      }
+  getProductReviews: async (productId: number): Promise<Review[]> => {
+    try {
+      const response = await wcFetch(
+        `/wp-json/wc/v3/products/reviews?product=${productId}`,
+        { next: { revalidate: 60 } },
+      );
+      if (response?.ok) return await response.json();
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
     }
-    // Fallback del lado del cliente (si es necesario, aunque típicamente SSR para SEO)
     return [];
   },
 
@@ -260,45 +293,26 @@ const WooCommerceService = {
     reviewer_email: string;
     rating: number;
   }): Promise<{ success: boolean; message?: string }> => {
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
+    try {
+      const response = await wcFetch(`/wp-json/wc/v3/products/reviews`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-          const response = await fetch(
-            `${url}/wp-json/wc/v3/products/reviews`,
-            {
-              method: "POST",
-              headers: {
-                Authorization: `Basic ${auth}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(data),
-            },
-          );
+      if (!response)
+        return { success: false, message: "Server config unavailable" };
+      if (response.ok) return { success: true };
 
-          if (response.ok) {
-            return { success: true };
-          } else {
-            const errorData = await response.json();
-            return {
-              success: false,
-              message: errorData.message || "Error al enviar la reseña",
-            };
-          }
-        } catch (error) {
-          console.error("Error al enviar reseña a WooCommerce:", error);
-          return { success: false, message: "Error de conexión" };
-        }
-      }
+      const errorData = await response.json();
+      return {
+        success: false,
+        message: errorData.message || "Error al enviar la reseña",
+      };
+    } catch (error) {
+      console.error("Error creating review:", error);
+      return { success: false, message: "Error de conexión" };
     }
-    return {
-      success: false,
-      message: "Configuración de servidor no disponible",
-    };
   },
 
   getProducts: async ({
@@ -308,121 +322,81 @@ const WooCommerceService = {
   }: {
     page?: number;
     per_page?: number;
-    category?: string; // Slug de categoría para filtrar
+    category?: string;
   }): Promise<ProductsPage> => {
-    // SOLO LADO DEL SERVIDOR: Petición directa a WooCommerce (Más rápido, corrige problemas de enrutamiento interno)
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
+    // Server-side: direct WooCommerce call
+    if (isServer()) {
+      try {
+        const params = new URLSearchParams({
+          page: String(page),
+          per_page: String(per_page),
+        });
+        if (category) params.append("category", category);
+
+        const response = await wcFetch(
+          `/wp-json/wc/v3/products?${params.toString()}`,
+          { next: { revalidate: 60 } },
+        );
+
+        if (response?.ok) {
+          const data = await response.json();
+          const totalPages = parseInt(
+            response.headers.get("x-wp-totalpages") || "0",
+            10,
           );
-          const params = new URLSearchParams({
-            page: String(page),
-            per_page: String(per_page),
-          });
-
-          // Agregar filtro de categoría si se proporciona
-          if (category) {
-            params.append("category", category);
-          }
-
-          const response = await fetch(
-            `${url}/wp-json/wc/v3/products?${params.toString()}`,
-            {
-              headers: { Authorization: `Basic ${auth}` },
-              next: { revalidate: 60 }, // Opcional: Agregar caché para llamadas al servidor
-            },
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            const totalPagesHeader =
-              response.headers.get("x-wp-totalpages") || "0";
-            return {
-              products: data,
-              totalPages: parseInt(totalPagesHeader, 10),
-            };
-          }
-        } catch (error) {
-          console.error("Error en petición directa a WooCommerce:", error);
+          return { products: data, totalPages };
         }
+      } catch (error) {
+        console.error("Error fetching products (server):", error);
       }
+      return { products: [], totalPages: 0 };
     }
 
-    // LADO DEL CLIENTE (o fallback): Petición vía API Interna
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams({
-        page: String(page),
-        per_page: String(per_page),
-      });
+    // Client-side: internal API proxy
+    const params = new URLSearchParams({
+      page: String(page),
+      per_page: String(per_page),
+    });
+    if (category) params.append("category", category);
 
-      // Agregar filtro de categoría si se proporciona
-      if (category) {
-        params.append("category", category);
-      }
-
-      const response = await fetch(`/api/products?${params.toString()}`);
-
-      if (!response.ok) {
-        throw new Error(`Error obteniendo productos: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      const totalPagesHeader = response.headers.get("x-wp-totalpages") || "0";
-
-      return {
-        products: data,
-        totalPages: parseInt(totalPagesHeader, 10),
-      };
+    const response = await fetch(`/api/products?${params.toString()}`);
+    if (!response.ok) {
+      throw new Error(`Error fetching products: ${response.statusText}`);
     }
 
-    return { products: [], totalPages: 0 };
+    const data = await response.json();
+    const totalPages = parseInt(
+      response.headers.get("x-wp-totalpages") || "0",
+      10,
+    );
+    return { products: data, totalPages };
   },
 
   getProductBySlug: async (slug: string): Promise<Product | null> => {
-    // SOLO LADO DEL SERVIDOR: Petición directa a WooCommerce
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
-          const response = await fetch(
-            `${url}/wp-json/wc/v3/products?slug=${slug}`,
-            {
-              headers: { Authorization: `Basic ${auth}` },
-              next: { revalidate: 60 },
-            },
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            return data && data.length > 0 ? data[0] : null;
-          }
-        } catch (error) {
-          console.error(
-            "Error en petición directa a WooCommerce (Slug):",
-            error,
-          );
+    // Server-side
+    if (isServer()) {
+      try {
+        const response = await wcFetch(
+          `/wp-json/wc/v3/products?slug=${encodeURIComponent(slug)}`,
+          { next: { revalidate: 60 } },
+        );
+        if (response?.ok) {
+          const data = await response.json();
+          return data?.[0] ?? null;
         }
+      } catch (error) {
+        console.error("Error fetching product by slug:", error);
       }
+      return null;
     }
 
-    // LADO DEL CLIENTE (o fallback): Petición vía API Interna
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams({ slug });
-      const response = await fetch(`/api/products?${params.toString()}`);
+    // Client-side
+    const params = new URLSearchParams({ slug });
+    const response = await fetch(`/api/products?${params.toString()}`);
+    if (!response.ok) return null;
 
-      if (!response.ok) return null;
-
-      const data = await response.json();
-      return data && data.length > 0 ? data[0] : null;
-    }
-
-    return null;
+    const data = await response.json();
+    return data?.[0] ?? null;
   },
 
   registerCustomer: async (
@@ -431,146 +405,89 @@ const WooCommerceService = {
     success: boolean;
     message?: string;
     error?: string;
-    customer?: any;
+    customer?: WCCustomer;
   }> => {
-    // SOLO LADO DEL SERVIDOR
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
+    try {
+      const response = await wcFetch(`/wp-json/wc/v3/customers`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-          const response = await fetch(`${url}/wp-json/wc/v3/customers`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Basic ${auth}`,
-            },
-            body: JSON.stringify(data),
-          });
-
-          const responseData = await response.json();
-
-          if (!response.ok) {
-            console.error("Error de registro en WooCommerce:", responseData);
-
-            // Tratamiento de errores y traducción
-            let errorMessage =
-              responseData.message || "Error al registrar usuario.";
-
-            if (errorMessage.includes("An account is already registered")) {
-              errorMessage =
-                "Ya existe una cuenta registrada con este correo electrónico. Por favor, inicia sesión.";
-            } else if (
-              errorMessage.includes("Username is already registered")
-            ) {
-              errorMessage =
-                "Este nombre de usuario ya está en uso. Por favor elige otro.";
-            }
-
-            return {
-              success: false,
-              message: errorMessage,
-              error: errorMessage,
-            };
-          }
-
-          return {
-            success: true,
-            message: "Cuenta creada exitosamente. Por favor inicia sesión.",
-            customer: responseData,
-          };
-        } catch (error) {
-          console.error("Excepción en registro:", error);
-          return {
-            success: false,
-            message: "Error de conexión con el servidor.",
-            error: "Error de conexión con el servidor.",
-          };
-        }
+      if (!response) {
+        return {
+          success: false,
+          message: "Server config unavailable",
+          error: "Server config unavailable",
+        };
       }
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        let errorMessage =
+          responseData.message || "Error al registrar usuario.";
+
+        if (errorMessage.includes("An account is already registered")) {
+          errorMessage =
+            "Ya existe una cuenta registrada con este correo electrónico. Por favor, inicia sesión.";
+        } else if (errorMessage.includes("Username is already registered")) {
+          errorMessage =
+            "Este nombre de usuario ya está en uso. Por favor elige otro.";
+        }
+
+        return { success: false, message: errorMessage, error: errorMessage };
+      }
+
+      return {
+        success: true,
+        message: "Cuenta creada exitosamente. Por favor inicia sesión.",
+        customer: responseData,
+      };
+    } catch (error) {
+      console.error("Error registering customer:", error);
+      return {
+        success: false,
+        message: "Error de conexión con el servidor.",
+        error: "Error de conexión con el servidor.",
+      };
     }
-    return {
-      success: false,
-      message: "Configuración de servidor no disponible",
-      error: "Falta configuración del servidor",
-    };
   },
 
-  getCustomerByEmail: async (email: string): Promise<any | null> => {
-    // SOLO LADO DEL SERVIDOR
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
-          const endpoint = `${url.replace(
-            /\/$/,
-            "",
-          )}/wp-json/wc/v3/customers?email=${email}`;
-          console.log(
-            "[WooCommerceService] Checking customer:",
-            endpoint.split("?")[0],
-          ); // Log de URL base para depuración
-
-          const response = await fetch(endpoint, {
-            headers: { Authorization: `Basic ${auth}` },
-            next: { revalidate: 0 },
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            console.log("[WooCommerceService] Customer found:", data);
-            return data && data.length > 0 ? data[0] : null;
-          }
-        } catch (error) {
-          console.error("Error al buscar cliente por email:", error);
-        }
+  getCustomerByEmail: async (
+    email: string,
+  ): Promise<WCCustomer | null> => {
+    try {
+      const response = await wcFetch(
+        `/wp-json/wc/v3/customers?email=${encodeURIComponent(email)}`,
+        { next: { revalidate: 0 } },
+      );
+      if (response?.ok) {
+        const data = await response.json();
+        return data?.[0] ?? null;
       }
+    } catch (error) {
+      console.error("Error fetching customer by email:", error);
     }
     return null;
   },
 
-  getWPUserByEmail: async (email: string): Promise<any | null> => {
-    // SOLO LADO DEL SERVIDOR - Busca en /wp/v2/users (WordPress nativo)
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
-          // Intentamos buscar por email en el endpoint de usuarios nativo de WP
-          // Agregamos context=edit para que nos devuelva todos los campos y usuarios (requiere permisos de API Key)
-          const endpoint = `${url.replace(/\/$/, "")}/wp-json/wp/v2/users?search=${email}&context=edit`;
-
-          const response = await fetch(endpoint, {
-            headers: { Authorization: `Basic ${auth}` },
-            next: { revalidate: 0 },
-          });
-
-          if (response.ok) {
-            const data = await response.json();
-            // Filtrar por email exacto por si acaso search devuelve parciales
-            const user = data.find(
-              (u: any) => u.email === email || u.user_email === email,
-            );
-            if (user) {
-              console.log(
-                "[WooCommerceService] WP User found via API:",
-                user.id,
-              );
-              return user;
-            }
-          }
-        } catch (error) {
-          console.error("Error al buscar WP user por email:", error);
-        }
+  getWPUserByEmail: async (email: string): Promise<WPUser | null> => {
+    try {
+      const response = await wcFetch(
+        `/wp-json/wp/v2/users?search=${encodeURIComponent(email)}&context=edit`,
+        { next: { revalidate: 0 } },
+      );
+      if (response?.ok) {
+        const data: WPUser[] = await response.json();
+        return (
+          data.find(
+            (u) => u.email === email || u.user_email === email,
+          ) ?? null
+        );
       }
+    } catch (error) {
+      console.error("Error fetching WP user by email:", error);
     }
     return null;
   },
@@ -590,157 +507,101 @@ const WooCommerceService = {
     token?: string;
     message?: string;
   }> => {
-    if (typeof window === "undefined") {
-      const { url } = config.woocommerce;
-      if (url) {
-        try {
-          // Nota: El plugin JWT Auth típicamente requiere username/email y password
-          const res = await fetch(`${url}/wp-json/jwt-auth/v1/token`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              username: credentials.email,
-              password: credentials.password,
-            }),
-          });
-
-          const data = await res.json();
-
-          if (res.ok && data?.token) {
-            return {
-              success: true,
-              token: data.token,
-              user: {
-                id: data.user_email,
-                name: data.user_display_name,
-                email: data.user_email,
-                // roles is not always returned by JWT Auth by default
-              },
-            };
-          }
-
-          console.error("Fallo de Autenticación WP:", data);
-          return {
-            success: false,
-            message: "Credenciales inválidas",
-          };
-        } catch (error) {
-          console.error("Excepción de Inicio de Sesión:", error);
-          return {
-            success: false,
-            message: "Error de conexión",
-          };
-        }
-      }
+    if (!isServer()) {
+      return { success: false, message: "Server config unavailable" };
     }
-    return { success: false, message: "Falta configuración del servidor" };
+
+    const wc = getWCConfig();
+    if (!wc) {
+      return { success: false, message: "Server config unavailable" };
+    }
+
+    try {
+      const res = await fetch(`${wc.url}/wp-json/jwt-auth/v1/token`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: credentials.email,
+          password: credentials.password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data?.token) {
+        return {
+          success: true,
+          token: data.token,
+          user: {
+            id: data.user_email,
+            name: data.user_display_name,
+            email: data.user_email,
+          },
+        };
+      }
+
+      return { success: false, message: "Credenciales inválidas" };
+    } catch (error) {
+      console.error("Login error:", error);
+      return { success: false, message: "Error de conexión" };
+    }
   },
 
   createOrder: async (
     data: OrderData,
   ): Promise<{ success: boolean; order?: Order; message?: string }> => {
-    // SOLO LADO DEL SERVIDOR
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
+    try {
+      const response = await wcFetch(`/wp-json/wc/v3/orders`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
 
-          const response = await fetch(`${url}/wp-json/wc/v3/orders`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Basic ${auth}`,
-            },
-            body: JSON.stringify(data),
-          });
-
-          const responseData = await response.json();
-
-          if (!response.ok) {
-            console.error("Error creando orden:", responseData);
-            return {
-              success: false,
-              message: responseData.message || "Error al crear la orden",
-            };
-          }
-
-          return {
-            success: true,
-            order: responseData,
-          };
-        } catch (error) {
-          console.error("Excepción creando orden:", error);
-          return {
-            success: false,
-            message: "Error de conexión con el servidor",
-          };
-        }
+      if (!response) {
+        return { success: false, message: "Server config unavailable" };
       }
+
+      const responseData = await response.json();
+
+      if (!response.ok) {
+        return {
+          success: false,
+          message: responseData.message || "Error al crear la orden",
+        };
+      }
+
+      return { success: true, order: responseData };
+    } catch (error) {
+      console.error("Error creating order:", error);
+      return { success: false, message: "Error de conexión con el servidor" };
     }
-    return {
-      success: false,
-      message: "Configuración del servidor no disponible",
-    };
   },
 
   getCustomerOrders: async (customerId: number): Promise<Order[]> => {
-    // SOLO LADO DEL SERVIDOR
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
-
-          // Obtener órdenes del cliente ordenadas por fecha descendente
-          const response = await fetch(
-            `${url}/wp-json/wc/v3/orders?customer=${customerId}&orderby=date&order=desc`,
-            {
-              headers: { Authorization: `Basic ${auth}` },
-              next: { revalidate: 60 }, // Cache breve para órdenes
-            },
-          );
-
-          if (response.ok) {
-            return await response.json();
-          }
-        } catch (error) {
-          console.error("Error al obtener órdenes del cliente:", error);
-        }
-      }
+    try {
+      const response = await wcFetch(
+        `/wp-json/wc/v3/orders?customer=${customerId}&orderby=date&order=desc`,
+        { next: { revalidate: 60 } },
+      );
+      if (response?.ok) return await response.json();
+    } catch (error) {
+      console.error("Error fetching customer orders:", error);
     }
     return [];
   },
 
   getCouponByCode: async (code: string): Promise<Coupon | null> => {
-    // SOLO LADO DEL SERVIDOR
-    if (typeof window === "undefined") {
-      const { url, consumerKey, consumerSecret } = config.woocommerce;
-      if (url && consumerKey && consumerSecret) {
-        try {
-          const auth = Buffer.from(`${consumerKey}:${consumerSecret}`).toString(
-            "base64",
-          );
-          const response = await fetch(
-            `${url}/wp-json/wc/v3/coupons?code=${code}`,
-            {
-              headers: { Authorization: `Basic ${auth}` },
-              next: { revalidate: 0 }, // No caché para códigos
-            },
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            return data && data.length > 0 ? data[0] : null;
-          }
-        } catch (error) {
-          console.error("Error buscando cupón:", error);
-        }
+    try {
+      const response = await wcFetch(
+        `/wp-json/wc/v3/coupons?code=${encodeURIComponent(code)}`,
+        { next: { revalidate: 0 } },
+      );
+      if (response?.ok) {
+        const data = await response.json();
+        return data?.[0] ?? null;
       }
+    } catch (error) {
+      console.error("Error fetching coupon:", error);
     }
     return null;
   },

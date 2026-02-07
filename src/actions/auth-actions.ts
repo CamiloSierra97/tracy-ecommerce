@@ -12,7 +12,17 @@ const RegisterSchema = z.object({
   phone: z.string().optional(),
 });
 
-export async function registerUser(prevState: any, formData: FormData) {
+interface RegisterState {
+  error?: string;
+  success?: boolean;
+  message?: string;
+  details?: Record<string, string[] | undefined>;
+}
+
+export async function registerUser(
+  prevState: RegisterState | null,
+  formData: FormData,
+) {
   const validatedFields = RegisterSchema.safeParse({
     email: formData.get("email"),
     username: formData.get("username"),

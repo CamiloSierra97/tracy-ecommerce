@@ -164,9 +164,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
 
       throw new Error(data.message);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
-      setToastMessage(error.message || "Error al aplicar cupón");
+      const message =
+        error instanceof Error ? error.message : "Error al aplicar cupón";
+      setToastMessage(message);
       setShowToast(true);
       return false;
     }
