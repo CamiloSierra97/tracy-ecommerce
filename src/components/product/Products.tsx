@@ -7,6 +7,7 @@ import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useProducts } from "@/hooks/useProducts";
 import { ProductsPage, Category } from "@/services/WooCommerceService";
+import { INFINITE_SCROLL_ROOT_MARGIN } from "@/utils/constants";
 
 // 🛑 TS CORRECCIÓN: Definimos las props requeridas para la reutilización.
 interface ProductsProps {
@@ -52,12 +53,11 @@ export default function Products({
   // Carga automática con IntersectionObserver (UX)
   useEffect(() => {
     if (!hasNextPage || !loadMoreRef.current) return;
-    // ... (lógica del observer)
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) fetchNextPage();
       },
-      { rootMargin: "200px" }
+      { rootMargin: INFINITE_SCROLL_ROOT_MARGIN },
     );
     const current = loadMoreRef.current;
     observer.observe(current);
@@ -113,9 +113,7 @@ export default function Products({
           className="page-products__infinite-loader-wrapper flex justify-center py-8"
         >
           {isFetchingNextPage && (
-            <motion.div
-              /* ... spinner ... */ className="page-products__infinite-loader flex flex-col items-center text-gray-500"
-            >
+            <motion.div className="page-products__infinite-loader flex flex-col items-center text-gray-500">
               <motion.div className="page-products__spinner size-8 border-4 border-pink-400 border-t-transparent rounded-full animate-spin" />
               <span className="page-products__loading-text mt-2 text-sm">
                 Cargando más productos...
@@ -125,7 +123,6 @@ export default function Products({
         </div>
 
         {/* 🛑 OPTIMIZACIÓN SEO 2: FALLBACK DE PAGINACIÓN RASTREABLE 🛑 */}
-        {/* Esto garantiza que Googlebot encuentre todas las páginas (e.g., /lenceria?page=2) */}
         {totalPages > 1 && (
           <nav
             aria-label="Paginación de productos"
@@ -136,11 +133,9 @@ export default function Products({
               const pageLink = `${basePath}?page=${pageNum}`;
               const isActive = pageNum === currentPage;
 
-              // 1. Definimos las clases base (Bloque + Elemento)
               const baseClasses =
                 "px-4 py-2 border rounded-lg text-sm transition page-products__pagination-link";
 
-              // 2. Definimos las clases de estado (Modificadores BEM + Estilos Tailwind)
               const stateClasses = isActive
                 ? "page-products__pagination-link--active bg-burdeos text-marfil font-bold border-burdeos"
                 : "bg-white text-gray-700 hover:bg-gray-100";
@@ -149,7 +144,6 @@ export default function Products({
                 <Link
                   key={pageNum}
                   href={pageLink}
-                  // 3. Concatenamos de forma limpia
                   className={`${baseClasses} ${stateClasses}`}
                 >
                   {pageNum}

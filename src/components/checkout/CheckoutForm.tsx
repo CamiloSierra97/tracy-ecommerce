@@ -102,10 +102,14 @@ export default function CheckoutForm() {
         </div>
 
         <div className="checkout-form__input-group pt-2">
-          <label className="checkout-form__label block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="checkout-notes"
+            className="checkout-form__label block text-sm font-medium text-gray-700 mb-1"
+          >
             Notas del Pedido (Opcional)
           </label>
           <textarea
+            id="checkout-notes"
             name="notes"
             value={formData.notes}
             onChange={handleChange}

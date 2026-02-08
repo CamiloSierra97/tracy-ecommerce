@@ -1,8 +1,8 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import Icon from "@/components/ui/Icon";
 import UserRegistrationForm from "@/components/admin/UserRegistrationForm";
+import { useRouter } from "next/navigation";
 
 export default function AdminRegisterClient() {
   const router = useRouter();

@@ -1,11 +1,11 @@
 "use client";
 
+import ButtonSpinner from "@/components/ui/ButtonSpinner";
+import Icon from "@/components/ui/Icon";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUI } from "@/context/UIContext";
-import ButtonSpinner from "@/components/ui/ButtonSpinner";
-import Icon from "@/components/ui/Icon";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -63,10 +63,14 @@ export default function LoginForm() {
         className="login-form__form flex flex-col gap-4"
       >
         <div className="login-form__field">
-          <label className="login-form__label block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="login-email"
+            className="login-form__label block text-sm font-medium text-gray-700 mb-1"
+          >
             Correo electrónico
           </label>
           <input
+            id="login-email"
             name="email"
             type="email"
             required
@@ -75,11 +79,15 @@ export default function LoginForm() {
           />
         </div>
         <div className="login-form__field">
-          <label className="login-form__label block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="login-password"
+            className="login-form__label block text-sm font-medium text-gray-700 mb-1"
+          >
             Contraseña
           </label>
           <div className="relative">
             <input
+              id="login-password"
               name="password"
               type={showPassword ? "text" : "password"}
               required

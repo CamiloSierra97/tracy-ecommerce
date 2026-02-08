@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
 import Icon from "@/components/ui/Icon";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -95,6 +95,6 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         </motion.div>
       </div>
     </AnimatePresence>,
-    document.body
+    document.body,
   );
 }

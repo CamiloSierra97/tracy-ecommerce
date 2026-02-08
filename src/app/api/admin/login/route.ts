@@ -1,7 +1,7 @@
 import WooCommerceService from "@/services/WooCommerceService";
+import config from "@/lib/config";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
-import config from "@/lib/config";
 
 export async function POST(request: Request) {
   try {
@@ -32,6 +32,7 @@ export async function POST(request: Request) {
         if (wpUserRes.ok) {
           const wpUser = await wpUserRes.json();
           userRoles = wpUser.roles || [];
+          console.log(wpUserRes);
         }
       } catch (wpError) {
         console.error("[AdminLogin] Error fetching WP roles via JWT:", wpError);

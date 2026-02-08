@@ -1,7 +1,7 @@
 import Icon from "@/components/ui/Icon";
 import ProductGallery from "./ProductGallery";
-import ProductInteraction from "./ProductInteraction"; // Componente orquestador
-import ProductPrice from "./ProductPrice"; // Nuevo componente cliente para precio dinámico
+import ProductInteraction from "./ProductInteraction";
+import ProductPrice from "./ProductPrice";
 import sanitizeHtml from "sanitize-html";
 import WooCommerceService from "@/services/WooCommerceService";
 import { Product, ProductVariation } from "@/services/WooCommerceService";
@@ -22,6 +22,10 @@ export default async function ProductDetails({ product }: ProductDetailsProps) {
       ? product.images
       : [{ id: 0, src: "/placeholder.png", name: product.name }];
 
+  // Usar utilidad de sanitización
+  const cleanDescription =
+    product.description || product.short_description || "";
+
   return (
     <article className="product-details max-w-[1400px] mx-auto px-4 md:px-8 py-10">
       <div className="product-details__grid grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20">
@@ -40,15 +44,13 @@ export default async function ProductDetails({ product }: ProductDetailsProps) {
             {product.name}
           </h1>
 
-          {/* Precio Dinámico (Componente Cliente para actualizar con variación) */}
+          {/* Precio Dinámico */}
           <ProductPrice basePrice={product.price} />
 
           <div className="product-details__description prose prose-stone mb-10 text-gray-600 leading-relaxed max-w-none">
             <div
               dangerouslySetInnerHTML={{
-                __html: sanitizeHtml(
-                  product.description || product.short_description || ""
-                ),
+                __html: sanitizeHtml(cleanDescription),
               }}
             />
           </div>

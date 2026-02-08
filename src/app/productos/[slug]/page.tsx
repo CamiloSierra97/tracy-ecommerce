@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import WooCommerceService from "@/services/WooCommerceService";
 import ProductDetails from "@/components/product/ProductDetails";
 import ProductReviews from "@/components/product/ProductReviews";
+import { sanitizeProductDescription } from "@/utils/sanitize";
+import { MAX_DESCRIPTION_LENGTH } from "@/utils/constants";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -18,14 +20,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  // Eliminar HTML de la descripción para la meta descripción
-  const cleanDescription = (
-    product.short_description ||
-    product.description ||
-    ""
-  )
-    .replace(/<[^>]*>?/gm, "")
-    .slice(0, 160);
+  // Usar utilidad de sanitización con longitud máxima
+  const cleanDescription = sanitizeProductDescription(
+    product.short_description || product.description,
+    MAX_DESCRIPTION_LENGTH,
+  );
 
   return {
     title: `${product.name} - Tracy Lencería`,
@@ -46,16 +45,15 @@ export default async function ProductPage({ params }: Props) {
 
   const reviews = await WooCommerceService.getProductReviews(product.id);
 
+  // Crear Schema.org con descripción sanitizada
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
     image: product.images?.map((img) => img.src) || [],
-    description: (
-      product.short_description ||
-      product.description ||
-      ""
-    ).replace(/<[^>]*>?/gm, ""),
+    description: sanitizeProductDescription(
+      product.short_description || product.description,
+    ),
     sku: product.id.toString(),
     offers: {
       "@type": "Offer",
