@@ -23,9 +23,9 @@ export default function InputGroup({
     <div className="checkout-form__input-group">
       <label
         htmlFor={inputId}
-        className="checkout-form__label block text-sm font-medium text-gray-700 mb-1"
+        className="checkout-form__label block text-sm font-medium text-black mb-1"
       >
-        {label} {required && <span className="text-red-500">*</span>}
+        {label} {required && <span className="text-burgundy">*</span>}
       </label>
       <input
         id={inputId}
@@ -34,7 +34,7 @@ export default function InputGroup({
         value={value}
         onChange={onChange}
         required={required}
-        className="checkout-form__input w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-colors"
+        className="checkout-form__input w-full px-4 py-3 rounded-lg border border-gray-400 focus:border-gold focus:ring-1 focus:ring-gold outline-none transition-colors text-black"
       />
     </div>
   );

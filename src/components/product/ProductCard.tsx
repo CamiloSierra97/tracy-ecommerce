@@ -124,7 +124,7 @@ export default function ProductCard({
                   : formatPrice(product.price)}
               </p>
               {product.sale_price && (
-                <p className="product-card__price-regular text-sm text-gray-400 line-through">
+                <p className="product-card__price-regular text-sm text-gray-600 line-through">
                   {formatPrice(product.regular_price || product.price)}
                 </p>
               )}
@@ -132,7 +132,7 @@ export default function ProductCard({
             {/* Short Description */}
             {product.short_description && (
               <div
-                className="product-card__short-desc text-xs text-gray-500 line-clamp-2 mt-2 leading-relaxed"
+                className="product-card__short-desc text-xs text-gray line-clamp-2 mt-2 leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: product.short_description }}
               />
             )}

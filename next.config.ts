@@ -46,11 +46,11 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: `
               default-src 'self';
-              script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com;
+              script-src 'self' 'unsafe-eval' 'unsafe-inline' https://va.vercel-scripts.com https://www.googletagmanager.com https://www.google-analytics.com;
               style-src 'self' 'unsafe-inline';
-              img-src 'self' blob: data: https://db.tracystore.com https://*.googleusercontent.com;
+              img-src 'self' blob: data: https://db.tracystore.com https://*.googleusercontent.com https://www.googletagmanager.com https://www.google-analytics.com;
               font-src 'self' data:;
-              connect-src 'self' https://db.tracystore.com https://vitals.vercel-insights.com;
+              connect-src 'self' https://db.tracystore.com https://vitals.vercel-insights.com https://www.googletagmanager.com https://www.google-analytics.com https://region1.google-analytics.com;
               object-src 'none';
               base-uri 'self';
               form-action 'self';

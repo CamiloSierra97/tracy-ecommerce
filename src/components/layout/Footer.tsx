@@ -14,7 +14,7 @@ export default function Footer() {
             <h2 className="footer__title font-roboto-serif font-semibold text-xl mb-4 text-gold">
               Tracy
             </h2>
-            <p className="footer__description text-ivory/80">
+            <p className="footer__description text-ivory">
               Tu tienda de ropa interior premium en línea.
             </p>
           </div>
@@ -22,7 +22,7 @@ export default function Footer() {
             <h3 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
               Enlaces Rápidos
             </h3>
-            <ul className="footer__list space-y-2 text-ivory/80">
+            <ul className="footer__list space-y-2 text-ivory">
               <li>
                 <Link
                   href="/"
@@ -53,7 +53,7 @@ export default function Footer() {
             <h3 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
               Atención al Cliente
             </h3>
-            <ul className="footer__list space-y-2 text-ivory/80">
+            <ul className="footer__list space-y-2 text-ivory">
               <li>
                 <Link
                   href="/contacto"
@@ -84,7 +84,7 @@ export default function Footer() {
             <h3 className="footer__title font-roboto-serif font-semibold mb-4 text-gold">
               Información Legal
             </h3>
-            <ul className="footer__list space-y-2 text-ivory/80">
+            <ul className="footer__list space-y-2 text-ivory">
               <li>
                 <Link
                   href="/terminos"
@@ -113,10 +113,10 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer__bottom border-t-2 border-burgundy-light/50 pt-8">
-          <p className="footer__copyright text-center text-ivory/60 text-sm">
+          <p className="footer__copyright text-center text-ivory text-sm">
             {`© ${currentYear} Tracy Lencería®. Todos los derechos reservados.`}
           </p>
-          <p className="footer__credit text-center text-ivory/60 text-sm mt-2">
+          <p className="footer__credit text-center text-ivory text-sm mt-2">
             Made with 💖 by SierraDev
           </p>
         </div>

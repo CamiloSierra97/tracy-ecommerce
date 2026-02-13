@@ -104,7 +104,7 @@ export default function CheckoutForm() {
         <div className="checkout-form__input-group pt-2">
           <label
             htmlFor="checkout-notes"
-            className="checkout-form__label block text-sm font-medium text-gray-700 mb-1"
+            className="checkout-form__label block text-sm font-medium text-black mb-1"
           >
             Notas del Pedido (Opcional)
           </label>
@@ -154,7 +154,7 @@ export default function CheckoutForm() {
         )}
       </button>
 
-      <p className="checkout-form__terms text-xs text-center text-gray-500 mt-4">
+      <p className="checkout-form__terms text-xs text-center text-gray mt-4">
         Al confirmar, aceptas nuestros términos y condiciones y política de
         privacidad.
       </p>

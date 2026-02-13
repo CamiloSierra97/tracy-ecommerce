@@ -15,7 +15,7 @@ export default function CartDetails() {
         <h1 className="cart-details__title text-4xl font-serif text-burgundy mb-6">
           Tu Carrito
         </h1>
-        <p className="cart-details__empty-text text-lg text-gray-600 mb-8">
+        <p className="cart-details__empty-text text-lg text-gray mb-8">
           Tu carrito está vacío actualmente.
         </p>
         <Link
@@ -78,15 +78,13 @@ export default function CartDetails() {
 
                 {/* Precio */}
                 <div className="cart-details__item-price w-full md:col-span-2 flex justify-between md:justify-center items-center">
-                  <span className="md:hidden font-bold text-gray-500">
-                    Precio:
-                  </span>
+                  <span className="md:hidden font-bold text-gray">Precio:</span>
                   <span>{formatPrice(item.price)}</span>
                 </div>
 
                 {/* Cantidad */}
                 <div className="cart-details__item-quantity w-full md:col-span-2 flex justify-between md:justify-center items-center">
-                  <span className="md:hidden font-bold text-gray-500">
+                  <span className="md:hidden font-bold text-gray">
                     Cantidad:
                   </span>
                   <div className="cart-details__quantity-selector flex items-center border border-[#e5d0d0] rounded-sm">
@@ -114,7 +112,7 @@ export default function CartDetails() {
 
                 {/* Subtotal */}
                 <div className="cart-details__item-subtotal w-full md:col-span-2 flex justify-between md:justify-end items-center pr-4">
-                  <span className="md:hidden font-bold text-gray-500">
+                  <span className="md:hidden font-bold text-gray">
                     Subtotal:
                   </span>
                   <span className="font-bold text-burgundy">
@@ -130,7 +128,7 @@ export default function CartDetails() {
             <input
               type="text"
               placeholder="Código de cupón"
-              className="cart-details__coupon-input px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-burgundy flex-1 lg:max-w-xs bg-white"
+              className="cart-details__coupon-input px-4 py-3 border border-gray-400 rounded-lg focus:outline-none focus:border-burgundy flex-1 lg:max-w-xs bg-white text-gray"
             />
             <button className="cart-details__coupon-btn px-8 py-3 bg-transparent border border-burgundy text-burgundy font-bold uppercase tracking-wider text-sm hover:bg-burgundy hover:text-white transition-all rounded-lg">
               Aplicar Cupón
@@ -147,18 +145,18 @@ export default function CartDetails() {
             </h2>
 
             <div className="cart-details__summary-rows space-y-6">
-              <div className="cart-details__summary-row flex justify-between items-center text-gray-600 text-lg border-b border-[#e5d0d0] pb-4">
+              <div className="cart-details__summary-row flex justify-between items-center text-gray text-lg border-b border-[#e5d0d0] pb-4">
                 <span>Subtotal</span>
                 <span className="cart-details__subtotal-value text-burgundy font-bold">
                   {formatPrice(cartTotal)}
                 </span>
               </div>
 
-              <div className="cart-details__summary-row flex justify-between items-start text-gray-600 text-lg border-b border-[#e5d0d0] pb-4">
+              <div className="cart-details__summary-row flex justify-between items-start text-gray text-lg border-b border-[#e5d0d0] pb-4">
                 <span>Envío</span>
                 <div className="text-right">
                   <p className="font-bold text-burgundy">Gratis</p>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-gray mt-1">
                     Envíos a toda Colombia
                   </p>
                   <button className="text-sm text-burgundy underline mt-1 hover:text-burgundy-light">

@@ -4,8 +4,8 @@ const BRAND_SLOGAN = "Libera tu cuerpo, abraza tu libertad.";
 
 export default function HeroContent() {
   return (
-    <article className="hero-section__content w-full h-full md:w-1/2 lg:w-2/5 py-15 px-6 md:pt-6 md:px-12 lg:px-20 z-10 bg-burgundy-light/95 md:backdrop-blur-sm flex flex-col justify-between items-stretch relative gap-4 text-center">
-      <h1 className="hero-section__title inline-block font-serif text-5xl md:text-6xl text-light-gold mx-0 my-2 tracking-wide">
+    <article className="hero-section__content w-full h-full md:w-1/2 lg:w-2/5 py-15 px-6 md:pt-6 md:px-12 lg:px-20 z-10 bg-burgundy-light md:backdrop-blur-sm flex flex-col justify-between items-stretch relative gap-4 text-center">
+      <h1 className="hero-section__title inline-block font-serif text-5xl md:text-6xl text-gold mx-0 my-2 tracking-wide drop-shadow-sm">
         <span className="">Tracy</span>
       </h1>
 
@@ -15,7 +15,7 @@ export default function HeroContent() {
       >
         {BRAND_SLOGAN}
       </p>
-      <p className="hero-section__description text-ivory mb-6 opacity-90 text-base md:text-lg leading-relaxed text-pretty text-center max-w-sm md:max-w-none mx-auto">
+      <p className="hero-section__description text-white mb-6 opacity-100 text-base md:text-lg leading-relaxed text-pretty text-center max-w-sm md:max-w-none mx-auto drop-shadow-sm">
         Creemos que nuestra marca es el primer paso hacia la autenticidad.
         Nuestras colecciones están diseñadas para celebrar cada silueta,
         combinando seducción con un bienestar que se siente como una segunda

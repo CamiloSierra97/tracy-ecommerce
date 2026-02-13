@@ -34,14 +34,14 @@ export default function StarRating({
       aria-label={`Calificación: ${rating} de 5 estrellas`}
     >
       {stars.map((type, i) => (
-        <span key={i} className="star-rating__star text-golden">
+        <span key={i} className="star-rating__star text-gold-dark">
           <Icon
             name={
               type === "full"
                 ? "icon-filled-star"
                 : type === "half"
-                ? "icon-half-star"
-                : "icon-notfilled-star"
+                  ? "icon-half-star"
+                  : "icon-notfilled-star"
             }
             size={size}
             className={type === "empty" ? "text-black/50" : ""}
