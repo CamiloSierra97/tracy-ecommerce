@@ -2,6 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import WooCommerceService, {
   ProductsPage,
 } from "@/services/WooCommerceService";
+import { PRODUCTS_PER_PAGE } from "@/utils/constants";
 
 // Definiendo el tipo de datos que se almacena en la caché de Tanstack Query
 interface ProductsQueryResult {
@@ -11,22 +12,28 @@ interface ProductsQueryResult {
 
 interface UseProductsOptions {
   initialData?: ProductsQueryResult;
+  page?: number; // Página actual para la key
+  categoryId?: number; // Filtro por ID de categoría
 }
 
 export const useProducts = (options?: UseProductsOptions) => {
+  const page = options?.page || 1;
+  const categoryId = options?.categoryId;
+
   return useInfiniteQuery<
     ProductsPage,
     Error,
     ProductsQueryResult,
-    [_: string],
+    [_: string, _: number, _: number | undefined],
     number
   >({
-    queryKey: ["products"],
-    queryFn: async ({ pageParam = 1 }: { pageParam: number }) => {
+    queryKey: ["products", page, categoryId], // Key includes categoryId
+    queryFn: async ({ pageParam = page }: { pageParam: number }) => {
       // Retorna ProductsPage { products, totalPages }
       return await WooCommerceService.getProducts({
         page: pageParam,
-        per_page: 12,
+        per_page: PRODUCTS_PER_PAGE,
+        category: categoryId ? String(categoryId) : undefined,
       });
     },
     initialData: options?.initialData,
@@ -39,7 +46,7 @@ export const useProducts = (options?: UseProductsOptions) => {
       return nextPage <= currentTotalPages ? nextPage : undefined;
     },
 
-    initialPageParam: 1,
+    initialPageParam: page,
     // Evita reintentos infinitos
     retry: false,
     staleTime: 1000 * 60 * 5, // cache 5 min

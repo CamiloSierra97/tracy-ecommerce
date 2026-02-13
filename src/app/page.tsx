@@ -20,6 +20,10 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
+import { PRODUCTS_PER_PAGE } from "@/utils/constants";
+
+// ...
+
 export default async function Page() {
   const queryClient = new QueryClient();
 
@@ -28,7 +32,7 @@ export default async function Page() {
     queryFn: async ({ pageParam = 1 }) => {
       return await WooCommerceService.getProducts({
         page: pageParam as number,
-        per_page: 12,
+        per_page: PRODUCTS_PER_PAGE,
       });
     },
     initialPageParam: 1,

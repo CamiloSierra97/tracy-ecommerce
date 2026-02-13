@@ -129,6 +129,13 @@ export default function ProductCard({
                 </p>
               )}
             </div>
+            {/* Short Description */}
+            {product.short_description && (
+              <div
+                className="product-card__short-desc text-xs text-gray-500 line-clamp-2 mt-2 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: product.short_description }}
+              />
+            )}
           </Link>
         </div>
       </motion.div>

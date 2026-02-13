@@ -454,9 +454,7 @@ const WooCommerceService = {
     }
   },
 
-  getCustomerByEmail: async (
-    email: string,
-  ): Promise<WCCustomer | null> => {
+  getCustomerByEmail: async (email: string): Promise<WCCustomer | null> => {
     try {
       const response = await wcFetch(
         `/wp-json/wc/v3/customers?email=${encodeURIComponent(email)}`,
@@ -481,9 +479,7 @@ const WooCommerceService = {
       if (response?.ok) {
         const data: WPUser[] = await response.json();
         return (
-          data.find(
-            (u) => u.email === email || u.user_email === email,
-          ) ?? null
+          data.find((u) => u.email === email || u.user_email === email) ?? null
         );
       }
     } catch (error) {
@@ -602,6 +598,29 @@ const WooCommerceService = {
       }
     } catch (error) {
       console.error("Error fetching coupon:", error);
+    }
+    return null;
+  },
+
+  getCategoryIdBySlug: async (slug: string): Promise<number | null> => {
+    try {
+      // First try to fetch all categories and find by slug (better for performance if cached)
+      // Or fetch specifically filtering by slug if API supports it, but standard WC API
+      // usually requires fetching categories list.
+      // Using 'slug' parameter for categories endpoint is supported.
+      const response = await wcFetch(
+        `/wp-json/wc/v3/products/categories?slug=${encodeURIComponent(slug)}`,
+        { next: { revalidate: 3600 } },
+      );
+
+      if (response?.ok) {
+        const categories: Category[] = await response.json();
+        if (categories.length > 0) {
+          return categories[0].id;
+        }
+      }
+    } catch (error) {
+      console.error(`Error fetching category ID for slug ${slug}:`, error);
     }
     return null;
   },

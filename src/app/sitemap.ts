@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const { products } = await WooCommerceService.getProducts({
       page: 1,
-      per_page: 100,
+      per_page: 8,
     });
 
     productEntries = products.map((product) => ({

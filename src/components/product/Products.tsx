@@ -1,10 +1,11 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import ProductsGrid from "./ProductsGrid";
 import ThreeRingLoader from "@/components/ui/ThreeRingLoader";
 import { useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useProducts } from "@/hooks/useProducts";
 import { ProductsPage, Category } from "@/services/WooCommerceService";
 import { INFINITE_SCROLL_ROOT_MARGIN } from "@/utils/constants";
@@ -16,21 +17,29 @@ interface ProductsProps {
   initialData?: ProductsPage;
   headingLevel?: "h1" | "h2"; // Permitir nivel de encabezado dinámico
   categories?: Category[]; // Categorías para filtros
+  initialPage?: number; // Página inicial para SSR
+  categoryId?: number; // ID de categoría para filtrado
 }
 
-// Nota: Asumo que useProducts devuelve la estructura necesaria (pages, totalPages).
 export default function Products({
   title,
   basePath,
   initialData,
   headingLevel = "h2", // Por defecto h2
   categories = [], // Por defecto array vacío
+  initialPage = 1,
+  categoryId,
 }: ProductsProps) {
+  const searchParams = useSearchParams();
+  // Obtener página actual de la URL o usar la prop inicial.
+  // Esto asegura que el cliente reaccione a cambios de URL incluso en soft navigation.
+  const pageFromUrl = Number(searchParams.get("page")) || initialPage;
+
   // Construir la estructura de consulta infinita inicial si se proporcionan datos iniciales
   const infiniteInitialData = initialData
     ? {
         pages: [initialData],
-        pageParams: [1],
+        pageParams: [pageFromUrl],
       }
     : undefined;
 
@@ -41,33 +50,58 @@ export default function Products({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useProducts({ initialData: infiniteInitialData });
+  } = useProducts({
+    initialData: infiniteInitialData,
+    page: pageFromUrl,
+    categoryId, // Pass categoryId to the hook
+  });
 
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
+  // Al usar paginación basada en URL, 'data.pages' solo debería tener 1 página (la actual)
+  // gracias a que cambiamos la queryKey en useProducts.
   const allProducts = data?.pages.flatMap((page) => page.products) ?? [];
-  // 🛑 SEO: Extraer totalPages y currentPage para la paginación de fallback.
   const totalPages = data?.pages[0]?.totalPages ?? 1;
-  const currentPage = data?.pages.length ?? 1;
 
-  // Carga automática con IntersectionObserver (UX)
+  // Calcular página actual
+  const currentPage = pageFromUrl;
+
+  // Detectar dirección de cambio de página para animación
+  const prevPageRef = useRef(pageFromUrl);
+  const direction = pageFromUrl > prevPageRef.current ? 1 : -1;
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
-    if (!hasNextPage || !loadMoreRef.current) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) fetchNextPage();
-      },
-      { rootMargin: INFINITE_SCROLL_ROOT_MARGIN },
-    );
-    const current = loadMoreRef.current;
-    observer.observe(current);
-    return () => observer.unobserve(current);
-  }, [hasNextPage, fetchNextPage]);
+    prevPageRef.current = pageFromUrl;
+    // El usuario solicitó eliminar el scroll automático, solo se mantiene la lógica de refs para la dirección de la animación
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+    }
+  }, [pageFromUrl]);
+
+  // Variantes de animación para slide
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+  };
 
   if (isLoading)
     return (
       <div className="page-products__status text-center py-10 flex flex-col items-center justify-center gap-3">
         <span>
+          {/* @ts-ignore */}
           <ThreeRingLoader></ThreeRingLoader>
         </span>
         <span>Cargando productos...</span>
@@ -84,12 +118,7 @@ export default function Products({
 
   return (
     <article className="page-products" id="products-visual">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.7 }}
-        className="page-products__content min-h-screen bg-transparent"
-      >
+      <div className="page-products__content min-h-screen bg-transparent overflow-hidden">
         {/* 🛑 OPTIMIZACIÓN SEO 1: H1 DINÁMICO. Único y relevante para la página. */}
         <div className="page-products__header flex flex-col items-center py-8 px-4">
           <HeadingTag className="page-products__title text-2xl lg:text-4xl font-serif font-semibold lg:font-bold text-burgundy text-center mb-3 tracking-wide drop-shadow-sm">
@@ -103,23 +132,32 @@ export default function Products({
           ></motion.div>
         </div>
 
-        <div className="page-products__grid-container">
-          <ProductsGrid products={allProducts} categories={categories} />
+        <div className="page-products__grid-container relative overflow-hidden min-h-[400px]">
+          <AnimatePresence initial={false} custom={direction} mode="wait">
+            <motion.div
+              key={pageFromUrl}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+              }}
+              className="w-full"
+            >
+              <ProductsGrid products={allProducts} categories={categories} />
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        {/* Loader del Scroll Infinito (UX) */}
+        {/* Loader del Scroll Infinito (UX) - Mantener oculto si infinite scroll está desactivado logicamente */}
         <div
           ref={loadMoreRef}
-          className="page-products__infinite-loader-wrapper flex justify-center py-8"
+          className="page-products__infinite-loader-wrapper justify-center py-8 hidden"
         >
-          {isFetchingNextPage && (
-            <motion.div className="page-products__infinite-loader flex flex-col items-center text-gray-500">
-              <motion.div className="page-products__spinner size-8 border-4 border-pink-400 border-t-transparent rounded-full animate-spin" />
-              <span className="page-products__loading-text mt-2 text-sm">
-                Cargando más productos...
-              </span>
-            </motion.div>
-          )}
+          {/* ... */}
         </div>
 
         {/* 🛑 OPTIMIZACIÓN SEO 2: FALLBACK DE PAGINACIÓN RASTREABLE 🛑 */}
@@ -144,6 +182,7 @@ export default function Products({
                 <Link
                   key={pageNum}
                   href={pageLink}
+                  scroll={false} // Evita scroll al top del body
                   className={`${baseClasses} ${stateClasses}`}
                 >
                   {pageNum}
@@ -158,7 +197,7 @@ export default function Products({
             No hay más productos para mostrar en este listado.
           </div>
         )}
-      </motion.div>
+      </div>
     </article>
   );
 }

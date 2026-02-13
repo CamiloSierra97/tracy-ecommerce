@@ -31,8 +31,15 @@ export async function POST(request: Request) {
 
         if (wpUserRes.ok) {
           const wpUser = await wpUserRes.json();
+          console.log("[DEBUG] WP User JWT:", wpUser);
           userRoles = wpUser.roles || [];
-          console.log(wpUserRes);
+          console.log("[DEBUG] Roles from JWT:", userRoles);
+        } else {
+          console.log(
+            "[DEBUG] WP User JWT failed:",
+            wpUserRes.status,
+            await wpUserRes.text(),
+          );
         }
       } catch (wpError) {
         console.error("[AdminLogin] Error fetching WP roles via JWT:", wpError);
@@ -40,17 +47,23 @@ export async function POST(request: Request) {
 
       // Fallback 1: Buscar por email usando API Keys en endpoint de Usuarios de WP
       if (userRoles.length === 0) {
+        console.log("[DEBUG] Intentando Fallback 1: getWPUserByEmail");
         const wpUser = await WooCommerceService.getWPUserByEmail(email);
+        console.log("[DEBUG] WP User from API:", wpUser);
         if (wpUser?.roles) {
           userRoles = wpUser.roles;
+          console.log("[DEBUG] Roles from WP API:", userRoles);
         }
       }
 
       // Fallback 2: Buscar por email usando API Keys en endpoint de Clientes de WooCommerce
       if (userRoles.length === 0) {
+        console.log("[DEBUG] Intentando Fallback 2: getCustomerByEmail");
         const customer = await WooCommerceService.getCustomerByEmail(email);
+        console.log("[DEBUG] Customer from WC API:", customer);
         if (customer?.role) {
           userRoles = [customer.role];
+          console.log("[DEBUG] Roles from WC Customer:", userRoles);
         }
       }
 
@@ -61,9 +74,11 @@ export async function POST(request: Request) {
         "gestor_de_la_tienda",
         "administrador",
       ];
+      console.log("[DEBUG] Final userRoles:", userRoles);
       hasAdminRole = userRoles.some((role) =>
         adminRoles.includes(role.toLowerCase()),
       );
+      console.log("[DEBUG] hasAdminRole:", hasAdminRole);
 
       if (hasAdminRole) {
         // Crear sesión simple con cookie

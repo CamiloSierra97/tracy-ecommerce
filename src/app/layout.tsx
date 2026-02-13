@@ -7,6 +7,7 @@ import { CartProvider } from "@/context/CartContext";
 import { playfair, roboto_serif, roboto } from "@/lib/fonts";
 import { UIProvider } from "@/context/UIContext";
 import { auth } from "@/auth";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -68,6 +69,8 @@ export default async function RootLayout({
       className={`${playfair.variable} ${roboto_serif.variable} ${roboto.variable}`}
       suppressHydrationWarning
     >
+      <GoogleTagManager gtmId="GTM-K373Q56D" />
+
       <body className="font-sans">
         <ReactQueryProvider>
           <UIProvider>
@@ -83,6 +86,7 @@ export default async function RootLayout({
             </CartProvider>
           </UIProvider>
         </ReactQueryProvider>
+        <GoogleAnalytics gaId="G-X4Q479N49V" />
       </body>
     </html>
   );

@@ -3,6 +3,7 @@ import Products from "@/components/product/Products";
 import PageHero from "@/components/ui/PageHero";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { PRODUCTS_PER_PAGE } from "@/utils/constants";
 
 // Generación estática de rutas para todas las categorías
 export async function generateStaticParams() {
@@ -43,9 +44,13 @@ export async function generateMetadata({
 
 export default async function CategoryPage({
   params,
+  searchParams,
 }: {
   params: { category: string };
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const resolvedSearchParams = await searchParams;
+  const page = Number(resolvedSearchParams?.page) || 1;
   // Obtener categoría actual
   const categories = await WooCommerceService.getProductCategories();
   const category = categories.find((c) => c.slug === params.category);
@@ -53,10 +58,13 @@ export default async function CategoryPage({
   // Redirigir a 404 si la categoría no existe
   if (!category) notFound();
 
+  // ...
+
   // Obtener productos de esta categoría
   const { products, totalPages } = await WooCommerceService.getProducts({
     category: params.category,
-    per_page: 12,
+    per_page: PRODUCTS_PER_PAGE,
+    page,
   });
 
   return (
@@ -73,6 +81,7 @@ export default async function CategoryPage({
         initialData={{ products, totalPages }}
         title={`Productos en ${category.name}`}
         basePath={`/tienda/${params.category}`}
+        initialPage={page}
       />
     </>
   );

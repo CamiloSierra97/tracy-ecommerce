@@ -7,7 +7,7 @@
 export const PRIORITY_IMAGES_COUNT = 4; // Primeras 4 imágenes en viewport inicial (above-the-fold)
 
 // Configuración de productos
-export const PRODUCTS_PER_PAGE = 12; // Productos por página en listados
+export const PRODUCTS_PER_PAGE = 8; // Productos por página en listados
 export const MAX_DESCRIPTION_LENGTH = 160; // Longitud máxima para meta descriptions
 
 // Configuración de zoom en modales

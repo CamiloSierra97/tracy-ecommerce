@@ -8,13 +8,24 @@ export const metadata: Metadata = {
     "Explora toda nuestra colección de lencería de lujo y ropa interior femenina, caballero y niña.",
 };
 
-export default async function ShopPage() {
+import { PRODUCTS_PER_PAGE } from "@/utils/constants";
+
+// ...
+
+interface Props {
+  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+export default async function ShopPage(props: Props) {
+  const searchParams = await props.searchParams;
+  const page = Number(searchParams?.page) || 1;
+
   // Pre-carga SSR para la página de Tienda
   let initialData;
   try {
     initialData = await WooCommerceService.getProducts({
-      page: 1,
-      per_page: 12,
+      page,
+      per_page: PRODUCTS_PER_PAGE,
     });
   } catch (error) {
     console.error("Failed to prefetch shop products:", error);
@@ -27,6 +38,7 @@ export default async function ShopPage() {
         basePath="/tienda"
         initialData={initialData}
         headingLevel="h1"
+        initialPage={page}
       />
     </main>
   );
