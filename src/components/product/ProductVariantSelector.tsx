@@ -71,7 +71,11 @@ export default function ProductVariantSelector({
               {selectedAttributes[attribute.name] || "Selecciona una opción"}
             </span>
           </h3>
-          <div className="attribute-options flex flex-wrap gap-2">
+          <div
+            className="attribute-options flex flex-wrap gap-2"
+            role="radiogroup"
+            aria-label={`Seleccionar ${attribute.name}`}
+          >
             {attribute.options.map((option) => {
               const isActive = selectedAttributes[attribute.name] === option;
 

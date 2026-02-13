@@ -70,7 +70,7 @@ export default function ReviewForm({
       <h3 className="text-xl font-serif text-burgundy font-medium mb-1">
         Sé el primero en valorar &ldquo;{productName}&rdquo;
       </h3>
-      <p className="text-sm text-black/50 mb-6">
+      <p className="text-sm text-gray mb-6">
         Tu dirección de correo electrónico no será publicada. Los campos
         obligatorios están marcados con *
       </p>
@@ -92,7 +92,7 @@ export default function ReviewForm({
       <form ref={formRef} action={handleSubmit} className="space-y-6">
         {/* Campo de Puntuación */}
         <div className="form-group">
-          <label className="block text-sm font-medium text-black/70 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Tu puntuación *
           </label>
           <div
@@ -115,7 +115,6 @@ export default function ReviewForm({
                   className="focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-gold transition-transform hover:scale-110"
                   onClick={() => setRating(star)}
                   onMouseEnter={() => setHoverRating(star)}
-                  aria-pressed={rating === star}
                 >
                   <Icon
                     name={filled ? "icon-filled-star" : "icon-notfilled-star"}
@@ -134,7 +133,7 @@ export default function ReviewForm({
         <div className="form-group">
           <label
             htmlFor="review"
-            className="block text-sm font-medium text-black/70 mb-2"
+            className="block text-sm font-medium text-black mb-2"
           >
             Tu valoración *
           </label>
@@ -152,7 +151,7 @@ export default function ReviewForm({
           <div className="form-group">
             <label
               htmlFor="name"
-              className="block text-sm font-medium text-black/70 mb-2"
+              className="block text-sm font-medium text-black mb-2"
             >
               Nombre *
             </label>
@@ -167,7 +166,7 @@ export default function ReviewForm({
           <div className="form-group">
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-black/70 mb-2"
+              className="block text-sm font-medium text-black mb-2"
             >
               Correo electrónico *
             </label>
@@ -189,7 +188,7 @@ export default function ReviewForm({
             name="save-info"
             className="mt-1 border-black/30 text-burgundy focus:ring-gold rounded-sm"
           />
-          <label htmlFor="save-info" className="text-sm text-black/60">
+          <label htmlFor="save-info" className="text-sm text-gray font-medium">
             Guarda mi nombre, correo electrónico y web en este navegador para la
             próxima vez que comente.
           </label>
