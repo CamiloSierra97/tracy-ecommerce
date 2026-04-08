@@ -1,10 +1,13 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import WooCommerceService from "@/services/WooCommerceService";
 import ProductDetails from "@/components/product/ProductDetails";
-import ProductReviews from "@/components/product/ProductReviews";
+import ProductReviewsClient from "@/components/product/ProductReviewsClient";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { sanitizeProductDescription } from "@/utils/sanitize";
 import { MAX_DESCRIPTION_LENGTH } from "@/utils/constants";
+
+// ISR: revalidar cada 5 minutos — los detalles de producto cambian raramente
+export const revalidate = 300;
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -16,20 +19,50 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!product) {
     return {
-      title: "Producto no encontrado",
+      title: "Producto no encontrado | Tracy Lencería",
     };
   }
 
-  // Usar utilidad de sanitización con longitud máxima
-  const cleanDescription = sanitizeProductDescription(
-    product.short_description || product.description,
-    MAX_DESCRIPTION_LENGTH,
+  // Detectar si es categoría Junior/Infantil basado en el nombre o descripción
+  const isJunior = /junior|niña|infantil|niñas/i.test(
+    product.name + (product.short_description || ""),
   );
 
+  const seoSuffix = isJunior
+    ? "Lencería Junior & Diseño Colombiano"
+    : "Lencería de Autor & Diseño Colombiano Premium";
+
+  // Usar utilidad de sanitización con longitud máxima, dejando espacio para keywords SEO
+  const baseDescription = sanitizeProductDescription(
+    product.short_description || product.description,
+    120, // Reducir un poco para dar espacio a los sufijos SEO
+  );
+
+  const fullDescription = `${baseDescription}. ${
+    isJunior ? "Lencería Junior" : "Lencería de autor"
+  } con diseño colombiano premium. Hecho en Colombia con amor por Tracy.`;
+
   return {
-    title: `${product.name} - Tracy Lencería`,
-    description: cleanDescription,
+    title: `${product.name} | ${seoSuffix} | Tracy`,
+    description: fullDescription,
+    keywords: [
+      "lencería de autor",
+      "diseño colombiano",
+      "ropa interior premium",
+      isJunior ? "lencería para niñas" : "lencería fina",
+      "hecho en colombia",
+      product.name.toLowerCase(),
+    ],
     openGraph: {
+      title: `${product.name} - Tracy Lencería`,
+      description: fullDescription,
+      images: product.images?.[0]?.src ? [product.images[0].src] : [],
+      type: "article",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.name,
+      description: fullDescription,
       images: product.images?.[0]?.src ? [product.images[0].src] : [],
     },
   };
@@ -74,7 +107,7 @@ export default async function ProductPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ProductDetails product={product} />
-      <ProductReviews
+      <ProductReviewsClient
         reviews={reviews}
         productId={product.id}
         productName={product.name}

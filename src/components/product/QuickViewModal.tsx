@@ -167,9 +167,29 @@ export default function QuickViewModal({
               </h2>
               <div className="quick-view-modal__divider w-20 h-1 bg-burgundy mb-6 opacity-20"></div>
 
-              <p className="quick-view-modal__price text-3xl font-bold text-burgundy mb-6">
+              <p className="quick-view-modal__price text-3xl font-bold text-burgundy mb-4">
                 {formatPrice(product.price)}
               </p>
+
+              {/* Componente de Cuotas (Elegancia Técnica) */}
+              <div className="mb-6">
+                <div className="flex items-center gap-2 group cursor-pointer">
+                  <p className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-gray-500 font-light">
+                    O 3 cuotas de{" "}
+                    <span className="font-medium text-black">
+                      {formatPrice(parseFloat(product.price) / 3)}
+                    </span>{" "}
+                    sin interés con Mercado Pago
+                  </p>
+                  <span className="flex h-4 w-4 items-center justify-center rounded-full border border-gray-300 text-[9px] text-gray-400 group-hover:border-black group-hover:text-black transition-colors">
+                    i
+                  </span>
+                </div>
+                <p className="text-[9px] text-gray-400 mt-1 italic font-light leading-tight">
+                  *Sujeto a aprobación de crédito. Beneficio exclusivo de
+                  cortesía.
+                </p>
+              </div>
 
               <div className="quick-view-modal__description prose prose-sm text-gray-600 mb-8 line-clamp-3">
                 <p>{cleanDescription}</p>

@@ -5,6 +5,7 @@ import ProductPrice from "./ProductPrice";
 import sanitizeHtml from "sanitize-html";
 import WooCommerceService from "@/services/WooCommerceService";
 import { Product, ProductVariation } from "@/services/WooCommerceService";
+import { formatPrice } from "@/lib/utils/currency";
 
 interface ProductDetailsProps {
   product: Product;
@@ -47,7 +48,31 @@ export default async function ProductDetails({ product }: ProductDetailsProps) {
           {/* Precio Dinámico */}
           <ProductPrice basePrice={product.price} />
 
+          {/* Componente de Cuotas (Elegancia Técnica) */}
+          <div className="mt-4 mb-6">
+            <div className="flex items-center gap-2 group cursor-pointer">
+              <p className="text-[10px] md:text-[11px] uppercase tracking-[0.2em] text-gray-500 font-light">
+                O 3 cuotas de{" "}
+                <span className="font-medium text-black">
+                  {formatPrice(parseFloat(product.price) / 3)}
+                </span>{" "}
+                sin interés con Mercado Pago
+              </p>
+              <span className="flex h-4 w-4 items-center justify-center rounded-full border border-gray-300 text-[9px] text-gray-400 group-hover:border-black group-hover:text-black transition-colors">
+                i
+              </span>
+            </div>
+            <p className="text-[9px] text-gray-400 mt-1 italic font-light">
+              *Sujeto a aprobación de crédito. Beneficio exclusivo de cortesía.
+            </p>
+          </div>
+
           <div className="product-details__description prose prose-stone mb-10 text-gray-600 leading-relaxed max-w-none">
+            {/* Manifiesto de Marca */}
+            <p className="text-[15px] font-serif italic text-burgundy mb-6 border-l-[3px] border-gold/70 pl-4 py-1 leading-snug">
+              "Diseñado bajo nuestra premisa de libertad: seducción y bienestar en una sola pieza."
+            </p>
+            
             <div
               dangerouslySetInnerHTML={{
                 __html: sanitizeHtml(cleanDescription),

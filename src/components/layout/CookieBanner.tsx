@@ -16,8 +16,9 @@ export default function CookieBanner({
     // Verificar si ya se ha dado el consentimiento
     const consent = localStorage.getItem("cookieConsent");
     if (!consent) {
-      // Mostrar el banner después de un pequeño retraso para una mejor experiencia de usuario (UX)
-      const timer = setTimeout(() => setIsVisible(true), 1000);
+      // Retrasar el banner 3.5s para asegurar que NO bloquee el LCP
+      // ni el hilo principal durante la hidratación inicial crítica
+      const timer = setTimeout(() => setIsVisible(true), 3500);
       return () => clearTimeout(timer);
     }
   }, []);

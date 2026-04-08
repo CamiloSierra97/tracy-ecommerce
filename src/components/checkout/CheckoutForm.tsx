@@ -131,10 +131,16 @@ export default function CheckoutForm() {
         />
       </div>
 
+      <div className="text-center mt-12 mb-4">
+        <p className="text-[14px] text-gray-700 font-serif italic tracking-wide">
+          "Estás a un paso de tu versión más auténtica."
+        </p>
+      </div>
+
       <button
         type="submit"
         disabled={isSubmitting}
-        className="checkout-form__submit-btn w-full bg-burgundy text-golden py-4 rounded-xl font-bold tracking-widest hover:bg-opacity-90 transition-all flex items-center justify-center gap-3 shadow-premium mt-8 disabled:opacity-70 disabled:cursor-not-allowed"
+        className="checkout-form__submit-btn w-full bg-burgundy text-golden py-4 rounded-xl font-bold tracking-widest hover:bg-opacity-90 transition-all flex items-center justify-center gap-3 shadow-premium disabled:opacity-70 disabled:cursor-not-allowed"
       >
         {isSubmitting ? (
           <span className="size-6 border-2 border-golden border-t-transparent rounded-full animate-spin"></span>

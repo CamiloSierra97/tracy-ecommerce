@@ -68,7 +68,7 @@ export default function ProductsGrid({
       )}
 
       {/* Barra de herramientas inspirada en imagen de referencia */}
-      <div className="page-products__toolbar flex flex-col md:flex-row justify-between items-center border-b border-black pb-4 mb-8 text-sm text-black font-medium relative z-20">
+      <div className="page-products__toolbar flex flex-col md:flex-row justify-between items-center border-b border-black pb-4 mb-8 text-sm text-black font-medium relative z-40">
         <div className="page-products__count flex items-center gap-4 mb-4 md:mb-0 w-full md:w-auto">
           <span className="page-products__count-text text-black text-xs tracking-wide">
             {sortedProducts.length} PRODUCTOS
@@ -125,7 +125,7 @@ export default function ProductsGrid({
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
-                  className="page-products__sort-menu absolute right-0 top-full mt-2 w-48 bg-ivory shadow-xl border border-gray-100 rounded-lg p-2 z-50 overflow-hidden"
+                  className="page-products__sort-menu absolute right-0 max-md:right-auto max-md:left-0 top-full mt-2 w-48 bg-ivory shadow-xl border border-gray-100 rounded-lg p-2 z-50 overflow-hidden"
                 >
                   {sortOptions.map((option) => (
                     <button

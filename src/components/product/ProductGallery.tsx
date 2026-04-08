@@ -55,24 +55,38 @@ export default function ProductGallery({
           className="product-details__main-image-container relative grow bg-gray-50 rounded-2xl overflow-hidden aspect-3/4 lg:h-[700px] shadow-sm border border-gray-100 group cursor-zoom-in"
           onClick={() => setIsLightboxOpen(true)}
         >
+          {/* Imagen inicial: renderizada directamente para LCP (descubrible en HTML) */}
+          {selectedImageIndex === 0 && (
+            <Image
+              src={images[0].src}
+              alt={productName}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 60vw"
+              className="product-details__main-image object-cover"
+            />
+          )}
+
+          {/* Imágenes subsiguientes: con animación de transición */}
           <AnimatePresence mode="wait">
-            <motion.div
-              key={selectedImageIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="w-full h-full relative"
-            >
-              <Image
-                src={images[selectedImageIndex].src}
-                alt={productName}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 60vw"
-                className="product-details__main-image object-cover"
-              />
-            </motion.div>
+            {selectedImageIndex !== 0 && (
+              <motion.div
+                key={selectedImageIndex}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                className="w-full h-full relative"
+              >
+                <Image
+                  src={images[selectedImageIndex].src}
+                  alt={productName}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 60vw"
+                  className="product-details__main-image object-cover"
+                />
+              </motion.div>
+            )}
           </AnimatePresence>
 
           {/* Ícono de Zoom (Arriba Derecha) */}

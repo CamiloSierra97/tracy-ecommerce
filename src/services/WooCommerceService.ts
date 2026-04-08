@@ -319,10 +319,16 @@ const WooCommerceService = {
     page = 1,
     per_page = 12,
     category,
+    orderby,
+    order,
+    exclude,
   }: {
     page?: number;
     per_page?: number;
     category?: string;
+    orderby?: "date" | "popularity" | "rating" | "price" | "title";
+    order?: "asc" | "desc";
+    exclude?: string;
   }): Promise<ProductsPage> => {
     // Server-side: direct WooCommerce call
     if (isServer()) {
@@ -332,6 +338,9 @@ const WooCommerceService = {
           per_page: String(per_page),
         });
         if (category) params.append("category", category);
+        if (orderby) params.append("orderby", orderby);
+        if (order) params.append("order", order);
+        if (exclude) params.append("exclude", exclude);
 
         const response = await wcFetch(
           `/wp-json/wc/v3/products?${params.toString()}`,
@@ -358,6 +367,9 @@ const WooCommerceService = {
       per_page: String(per_page),
     });
     if (category) params.append("category", category);
+    if (orderby) params.append("orderby", orderby);
+    if (order) params.append("order", order);
+    if (exclude) params.append("exclude", exclude);
 
     const response = await fetch(`/api/products?${params.toString()}`);
     if (!response.ok) {

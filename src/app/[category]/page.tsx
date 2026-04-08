@@ -1,8 +1,11 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
 import Products from "@/components/product/Products";
 import WooCommerceService from "@/services/WooCommerceService";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { PRODUCTS_PER_PAGE } from "@/utils/constants";
+
+// ISR: revalidar catálogo cada 2 minutos
+export const revalidate = 120;
 
 // Definir las categorías válidas para coincidir con los enlaces estáticos
 const VALID_CATEGORIES = ["mujer", "hombre", "nina", "promociones"];
@@ -18,14 +21,41 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!VALID_CATEGORIES.includes(category)) {
     return {
-      title: "Página no encontrada",
+      title: "Página no encontrada | Tracy Lencería",
     };
   }
 
-  const title = category.charAt(0).toUpperCase() + category.slice(1);
+  const categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+  const isJunior = category === "nina";
+
+  const title = isJunior
+    ? `Lencería Junior | Diseño Colombiano Premium para Niñas | Tracy`
+    : `${categoryName} | Lencería de Autor & Diseño Colombiano | Tracy`;
+
+  const description = isJunior
+    ? `Descubre nuestra exclusiva colección de lencería junior para niñas. Diseño colombiano premium, telas suaves y confort excepcional. Hecho en Colombia por Tracy.`
+    : `Explora la colección de lencería de autor y diseño colombiano premium para ${categoryName}. Conjuntos exclusivos, calidad superior y elegancia en cada detalle.`;
+
   return {
-    title: `${title} - Tracy E-commerce`,
-    description: `Explora nuestra colección exclusiva de lencería y ropa interior para ${category}.`,
+    title,
+    description,
+    keywords: [
+      "lencería de autor",
+      "diseño colombiano",
+      isJunior ? "lencería junior" : "lencería premium",
+      categoryName.toLowerCase(),
+      "hecho en colombia",
+    ],
+    openGraph: {
+      title,
+      description,
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
   };
 }
 

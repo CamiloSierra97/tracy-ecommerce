@@ -2,6 +2,7 @@ import WooCommerceService, {
   ProductsPage,
 } from "@/services/WooCommerceService";
 import HeroCarousel from "@/components/marketing/HeroCarousel";
+import FeaturedProducts from "@/components/marketing/FeaturedProducts";
 
 import dynamic from "next/dynamic";
 const Products = dynamic(() => import("@/components/product/Products"), {
@@ -48,6 +49,8 @@ export default async function Page() {
         <section className="hero-section-wrapper">
           <HeroCarousel />
         </section>
+
+        <FeaturedProducts />
 
         <BrandManifesto />
 

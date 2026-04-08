@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin", "/private", "/region-no-disponible"],
     },
-    sitemap: "https://tracylenceria.com/sitemap.xml",
+    sitemap: "https://www.tracystore.com/sitemap.xml",
   };
 }

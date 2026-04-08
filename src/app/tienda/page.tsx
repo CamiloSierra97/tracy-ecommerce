@@ -10,6 +10,10 @@ export const metadata: Metadata = {
 
 import { PRODUCTS_PER_PAGE } from "@/utils/constants";
 
+// ISR: revalidar catálogo cada 2 minutos
+export const revalidate = 120;
+
+
 // ...
 
 interface Props {

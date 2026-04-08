@@ -21,10 +21,21 @@ export default function HeroCarousel() {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      {/* Diapositiva 1: Sección Hero Original */}
+      {/* Diapositiva 1: Triple Banner (Categorías de producto) */}
+      <div
+        className={`hero-carousel__slide hero-carousel__slide--banner absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+          current === 0
+            ? "opacity-100 z-10"
+            : "opacity-0 z-0 pointer-events-none"
+        }`}
+      >
+        <TripleBanner />
+      </div>
+
+      {/* Diapositiva 2: Sección Hero (Marca) */}
       <div
         className={`hero-carousel__slide hero-carousel__slide--hero absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
-          current === 0
+          current === 1
             ? "opacity-100 z-10"
             : "opacity-0 z-0 pointer-events-none"
         }`}
@@ -42,17 +53,6 @@ export default function HeroCarousel() {
         <div className="hero-carousel__content relative z-10 w-full h-full">
           <HeroSection />
         </div>
-      </div>
-
-      {/* Diapositiva 2: Triple Banner */}
-      <div
-        className={`hero-carousel__slide hero-carousel__slide--banner absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
-          current === 1
-            ? "opacity-100 z-10"
-            : "opacity-0 z-0 pointer-events-none"
-        }`}
-      >
-        <TripleBanner />
       </div>
 
       <ArrowButton direction="left" onClick={prevSlide} />

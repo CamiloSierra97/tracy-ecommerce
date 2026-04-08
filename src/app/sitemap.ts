@@ -1,7 +1,10 @@
 import { MetadataRoute } from "next";
 import WooCommerceService from "@/services/WooCommerceService";
 
-const BASE_URL = "https://tracylenceria.com";
+const BASE_URL = "https://www.tracystore.com";
+
+// Categorías válidas del proyecto (src/app/[category]/page.tsx)
+const CATEGORIES = ["mujer", "hombre", "nina", "promociones"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch real products from WooCommerce
@@ -10,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
     const { products } = await WooCommerceService.getProducts({
       page: 1,
-      per_page: 8,
+      per_page: 50,
     });
 
     productEntries = products.map((product) => ({
@@ -23,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Error fetching products for sitemap:", error);
   }
 
-  // Static pages
+  // Páginas estáticas públicas del proyecto
   const staticEntries: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
@@ -37,24 +40,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "daily",
       priority: 0.9,
     },
-    {
-      url: `${BASE_URL}/mujer`,
+    // Categorías principales /[category]
+    ...CATEGORIES.map((cat) => ({
+      url: `${BASE_URL}/${cat}`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: "weekly" as const,
       priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/hombre`,
+    })),
+    // Categorías dentro de /tienda/[category]
+    ...CATEGORIES.map((cat) => ({
+      url: `${BASE_URL}/tienda/${cat}`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${BASE_URL}/nina`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
+      changeFrequency: "weekly" as const,
+      priority: 0.7,
+    })),
     {
       url: `${BASE_URL}/acerca-de`,
       lastModified: new Date(),
@@ -78,6 +77,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
+    },
+    {
+      url: `${BASE_URL}/privacidad`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${BASE_URL}/terminos`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.3,
+    },
+    {
+      url: `${BASE_URL}/cookies`,
+      lastModified: new Date(),
+      changeFrequency: "yearly",
+      priority: 0.2,
     },
   ];
 

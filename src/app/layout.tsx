@@ -1,13 +1,14 @@
 import ReactQueryProvider from "../providers/ReactQueryProvider";
+import TransitionProvider from "@/components/layout/TransitionProvider";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import DynamicLayoutElements from "@/components/layout/DynamicLayoutElements";
+import Script from "next/script";
 import { Metadata, Viewport } from "next";
 import { CartProvider } from "@/context/CartContext";
 import { playfair, roboto_serif, roboto } from "@/lib/fonts";
 import { UIProvider } from "@/context/UIContext";
 import { auth } from "@/auth";
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
@@ -69,7 +70,19 @@ export default async function RootLayout({
       className={`${playfair.variable} ${roboto_serif.variable} ${roboto.variable}`}
       suppressHydrationWarning
     >
-      <GoogleTagManager gtmId="GTM-K373Q56D" />
+      <Script
+        id="gtm-script"
+        strategy="lazyOnload"
+        dangerouslySetInnerHTML={{
+          __html: `
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-K373Q56D');
+          `,
+        }}
+      />
 
       <body className="font-sans">
         <ReactQueryProvider>
@@ -77,7 +90,9 @@ export default async function RootLayout({
             <CartProvider>
               <div className="principal__container relative flex flex-col min-h-screen w-full">
                 <Header />
-                <main className="principal__main grow">{children}</main>
+                <main className="principal__main grow">
+                  <TransitionProvider>{children}</TransitionProvider>
+                </main>
               </div>
               <Analytics />
               <SpeedInsights />
@@ -86,7 +101,18 @@ export default async function RootLayout({
             </CartProvider>
           </UIProvider>
         </ReactQueryProvider>
-        <GoogleAnalytics gaId="G-X4Q479N49V" />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-X4Q479N49V"
+          strategy="lazyOnload"
+        />
+        <Script id="ga-script" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-X4Q479N49V');
+          `}
+        </Script>
       </body>
     </html>
   );
