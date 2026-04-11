@@ -156,8 +156,8 @@ Este proyecto está bajo la licencia **MIT**. Consulta el archivo `LICENSE` para
 ## Contacto
 
 - **Autor**: SierraDev (Camilo Sierra)
-- **Correo**: camilo.sierra@example.com
-- **Sitio web**: https://tracy-lenceria.com
+- **Correo**: sierracamilo3@gmail.com
+- **Sitio web**: https://tracystore.com
 
 ---
 

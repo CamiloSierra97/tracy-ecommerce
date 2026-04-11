@@ -14,14 +14,16 @@ export async function generateStaticParams() {
   }));
 }
 
+type Props = {
+  params: Promise<{ category: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
 // Metadata dinámica para SEO
-export async function generateMetadata({
-  params,
-}: {
-  params: { category: string };
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { category: categorySlug } = await params;
   const categories = await WooCommerceService.getProductCategories();
-  const category = categories.find((c) => c.slug === params.category);
+  const category = categories.find((c) => c.slug === categorySlug);
 
   if (!category) {
     return {
@@ -42,27 +44,21 @@ export async function generateMetadata({
   };
 }
 
-export default async function CategoryPage({
-  params,
-  searchParams,
-}: {
-  params: { category: string };
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
-}) {
+export default async function CategoryPage({ params, searchParams }: Props) {
+  const { category: categorySlug } = await params;
   const resolvedSearchParams = await searchParams;
   const page = Number(resolvedSearchParams?.page) || 1;
+
   // Obtener categoría actual
   const categories = await WooCommerceService.getProductCategories();
-  const category = categories.find((c) => c.slug === params.category);
+  const category = categories.find((c) => c.slug === categorySlug);
 
   // Redirigir a 404 si la categoría no existe
   if (!category) notFound();
 
-  // ...
-
   // Obtener productos de esta categoría
   const { products, totalPages } = await WooCommerceService.getProducts({
-    category: params.category,
+    category: categorySlug,
     per_page: PRODUCTS_PER_PAGE,
     page,
   });
@@ -80,7 +76,7 @@ export default async function CategoryPage({
       <Products
         initialData={{ products, totalPages }}
         title={`Productos en ${category.name}`}
-        basePath={`/tienda/${params.category}`}
+        basePath={`/tienda/${categorySlug}`}
         initialPage={page}
       />
     </>
