@@ -26,7 +26,7 @@ const VARIANT_STYLES: Record<
   }
 > = {
   men: {
-    overlay: "bg-black/70 group-hover:bg-black/40",
+    overlay: "bg-black/70 group-hover/card:bg-black/40",
     title: "text-gold",
     description: "text-ivory",
     link: "text-golden",
@@ -35,7 +35,7 @@ const VARIANT_STYLES: Record<
     linkHoverBorder: "border-ivory",
   },
   women: {
-    overlay: "bg-burgundy/50 group-hover:bg-burgundy/40",
+    overlay: "bg-burgundy/50 group-hover/card:bg-burgundy/40",
     title: "text-gold",
     description: "text-ivory",
     link: "text-gold",
@@ -45,7 +45,7 @@ const VARIANT_STYLES: Record<
   },
 
   junior: {
-    overlay: "bg-pink/50 group-hover:bg-pink/20",
+    overlay: "bg-pink/50 group-hover/card:bg-pink/20",
     title: "text-golden",
     description: "text-pink",
     link: "text-ivory",
@@ -67,10 +67,10 @@ export default function BannerCard({
   const styles = VARIANT_STYLES[variant];
 
   return (
-    <section className={`banner-card relative group overflow-hidden flex flex-col justify-center items-center text-center p-4 md:p-10 cursor-pointer h-full ${className}`}>
+    <section className={`banner-card relative group/card overflow-hidden flex flex-col justify-center items-center text-center p-4 md:p-10 cursor-pointer h-full ${className}`}>
       {/* Background Image with Scale Animation (No Reflow) */}
       <div
-        className={`absolute inset-0 ${bgClass} bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out lg:group-hover:scale-110 z-0`}
+        className={`absolute inset-0 ${bgClass} bg-cover bg-center bg-no-repeat transition-transform duration-700 ease-out lg:group-hover/card:scale-110 z-0`}
       />
 
       {/* Overlay */}
@@ -79,7 +79,7 @@ export default function BannerCard({
       />
 
       {/* Content */}
-      <div className="banner-card__content relative z-20 flex flex-col items-center transform transition-transform duration-500 lg:group-hover:-translate-y-2">
+      <div className="banner-card__content relative z-20 flex flex-col items-center transform transition-transform duration-500 lg:group-hover/card:-translate-y-2">
         <h2
           className={`banner-card__title text-3xl md:text-5xl lg:text-6xl ${styles.title} font-serif italic mb-2 md:mb-4 tracking-wider drop-shadow-lg`}
         >
