@@ -2,6 +2,7 @@
   "name": "tracy-ecommerce",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -44,7 +45,7 @@
     "baseline-browser-mapping": "^2.9.19",
     "dotenv": "^17.2.3",
     "eslint": "^9",
-    "eslint-config-next": "16.0.1",
+    "eslint-config-next": "^16.1.6",
     "node-fetch": "^3.3.2",
     "tsx": "^4.21.0",
     "typescript": "^5"

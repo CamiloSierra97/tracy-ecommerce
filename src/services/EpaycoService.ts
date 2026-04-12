@@ -5,12 +5,6 @@ const BASE_URL = config.epayco.isTest
   ? "https://api.secure.payco.co" // URL de pruebas (verificar si es distinta) - ePayco usa la misma URL base y la llave define el entorno usualmente, pero APIFY puede variar.
   : "https://api.secure.payco.co"; // URL Producción
 
-interface EpaycoLoginResponse {
-  status: boolean;
-  token: string;
-  data: any;
-}
-
 class EpaycoService {
   private token: string | null = null;
   private tokenExpiration: number | null = null;
@@ -63,7 +57,7 @@ class EpaycoService {
    * Crea una transacción de tarjeta de crédito (o cualquier método soportado por APIFY).
    * Requiere que la tarjeta ya esté tokenizada o se envíen los datos seguros (solo SERVER SIDE).
    */
-  async createTransaction(paymentData: any) {
+  async createTransaction(paymentData: Record<string, unknown>) {
     const token = await this.login();
 
     try {
