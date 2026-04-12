@@ -5,7 +5,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Session } from "next-auth";
 import Icon from "@/components/ui/Icon";
 import WhatsAppMenu from "./WhatsAppMenu";
-import PromoModal from "./PromoModal";
+import dynamic from "next/dynamic";
+
+const PromoModal = dynamic(() => import("./PromoModal"));
 
 export default function FloatingButtons({
   bottomOffset = 0,
@@ -35,13 +37,8 @@ export default function FloatingButtons({
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Salvaguarda: Asegurar que el scroll del body se desbloquee al cerrar el menú de WhatsApp
-  useEffect(() => {
-    if (isWhatsAppOpen) {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    }
-  }, [isWhatsAppOpen]);
+  // El control del scroll global se delegó al hook `useScrollLock` implementado en otros componentes 
+  // No hay necesidad de mutar el `document.body` de manera manual desde aquí.
 
   return (
     <>
@@ -67,7 +64,6 @@ export default function FloatingButtons({
 
         {/* Capa de Botones de Acción */}
         <div className="floating-buttons__actions flex flex-col gap-4 pointer-events-auto items-center">
-          {/* Botón de Promociones */}
           {/* Botón de Promociones */}
           {!session?.user && (
             <motion.button

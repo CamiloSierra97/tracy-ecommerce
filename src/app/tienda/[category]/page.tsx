@@ -78,6 +78,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         title={`Productos en ${category.name}`}
         basePath={`/tienda/${categorySlug}`}
         initialPage={page}
+        categoryId={category.id}
       />
     </>
   );

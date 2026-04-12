@@ -54,6 +54,7 @@ export default function WhatsAppMenu({ onSelect }: WhatsAppMenuProps) {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     checkScroll(); // Verificación inicial
     // Agregar listener de redimensionamiento por si el contenido cambia o la ventana se ajusta
     window.addEventListener("resize", checkScroll);

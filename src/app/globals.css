@@ -17,7 +17,7 @@
       4rem 4rem,
       4rem 4rem,
       100% 100%;
-    background-attachment: fixed;
+    /* Eliminado background-attachment: fixed porque desactiva composición por GPU y genera scroll laggy en mobile */
     min-height: 100vh;
   }
   button {
@@ -223,8 +223,15 @@
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+@media (min-width: 768px) {
+  #menu__checkbox:checked ~ .menu__backdrop {
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
 }
 
 /* 2.6 ACTIVACIÓN DEL BACKDROP AL MARCAR EL CHECKBOX */

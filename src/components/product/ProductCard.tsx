@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import { useCart } from "@/context/CartContext";
 import { Product } from "@/services/WooCommerceService";
 import { formatPrice } from "@/lib/utils/currency";
+import { sanitizeProductDescription } from "@/utils/sanitize";
 
 interface ProductCardProps {
   product: Product;
@@ -59,16 +60,19 @@ function ProductCardInner({
             }`}
           />
 
-          {/* Imagen Secundaria (Efecto Hover) */}
+          {/* Imagen Secundaria (Efecto Hover) - Solo disponible en desktop */}
           {product.images?.[1] && (
-            <Image
-              src={product.images[1].src}
-              alt={`${product.name} - Vista alternativa`}
-              width={500}
-              height={667}
-              sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="product-card__image-hover absolute inset-0 size-full object-cover opacity-0 lg:group-hover:opacity-100 transition-all duration-500 ease-in-out z-10 pointer-events-none"
-            />
+            <div className="hidden lg:block absolute inset-0 size-full z-10 pointer-events-none">
+              <Image
+                src={product.images[1].src}
+                alt={`${product.name} - Vista alternativa`}
+                width={500}
+                height={667}
+                loading="lazy"
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="product-card__image-hover size-full object-cover opacity-0 lg:group-hover:opacity-100 transition-all duration-500 ease-in-out"
+              />
+            </div>
           )}
 
           {/* Superposición Oscura al Hover */}
@@ -136,7 +140,7 @@ function ProductCardInner({
           {product.short_description && (
             <div
               className="product-card__short-desc text-xs text-gray line-clamp-2 mt-2 leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: product.short_description }}
+              dangerouslySetInnerHTML={{ __html: sanitizeProductDescription(product.short_description) }}
             />
           )}
         </Link>

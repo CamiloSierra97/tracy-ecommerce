@@ -39,6 +39,7 @@ export default function Lightbox({
   // Restablecer zoom al abrir y manejar redimensionamiento
   useEffect(() => {
     if (isOpen) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setZoomStyle({ scale: 1, origin: "50% 50%" });
     }
     const handleResize = () => {

@@ -219,9 +219,9 @@ export default function ProductsGrid({
                 </h4>
                 <div className="filter-group__colors flex flex-wrap gap-2">
                   {["bg-black", "bg-ivory", "bg-red-700", "bg-stone-200"].map(
-                    (color, i) => (
+                    (color) => (
                       <span
-                        key={i}
+                        key={color}
                         className={`filter-group__color-swatch w-6 h-6 rounded-full border border-gray-100 shadow-sm cursor-pointer hover:scale-110 transition-transform ${color}`}
                       ></span>
                     ),

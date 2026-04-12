@@ -133,7 +133,7 @@ export default function CheckoutForm() {
 
       <div className="text-center mt-12 mb-4">
         <p className="text-[14px] text-gray-700 font-serif italic tracking-wide">
-          "Estás a un paso de tu versión más auténtica."
+          &quot;Estás a un paso de tu versión más auténtica.&quot;
         </p>
       </div>
 

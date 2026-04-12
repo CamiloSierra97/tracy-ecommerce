@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Icon from "@/components/ui/Icon";
 import Image from "next/image";
+import { useScrollLock } from "@/hooks/useScrollLock";
 
 interface PromoModalProps {
   isOpen: boolean;
@@ -21,29 +23,23 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
 
   const [isSexOpen, setIsSexOpen] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulación de envío a API
-    setTimeout(() => {
+    try {
+      await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
       onClose();
-    }, 1000);
-    onClose();
+    }
   };
 
   // Bloquear el scroll del body cuando el modal está abierto para evitar desplazamiento del fondo
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-      document.documentElement.style.overflow = "";
-    };
-  }, [isOpen]);
+  useScrollLock(isOpen);
 
   return (
     <AnimatePresence>
@@ -251,12 +247,12 @@ export default function PromoModal({ isOpen, onClose }: PromoModalProps) {
                 </div>
 
                 <div className="promo-modal__conditions text-center mt-4">
-                  <a
+                  <Link
                     href="/terminos"
                     className="promo-modal__conditions-text text-xs text-black underline hover:text-black/80 transition-colors cursor-pointer"
                   >
                     VER TÉRMINOS Y CONDICIONES
-                  </a>
+                  </Link>
                 </div>
               </form>
             </div>

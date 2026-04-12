@@ -17,7 +17,7 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const [activeTab, setActiveTab] = useState("login");
 
   useEffect(() => {
-    setMounted(true);
+    const t = setTimeout(() => setMounted(true), 0); return () => clearTimeout(t);
     return () => setMounted(false);
   }, []);
 

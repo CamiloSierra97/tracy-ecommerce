@@ -9,6 +9,7 @@ import { useCart } from "@/context/CartContext";
 import { Product } from "@/services/WooCommerceService";
 import { formatPrice } from "@/lib/utils/currency";
 import { ZOOM_MIN_SCALE, ZOOM_MAX_SCALE, ZOOM_STEP } from "@/utils/constants";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import { sanitizeProductDescription } from "@/utils/sanitize";
 
 interface QuickViewModalProps {
@@ -70,19 +71,7 @@ export default function QuickViewModal({
   };
 
   // Bloqueo de scroll cuando el modal está abierto
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add("no-scroll");
-      document.documentElement.classList.add("no-scroll");
-    } else {
-      document.body.classList.remove("no-scroll");
-      document.documentElement.classList.remove("no-scroll");
-    }
-    return () => {
-      document.body.classList.remove("no-scroll");
-      document.documentElement.classList.remove("no-scroll");
-    };
-  }, [isOpen]);
+  useScrollLock(isOpen);
 
   if (!product) return null;
 

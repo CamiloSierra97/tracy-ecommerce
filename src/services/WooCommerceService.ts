@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 export interface Product {
   id: number;
   name: string;
@@ -260,7 +262,7 @@ const WooCommerceService = {
     return [];
   },
 
-  getProductCategories: async (): Promise<Category[]> => {
+  getProductCategories: cache(async (): Promise<Category[]> => {
     try {
       const response = await wcFetch(
         `/wp-json/wc/v3/products/categories?per_page=100&hide_empty=true&orderby=name&order=asc`,
@@ -271,7 +273,7 @@ const WooCommerceService = {
       console.error("Error fetching categories:", error);
     }
     return [];
-  },
+  }),
 
   getProductReviews: async (productId: number): Promise<Review[]> => {
     try {

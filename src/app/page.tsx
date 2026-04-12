@@ -29,7 +29,7 @@ export default async function Page() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["products"],
+    queryKey: ["products", 1, undefined],
     queryFn: async ({ pageParam = 1 }) => {
       return await WooCommerceService.getProducts({
         page: pageParam as number,

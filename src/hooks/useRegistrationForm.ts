@@ -78,7 +78,7 @@ export function useRegistrationForm() {
       } else {
         setError(data.message || "Error al crear usuario");
       }
-    } catch (err) {
+    } catch {
       setError("Error al conectar con el servidor");
     } finally {
       setLoading(false);

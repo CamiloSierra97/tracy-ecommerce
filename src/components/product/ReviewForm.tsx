@@ -58,7 +58,7 @@ export default function ReviewForm({
           text: result.message || "Error al enviar la valoración.",
         });
       }
-    } catch (error) {
+    } catch {
       setMessage({ type: "error", text: "Ocurrió un error inesperado." });
     } finally {
       setIsSubmitting(false);

@@ -40,14 +40,14 @@ export default function CarouselScroller({ children, trackClassName, className }
       <button
         onClick={() => scroll("left")}
         aria-label="Scroll izquierda"
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-10
+        className="hidden lg:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 lg:-translate-x-6 z-10
                    bg-white/90 shadow-[0_4px_12px_rgba(0,0,0,0.1)] text-burgundy 
-                   w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center rounded-full
+                   w-10 h-10 lg:w-12 lg:h-12 items-center justify-center rounded-full
                    opacity-0 lg:group-hover:opacity-100 transition-all duration-300
                    hover:bg-burgundy hover:text-white
                    disabled:opacity-0 focus:outline-none focus:ring-2 focus:ring-burgundy"
       >
-        <span className="hidden md:block">
+        <span>
           <Icon name="icon-arrow-left" size={24} />
         </span>
       </button>
@@ -55,14 +55,14 @@ export default function CarouselScroller({ children, trackClassName, className }
       <button
         onClick={() => scroll("right")}
         aria-label="Scroll derecha"
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-10
+        className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 lg:translate-x-6 z-10
                    bg-white/90 shadow-[0_4px_12px_rgba(0,0,0,0.1)] text-burgundy 
-                   w-10 h-10 lg:w-12 lg:h-12 flex items-center justify-center rounded-full
+                   w-10 h-10 lg:w-12 lg:h-12 items-center justify-center rounded-full
                    opacity-0 lg:group-hover:opacity-100 transition-all duration-300
                    hover:bg-burgundy hover:text-white
                    focus:outline-none focus:ring-2 focus:ring-burgundy"
       >
-        <span className="hidden md:block">
+        <span>
           <Icon name="icon-arrow-right" size={24} />
         </span>
       </button>

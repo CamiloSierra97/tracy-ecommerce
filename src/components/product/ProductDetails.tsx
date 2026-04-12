@@ -70,7 +70,7 @@ export default async function ProductDetails({ product }: ProductDetailsProps) {
           <div className="product-details__description prose prose-stone mb-10 text-gray-600 leading-relaxed max-w-none">
             {/* Manifiesto de Marca */}
             <p className="text-[15px] font-serif italic text-burgundy mb-6 border-l-[3px] border-gold/70 pl-4 py-1 leading-snug">
-              "Diseñado bajo nuestra premisa de libertad: seducción y bienestar en una sola pieza."
+              &quot;Diseñado bajo nuestra premisa de libertad: seducción y bienestar en una sola pieza.&quot;
             </p>
             
             <div

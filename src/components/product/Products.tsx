@@ -8,7 +8,7 @@ import { useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useProducts } from "@/hooks/useProducts";
 import { ProductsPage, Category } from "@/services/WooCommerceService";
-import { INFINITE_SCROLL_ROOT_MARGIN } from "@/utils/constants";
+// import { INFINITE_SCROLL_ROOT_MARGIN } from "@/utils/constants";
 
 // 🛑 TS CORRECCIÓN: Definimos las props requeridas para la reutilización.
 interface ProductsProps {
@@ -68,6 +68,7 @@ export default function Products({
 
   // Detectar dirección de cambio de página para animación
   const prevPageRef = useRef(pageFromUrl);
+  // eslint-disable-next-line react-hooks/refs
   const direction = pageFromUrl > prevPageRef.current ? 1 : -1;
   const isFirstRender = useRef(true);
 
@@ -101,8 +102,7 @@ export default function Products({
     return (
       <div className="page-products__status text-center py-10 flex flex-col items-center justify-center gap-3">
         <span>
-          {/* @ts-ignore */}
-          <ThreeRingLoader></ThreeRingLoader>
+          <ThreeRingLoader />
         </span>
         <span>Cargando productos...</span>
       </div>

@@ -10,7 +10,8 @@ export default function CartTrigger() {
 
   // Esperar hasta que el componente esté montado en el cliente para evitar hydration mismatch
   useEffect(() => {
-    setIsMounted(true);
+    const timer = setTimeout(() => setIsMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   return (

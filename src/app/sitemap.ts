@@ -11,12 +11,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let productEntries: MetadataRoute.Sitemap = [];
 
   try {
-    const { products } = await WooCommerceService.getProducts({
-      page: 1,
-      per_page: 50,
-    });
+    const allProducts = [];
+    let page = 1;
+    let totalPages = 1;
+    
+    do {
+      const result = await WooCommerceService.getProducts({ page, per_page: 50 });
+      if (result.products && result.products.length > 0) {
+        allProducts.push(...result.products);
+        totalPages = result.totalPages || 1;
+      } else {
+        break;
+      }
+      page++;
+    } while (page <= totalPages);
 
-    productEntries = products.map((product) => ({
+    productEntries = allProducts.map((product) => ({
       url: `${BASE_URL}/productos/${product.slug}`,
       lastModified: new Date(),
       changeFrequency: "weekly",

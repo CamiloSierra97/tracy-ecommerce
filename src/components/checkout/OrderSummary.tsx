@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image"; // Nota: Usando Image para optimización, pero requiere configurar dominios si las imgs son externas. Usaremos img standard si fallan.
 import CouponInput from "./CouponInput";
 import { formatPrice } from "@/lib/utils/currency";
 import { useCart } from "@/context/CartContext";
@@ -32,6 +31,7 @@ export default function OrderSummary() {
           >
             <div className="order-summary__item-image relative size-16 rounded-md overflow-hidden bg-white border border-gray-200 shrink-0">
               {item.images && item.images[0] ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
                 <img
                   src={item.images[0].src}
                   alt={item.name}

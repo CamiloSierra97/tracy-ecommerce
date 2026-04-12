@@ -15,11 +15,13 @@ export function useCartPersistence(initialItems: CartItem[] = []) {
     const savedCart = localStorage.getItem(STORAGE_KEY);
     if (savedCart) {
       try {
-        setCartItems(JSON.parse(savedCart));
+        const parsedCart = JSON.parse(savedCart);
+        setTimeout(() => setCartItems(parsedCart), 0);
       } catch (error) {
         console.error("Error al analizar el carrito de localStorage", error);
       }
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsLoaded(true);
   }, []);
 

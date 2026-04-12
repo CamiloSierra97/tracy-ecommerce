@@ -51,10 +51,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           // 2. Si no existe, crear usuario en WooCommerce
           // Generar una contraseña aleatoria fuerte (el usuario usará Google para entrar)
-          const randomPassword =
-            Math.random().toString(36).slice(-8) +
-            Math.random().toString(36).slice(-8) +
-            "A!1";
+          const randomPassword = crypto.randomUUID() + "A!1";
 
           const firstName =
             profile?.given_name || user.name?.split(" ")[0] || "User";
