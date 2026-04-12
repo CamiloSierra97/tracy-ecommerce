@@ -166,7 +166,7 @@ export default function Products({
             aria-label="Paginación de productos"
             className="page-products__pagination py-6 flex justify-center space-x-2"
           >
-            {[...Array(totalPages)].map((product, index) => {
+            {[...Array(totalPages)].map((_, index) => {
               const pageNum = index + 1;
               const pageLink = `${basePath}?page=${pageNum}`;
               const isActive = pageNum === currentPage;

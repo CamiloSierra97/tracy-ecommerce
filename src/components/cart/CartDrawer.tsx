@@ -6,6 +6,7 @@ import { useCart } from "@/context/CartContext";
 import { useEffect, useRef } from "react";
 import { formatPrice } from "@/lib/utils/currency";
 import Image from "next/image";
+import Link from "next/link";
 import Icon from "@/components/ui/Icon";
 
 export default function CartDrawer() {
@@ -228,12 +229,12 @@ export default function CartDrawer() {
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
-                    <a
+                    <Link
                       href="/carrito"
                       className="cart-drawer__view-cart-btn flex items-center justify-center border border-burgundy/30 text-burgundy py-3.5 rounded-full font-sans font-medium text-xs tracking-[0.15em] hover:bg-burgundy hover:text-ivory hover:border-burgundy transition-all duration-300 uppercase"
                     >
                       Ver Carrito
-                    </a>
+                    </Link>
 
                     <button className="cart-drawer__checkout-btn bg-burgundy text-ivory py-3.5 rounded-full font-sans font-medium text-xs tracking-[0.15em] hover:bg-burgundy-light hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 shadow-md shadow-burgundy/20 uppercase">
                       Pagar
