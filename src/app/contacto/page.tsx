@@ -69,7 +69,9 @@ export default function ContactPage() {
                     <h3 className="font-bold text-black mb-1">
                       Correo Electrónico
                     </h3>
-                    <p className="text-black">contacto@tracylenceria.com</p>
+                    <p className="text-black">
+                      soportecomercial@tracystore.com
+                    </p>
                     <p className="text-sm text-black mt-1">
                       Respondemos en menos de 24h
                     </p>

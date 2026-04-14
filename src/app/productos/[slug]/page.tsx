@@ -96,7 +96,7 @@ export default async function ProductPage({ params }: Props) {
         product.status === "publish"
           ? "https://schema.org/InStock"
           : "https://schema.org/OutOfStock",
-      url: `https://tracylenceria.com/productos/${slug}`,
+      url: `https://www.tracystore.com/productos/${slug}`,
     },
   };
 

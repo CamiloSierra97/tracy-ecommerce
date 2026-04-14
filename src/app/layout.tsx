@@ -14,7 +14,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tracystore.com"),
+  metadataBase: new URL("https://www.tracystore.com"),
   title: "Tracy Lencería | Ropa Interior y Lencería de lujo en Colombia",
   description:
     "Descubre la colección exclusiva de Tracy Lencería. Ropa interior y accesorios íntimos diseñados para resaltar tu elegancia. Disfruta de nuestros productos para dama, caballero y niña. Envíos en Colombia.",
@@ -31,6 +31,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  alternates: {
+    canonical: "./",
   },
   openGraph: {
     title: "Tracy Lencería | Ropa Interior y Lencería de Lujo",
