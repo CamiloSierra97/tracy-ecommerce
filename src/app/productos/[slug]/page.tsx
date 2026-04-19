@@ -78,6 +78,14 @@ export default async function ProductPage({ params }: Props) {
 
   const reviews = await WooCommerceService.getProductReviews(product.id);
 
+  // Calcular aggregateRating desde los reviews reales
+  const approvedReviews = reviews.filter((r) => r.rating > 0);
+  const ratingCount = approvedReviews.length;
+  const ratingValue =
+    ratingCount > 0
+      ? approvedReviews.reduce((sum, r) => sum + r.rating, 0) / ratingCount
+      : 5; // Valor por defecto cuando aún no hay reviews
+
   // Crear Schema.org con descripción sanitizada
   const jsonLd = {
     "@context": "https://schema.org",
@@ -88,6 +96,17 @@ export default async function ProductPage({ params }: Props) {
       product.short_description || product.description,
     ),
     sku: product.id.toString(),
+    brand: {
+      "@type": "Brand",
+      name: "Tracy Lencería",
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: parseFloat(ratingValue.toFixed(1)),
+      reviewCount: ratingCount > 0 ? ratingCount : 1,
+      bestRating: 5,
+      worstRating: 1,
+    },
     offers: {
       "@type": "Offer",
       priceCurrency: "COP",
@@ -97,6 +116,10 @@ export default async function ProductPage({ params }: Props) {
           ? "https://schema.org/InStock"
           : "https://schema.org/OutOfStock",
       url: `https://www.tracystore.com/productos/${slug}`,
+      seller: {
+        "@type": "Organization",
+        name: "Tracy Lencería",
+      },
     },
   };
 
