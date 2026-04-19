@@ -47,9 +47,7 @@ export default function Products({
     data,
     isLoading,
     isError,
-    fetchNextPage,
     hasNextPage,
-    isFetchingNextPage,
   } = useProducts({
     initialData: infiniteInitialData,
     page: pageFromUrl,

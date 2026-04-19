@@ -1,7 +1,5 @@
 import { Order } from "@/services/WooCommerceService";
 import { formatPrice } from "@/lib/utils/currency";
-import Icon from "@/components/ui/Icon";
-import Link from "next/link";
 
 interface OrderCardProps {
   order: Order;

@@ -112,11 +112,20 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="footer__bottom border-t-2 border-burgundy-light/50 pt-8">
+        <div className="footer__bottom border-t-2 border-burgundy-light/50 pt-8 flex flex-col items-center gap-2">
           <p className="footer__copyright text-center text-ivory text-sm">
             {`© ${currentYear} Tracy Lencería®. Todos los derechos reservados.`}
           </p>
-          <p className="footer__credit text-center text-ivory text-sm mt-2">
+          <div className="footer__transparency text-center text-[11px] text-ivory/70 max-w-2xl leading-relaxed">
+            <p>Tracy Lencería - Diseño y Confección Independiente | Medellín, Colombia</p>
+            <p>Garantía de calidad en cada prenda hecha a mano.</p>
+            <div className="mt-2 flex flex-wrap justify-center gap-x-4 gap-y-1">
+              <Link href="/privacidad" className="hover:text-gold underline">Habeas Data</Link>
+              <Link href="/envios" className="hover:text-gold underline">Cambios y Devoluciones</Link>
+              <a href="https://www.sic.gov.co" target="_blank" rel="noopener noreferrer" className="hover:text-gold underline">Superintendencia de Industria y Comercio</a>
+            </div>
+          </div>
+          <p className="footer__credit text-center text-ivory text-sm mt-2 opacity-60">
             Made with 💖 by SierraDev
           </p>
         </div>

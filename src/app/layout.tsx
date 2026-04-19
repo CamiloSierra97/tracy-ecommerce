@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: "Tracy Lencería | Ropa Interior y Lencería de Lujo",
     description:
       "Descubre la colección exclusiva de Tracy Lencería. Ropa interior, lencería y accesorios íntimos diseñados para resaltar tu elegancia.",
-    url: "https://tracystore.com",
+    url: "https://www.tracystore.com",
     siteName: "Tracy Lencería",
     locale: "es_CO",
     type: "website",

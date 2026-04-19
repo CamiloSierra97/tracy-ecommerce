@@ -8,6 +8,16 @@ async function checkAdminAuth() {
   return adminSession?.value === "authenticated";
 }
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Admin Register | Tracy Lencería",
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
+
 export default async function AdminRegisterPage() {
   const isAuthenticated = await checkAdminAuth();
 
