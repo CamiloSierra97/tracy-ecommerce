@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Envíos y Devoluciones | Tracy Lencería",
   description:
     "Conoce nuestra política de envíos y devoluciones. Envíos seguros a toda Colombia.",
+  alternates: {
+    canonical: "https://www.tracystore.com/envios",
+  },
 };
 
 export default function EnviosPage() {

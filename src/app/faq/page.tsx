@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Preguntas Frecuentes | Tracy Lencería",
   description:
     "Resuelve tus dudas sobre envíos, tallas y cuidados de nuestras prendas.",
+  alternates: {
+    canonical: "https://www.tracystore.com/faq",
+  },
 };
 
 export default function FAQPage() {

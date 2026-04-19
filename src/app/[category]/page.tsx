@@ -39,6 +39,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title,
     description,
+    alternates: {
+      canonical: `https://www.tracystore.com/${category}`,
+    },
     keywords: [
       "lencería de autor",
       "diseño colombiano",

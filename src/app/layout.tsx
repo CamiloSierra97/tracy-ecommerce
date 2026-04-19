@@ -32,9 +32,6 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: {
-    canonical: "./",
-  },
   openGraph: {
     title: "Tracy Lencería | Ropa Interior y Lencería de Lujo",
     description:

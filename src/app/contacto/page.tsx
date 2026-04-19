@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: "Contacto | Tracy Lencería",
   description:
     "Contáctanos para atención personalizada, dudas sobre envíos o asesoría de tallas.",
+  alternates: {
+    canonical: "https://www.tracystore.com/contacto",
+  },
 };
 
 export default function ContactPage() {

@@ -4,6 +4,9 @@ export const metadata: Metadata = {
   title: "Términos y Condiciones | Tracy Lencería",
   description:
     "Conoce los términos y condiciones de uso de nuestro sitio web y servicios.",
+  alternates: {
+    canonical: "https://www.tracystore.com/terminos",
+  },
 };
 
 export default function TermsPage() {

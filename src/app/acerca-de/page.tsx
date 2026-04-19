@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Acerca de Nosotros | Tracy Lencería",
   description:
     "Conoce la historia detrás de Tracy Lencería, nuestra misión y compromiso con la calidad y el diseño colombiano.",
+  alternates: {
+    canonical: "https://www.tracystore.com/acerca-de",
+  },
 };
 
 export default function AboutPage() {

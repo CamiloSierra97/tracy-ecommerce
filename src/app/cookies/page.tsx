@@ -3,6 +3,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Política de Cookies | Tracy Lencería",
   description: "Información sobre el uso de cookies en nuestro sitio web.",
+  alternates: {
+    canonical: "https://www.tracystore.com/cookies",
+  },
 };
 
 export default function CookiesPage() {

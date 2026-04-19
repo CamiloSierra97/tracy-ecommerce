@@ -3,6 +3,9 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Política de Privacidad | Tracy Lencería",
   description: "Cómo recopilamos, usamos y protegemos tu información personal.",
+  alternates: {
+    canonical: "https://www.tracystore.com/privacidad",
+  },
 };
 
 export default function PrivacyPage() {
