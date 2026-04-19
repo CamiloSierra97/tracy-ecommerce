@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import Icon from "@/components/ui/Icon";
 
 export default function SalesSidebar() {

@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import Icon from "@/components/ui/Icon";
 import PageHero from "@/components/ui/PageHero";
 import SalesSidebar from "@/components/marketing/SalesSidebar";
@@ -54,9 +53,9 @@ export default function ContactPage() {
                     <h3 className="font-bold text-black mb-1">
                       WhatsApp & Teléfono
                     </h3>
-                    <p className="text-black">+57 300 123 4567</p>
+                    <p className="text-black">+57 320 761 0070</p>
                     <p className="text-sm text-black mt-1">
-                      Lunes a Viernes: 9am - 6pm
+                      Lunes a Sábado: 9am - 7pm
                     </p>
                   </div>
                 </div>
@@ -83,9 +82,9 @@ export default function ContactPage() {
                     <Icon name="icon-bag" size={24} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-black mb-1">Showroom</h3>
-                    <p className="text-black">Calle 123 # 45 - 67</p>
-                    <p className="text-black">Bogotá, Colombia</p>
+                    <h3 className="font-bold text-black mb-1">Dirección</h3>
+                    <p className="text-black">Carrera 45 # 108 - 38</p>
+                    <p className="text-black">Medellín, Antioquia, Colombia</p>
                   </div>
                 </div>
               </div>
