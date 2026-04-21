@@ -4,7 +4,6 @@ import ProductReviewsClient from "@/components/product/ProductReviewsClient";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { sanitizeProductDescription } from "@/utils/sanitize";
-import { MAX_DESCRIPTION_LENGTH } from "@/utils/constants";
 
 // ISR: revalidar cada 5 minutos — los detalles de producto cambian raramente
 export const revalidate = 300;
@@ -19,18 +18,40 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!product) {
     return {
-      title: "Producto no encontrado | Tracy Lencería",
+      title: "Producto no encontrado | Tracy Store",
     };
   }
 
-  // Detectar si es categoría Junior/Infantil basado en el nombre o descripción
-  const isJunior = /junior|niña|infantil|niñas/i.test(
-    product.name + (product.short_description || ""),
-  );
+  // Detectar categoría a partir de product.categories, o nombre/descripción
+  const categoryNames = product.categories?.map((c) => c.name.toLowerCase()) || [];
+  const searchString = (product.name + " " + (product.short_description || "")).toLowerCase();
+  
+  const isHombreLenceria = categoryNames.some(c => c.includes('hombre') || c.includes('masculin')) || searchString.includes('hombre');
+  const isMujerLenceria = categoryNames.some(c => (c.includes('mujer') || c.includes('femenin')) && c.includes('lencer')) || (searchString.includes('mujer') && searchString.includes('lencer'));
+  const isMujerRopaInterior = categoryNames.some(c => (c.includes('mujer') || c.includes('femenin')) && c.includes('ropa interior')) || (searchString.includes('mujer') && searchString.includes('ropa interior'));
+  const isJunior = categoryNames.some(c => c.includes('junior') || c.includes('infantil') || c.includes('niña')) || /junior|niña|infantil|niñas/i.test(searchString);
 
-  const seoSuffix = isJunior
-    ? "Lencería Junior & Diseño Colombiano"
-    : "Lencería de Autor & Diseño Colombiano Premium";
+  let seoSuffix = "Lencería de Autor & Diseño Colombiano Premium";
+  let seoType = "Ropa Interior de Autor";
+  let seoKeyword = "ropa interior fina";
+
+  if (isHombreLenceria) {
+    seoSuffix = "Lencería Masculina & Diseño Colombiano";
+    seoType = "Lencería para Hombre";
+    seoKeyword = "lencería masculina";
+  } else if (isMujerLenceria) {
+    seoSuffix = "Lencería Femenina de Autor & Diseño Colombiano";
+    seoType = "Lencería Femenina";
+    seoKeyword = "lencería para mujer";
+  } else if (isMujerRopaInterior) {
+    seoSuffix = "Ropa Interior Femenina & Diseño Colombiano";
+    seoType = "Ropa Interior para Mujer";
+    seoKeyword = "ropa interior femenina";
+  } else if (isJunior) {
+    seoSuffix = "Lencería Junior & Diseño Colombiano";
+    seoType = "Ropa Interior Junior";
+    seoKeyword = "ropa interior para niñas";
+  }
 
   // Usar utilidad de sanitización con longitud máxima, dejando espacio para keywords SEO
   const baseDescription = sanitizeProductDescription(
@@ -38,30 +59,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     120, // Reducir un poco para dar espacio a los sufijos SEO
   );
 
-  const fullDescription = `${baseDescription}. ${
-    isJunior ? "Lencería Junior" : "Lencería de autor"
-  } con diseño colombiano premium. Hecho en Colombia con amor por Tracy.`;
+  const fullDescription = `${baseDescription}. ${seoType} con diseño colombiano premium. Hecho en Colombia con amor por Tracy.`;
 
   return {
-    title: `${product.name} | ${seoSuffix} | Tracy`,
+    title: `${product.name} | ${seoSuffix} | Tracy Store`,
     description: fullDescription,
     keywords: [
-      "lencería de autor",
+      "ropa interior de autor",
       "diseño colombiano",
       "ropa interior premium",
-      isJunior ? "lencería para niñas" : "lencería fina",
+      seoKeyword,
       "hecho en colombia",
       product.name.toLowerCase(),
     ],
+    alternates: {
+      canonical: `https://www.tracystore.com/productos/${slug}`, // Mejora SEO: Evita contenido duplicado
+    },
     openGraph: {
-      title: `${product.name} - Tracy Lencería`,
+      title: `${product.name} - Tracy Store`,
       description: fullDescription,
       images: product.images?.[0]?.src ? [product.images[0].src] : [],
       type: "article",
     },
     twitter: {
       card: "summary_large_image",
-      title: product.name,
+      title: `${product.name} | ${seoSuffix} | Tracy Store`,
       description: fullDescription,
       images: product.images?.[0]?.src ? [product.images[0].src] : [],
     },
@@ -84,10 +106,10 @@ export default async function ProductPage({ params }: Props) {
   const ratingValue =
     ratingCount > 0
       ? approvedReviews.reduce((sum, r) => sum + r.rating, 0) / ratingCount
-      : 5; // Valor por defecto cuando aún no hay reviews
+      : 0;
 
   // Crear Schema.org con descripción sanitizada
-  const jsonLd = {
+  const jsonLd: any = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
@@ -98,14 +120,7 @@ export default async function ProductPage({ params }: Props) {
     sku: product.id.toString(),
     brand: {
       "@type": "Brand",
-      name: "Tracy Lencería",
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: parseFloat(ratingValue.toFixed(1)),
-      reviewCount: ratingCount > 0 ? ratingCount : 1,
-      bestRating: 5,
-      worstRating: 1,
+      name: "Tracy",
     },
     offers: {
       "@type": "Offer",
@@ -116,12 +131,24 @@ export default async function ProductPage({ params }: Props) {
           ? "https://schema.org/InStock"
           : "https://schema.org/OutOfStock",
       url: `https://www.tracystore.com/productos/${slug}`,
+      itemCondition: "https://schema.org/NewCondition", // Mejora SEO: Condición del ítem
       seller: {
         "@type": "Organization",
-        name: "Tracy Lencería",
+        name: "Tracy",
       },
     },
   };
+
+  // Mejora SEO (Console): Solo añadir aggregateRating si hay reseñas reales (evita penalizaciones por "fake reviews")
+  if (ratingCount > 0) {
+    jsonLd.aggregateRating = {
+      "@type": "AggregateRating",
+      ratingValue: parseFloat(ratingValue.toFixed(1)),
+      reviewCount: ratingCount,
+      bestRating: 5,
+      worstRating: 1,
+    };
+  }
 
   return (
     <main className="main-product bg-white min-h-screen">

@@ -21,6 +21,7 @@ export interface Product {
     variation: boolean;
     options: string[];
   }[];
+  categories?: { id: number; name: string; slug: string }[];
   variations: number[];
   stock_status: "instock" | "outofstock" | "onbackorder";
   stock_quantity: number | null;
