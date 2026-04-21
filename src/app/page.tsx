@@ -1,18 +1,18 @@
 import WooCommerceService, {
   ProductsPage,
 } from "@/services/WooCommerceService";
-import HeroCarousel from "@/components/marketing/HeroCarousel";
-import FeaturedProducts from "@/components/marketing/FeaturedProducts";
+import HeroCarousel from "@/components/shared/marketing/HeroCarousel";
+import FeaturedProducts from "@/components/shared/marketing/FeaturedProducts";
 
 import dynamic from "next/dynamic";
-const Products = dynamic(() => import("@/components/product/Products"), {
+const Products = dynamic(() => import("@/components/products/Products"), {
   loading: () => <div className="min-h-screen"></div>,
 });
 const BrandManifesto = dynamic(
-  () => import("@/components/marketing/BrandManifesto"),
+  () => import("@/components/shared/marketing/BrandManifesto"),
 );
 const NewsletterSection = dynamic(
-  () => import("@/components/marketing/NewsletterSection"),
+  () => import("@/components/shared/marketing/NewsletterSection"),
 );
 
 import {

@@ -1,8 +1,8 @@
 "use client";
 
-import Icon from "@/components/ui/Icon";
+import Icon from "@/components/shared/ui/Icon";
 import { useCheckout } from "@/hooks/useCheckout";
-import InputGroup from "@/components/ui/InputGroup";
+import InputGroup from "@/components/shared/ui/InputGroup";
 import PaymentMethodSelector from "./PaymentMethodSelector";
 
 export default function CheckoutForm() {

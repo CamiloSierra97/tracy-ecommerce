@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import Icon from "@/components/ui/Icon";
+import Icon from "@/components/shared/ui/Icon";
 import { useCart } from "@/context/CartContext";
 import { formatPrice } from "@/lib/utils/currency";
 

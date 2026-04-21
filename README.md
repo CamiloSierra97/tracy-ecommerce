@@ -1,164 +1,71 @@
-# Tracy Lencería: Frontend Headless de E‑commerce
+# Tracy E-commerce
 
-Frontend para una tienda de lencería desarrollado con **Next.js** y **TypeScript**. Este proyecto opera bajo una arquitectura _headless_, donde la interfaz de usuario se desacopla y consume los datos de productos y transacciones desde una instancia de **WooCommerce** a través de su API REST.
+Tracy E-commerce es un frontend de comercio electrónico headless construido para consumir datos de productos y transacciones desde una API REST de WooCommerce. Está diseñado para proveer una experiencia de compra en línea robusta, rápida y escalable. La arquitectura desacopla la interfaz de usuario del CMS del backend, permitiendo interacciones del cliente altamente responsivas mientras mantiene la gestión de contenido estructurada del lado del servidor.
 
-## Descripción
-
-Este repositorio contiene el código del cliente web que muestra los productos, gestiona el carrito, procesa pagos y brinda una experiencia de compra fluida y visualmente atractiva. Todas las interacciones con el backend se realizan mediante llamadas a la API de WooCommerce.
-
-## Tecnologías
+## Stack Tecnológico
 
 - **Framework**: Next.js (App Router)
 - **Lenguaje**: TypeScript
-- **Estilos**: Tailwind CSS (clases utilitarias)
-- **Gestión de datos**: TanStack Query (React Query) para fetching, caching y paginación de productos
-- **Backend/CMS**: WooCommerce REST API (fuente de datos headless)
-- **Cliente HTTP**: Axios para peticiones a la API de WooCommerce
+- **Estilos**: Tailwind CSS
+- **Herramientas**: React Query, Framer Motion, ESLint
+- **Enfoque Arquitectónico**: Next.js App Router con Server Components, Server Actions para mutaciones de datos e integración headless con el backend de WooCommerce.
 
-### Paleta de Marca
+## Estructura del Proyecto
 
-- Borgoña: `#580a1e`
-- Borgoña Claro: `#8a505e`
-- Dorado: `#ddb153`
-- Oro: `#d4af37`
-- Oro Claro: `#ffe895`
-- Marfil: `#f4f1ec`
-- Negro: `#1c1c1c`
+El proyecto sigue una estructura de archivos modular y orientada al dominio, optimizada para el App Router de Next.js:
 
-## 🏗️ Arquitectura del Proyecto
+- `src/app`: Contiene la configuración de enrutamiento basado en el sistema de archivos. Actúa como el punto de entrada para todas las páginas y layouts.
+- `src/components`: Aloja componentes de interfaz de usuario reutilizables, organizados por dominios funcionales.
+- `src/services`: Encapsula la lógica de obtención de datos y la comunicación con APIs externas, específicamente con la API REST de WooCommerce.
+- `src/actions`: Contiene los Server Actions de Next.js para el manejo seguro de formularios del lado del servidor y mutaciones de datos.
+- `src/hooks` y `src/context`: Gestión del estado en el lado del cliente y hooks personalizados de React.
+- `src/lib` y `src/utils`: Funciones utilitarias puras y lógica compartida de la aplicación.
 
-Este proyecto sigue una **Arquitectura Híbrida** optimizada para Next.js App Router, combinando **Rutas por Sistema de Archivos** para la navegación y **Diseño Guiado por Dominio (DDD)** para la lógica de negocio.
+## Principios Arquitectónicos
 
-### 1. Capa de Rutas (`src/app`)
+- **Server Components por Defecto**: Maximizamos el uso de React Server Components (RSC) para reducir los payloads de JavaScript del lado del cliente, mejorar los tiempos de carga inicial y asegurar un manejo de datos seguro.
+- **Client Components bajo Demanda**: La directiva `"use client"` se restringe a las hojas del árbol de componentes y se utiliza únicamente cuando la interactividad, los hooks o las APIs del navegador son estrictamente necesarios.
+- **Mentalidad Centrada en el Rendimiento**: La aplicación prioriza el cumplimiento óptimo de los Core Web Vitals, aprovechando el almacenamiento en caché, el renderizado estático donde sea posible y el code splitting.
+- **Desarrollo Orientado al SEO**: El SEO técnico está integrado desde la base, asegurando HTML semántico, etiquetas canónicas correctas, metadatos y una estructura rastreable para una mejor indexación en motores de búsqueda.
 
-Sigue el patrón **File-System Based Routing**. Cada carpeta aquí representa una URL pública accesible por el usuario.
+## Primeros Pasos
 
-- `src/app/privacidad`: Ruta `/privacidad`
-- `src/app/envios`: Ruta `/envios`
-- `src/app/tienda`: Ruta `/tienda`
+Para ejecutar el proyecto localmente, asegúrate de tener Node.js instalado y sigue estos pasos:
 
-Esta capa actúa solo como **Punto de Entrada**. No debe contener lógica compleja, solo composición de páginas.
-
-### 2. Capa de Componentes (`src/components`)
-
-Organizada por **Dominio Funcional**. Aquí reside la lógica de negocio y UI, agrupada por responsabilidad y no por ruta.
-
-| Dominio          | Responsabilidad                     | Ejemplos                                       |
-| :--------------- | :---------------------------------- | :--------------------------------------------- |
-| 📂 **auth**      | Autenticación y gestión de usuarios | `LoginForm`, `UserDropdown`                    |
-| 📂 **cart**      | Lógica del carrito de compras       | `CartDrawer`, `CartItem`                       |
-| 📂 **catalog**   | Presentación de productos           | `ProductGrid`, `ProductCard`                   |
-| 📂 **marketing** | Landing pages y promoción           | `HeroCarousel`, `BrandManifesto`, `Newsletter` |
-| 📂 **layout**    | Elementos estructurales globales    | `Header`, `Footer`, `FloatingButtons`          |
-| 📂 **ui**        | Componentes base reutilizables      | `Button`, `Icon`, `Input`                      |
-
-### 3. Capa de Aplicación (`src/lib`, `src/services`)
-
-Contiene utilidades puras y comunicación con servicios externos (como WooCommerce), desacoplando la UI de los datos.
-
-## Estructura del código
-
-La estructura sigue el patrón del **App Router** de Next.js, con una organización clara para la lógica de la aplicación:
-
-```text
-tracy-ecommerce/
-|-- public/               # Archivos estáticos (SVG Sprite, Logos, Patrones, Imágenes)
-|-- src/
-|   |-- app/              # Rutas principales (ej: /page.tsx, /layout.tsx)
-|   |-- components/       # Componentes UI reutilizables (Header, Products, ProductsGrid, CartDrawer, etc.)
-|   |-- hooks/            # Lógica de hooks personalizados (ej: useProducts con TanStack Query)
-|   |-- lib/              # Utilidades del lado del servidor (ej: importación de fuentes, helpers)
-|   |-- providers/        # Componentes de contexto (ej: ReactQueryProvider)
-|   |-- types/            # Definiciones de tipos de TypeScript (WooProduct, etc.)
-|-- .env.local            # Variables de entorno secretas (API Keys en modo DEV)
-|-- next.config.ts        # Configuración de Next.js
-|-- package.json          # Dependencias y scripts
-|-- tailwind.config.js    # Configuración de Tailwind CSS
+1. Instala las dependencias:
+```bash
+npm install
 ```
 
-## Arquitectura de UI y Mejoras (Nuevo)
+2. Configura las variables de entorno creando un archivo `.env.local` con las credenciales requeridas de WooCommerce.
 
-### Componentes Destacados
+3. Ejecuta el servidor de desarrollo:
+```bash
+npm run dev
+```
 
-- **Hero Carousel**: Carrusel principal optimizado con transiciones suaves, navegación por gestos (en desarrollo) y paginación estilo "glassmorphism".
-  - **Animaciones**: Flechas con efecto "pulso" y desplazamiento al hover para invitar a la interacción.
-  - **Indicadores**: Diseño premium con barra dorada activa y puntos expansibles.
+4. Abre la aplicación en el navegador en `http://localhost:3000`.
 
-### Metodología y Estándares
+## Scripts
 
-- **BEM (Block, Element, Modifier)**: Se ha adoptado estrictamente la convención BEM en componentes críticos (`HeroSection`, `TripleBanner`, `HeroCarousel`) para garantizar estilos encapsulados y mantenibles.
-  - Ejemplo: `.hero-carousel__slide--active`, `.triple-banner__content`.
+- `npm run dev`: Inicia el servidor de desarrollo de Next.js con Fast Refresh.
+- `npm run build`: Crea una compilación optimizada de la aplicación para producción.
+- `npm run start`: Inicia la aplicación en modo producción utilizando la compilación generada.
+- `npm run lint`: Ejecuta ESLint para analizar estáticamente el código y aplicar las guías de estilo.
 
-### Optimización de Performance (Mobile First)
+## Notas de Rendimiento y SEO
 
-- **Carga Condicional de Imágenes**:
-  - Se evita la descarga de imágenes pesadas de escritorio en dispositivos móviles mediante Media Queries en CSS (`globals.css`).
-  - Mobile: Fondo de color sólido o degradado ligero (0 bytes de imagen).
-  - Desktop: Carga diferida de imágenes de alta resolución (`background-image: url(...)`).
-- **Sprite SVG**: Uso de un archivo único `Sprite.svg` para iconos (`<use href="...">`), reduciendo el tamaño del DOM y mejorando el caché.
+- **Obtención de Datos del Lado del Servidor**: El catálogo de productos y los datos críticos se obtienen en el servidor utilizando los métodos de fetching de Next.js, apoyándose en React Query para el almacenamiento en caché subsecuente del lado del cliente.
+- **Optimización de Imágenes**: Los recursos multimedia utilizan el componente `<Image>` de Next.js para optimización automática de formatos, carga diferida (lazy loading) y prevención de cambios de diseño (layout shift).
+- **Uso de Metadatos**: Las páginas dinámicas y estáticas implementan la API de Metadatos de Next.js para generar etiquetas de título precisas, meta descripciones y etiquetas Open Graph para una indexación óptima.
 
-## Instalación
+## Estado
 
-1. **Clonar el repositorio**
-   ```bash
-   git clone https://github.com/tu-usuario/tracy-ecommerce.git
-   cd tracy-ecommerce
-   ```
-2. **Instalar dependencias**
-   ```bash
-   npm install
-   ```
-3. **Crear archivo de variables de entorno**
-   Copia el ejemplo y configura tus credenciales de WooCommerce:
-   ```bash
-   cp .env.example .env.local
-   ```
-   Edita `.env.local` con los valores correctos (`NEXT_PUBLIC_WC_URL`, `NEXT_PUBLIC_WC_CONSUMER_KEY`, `NEXT_PUBLIC_WC_CONSUMER_SECRET`).
-4. **Ejecutar el proyecto en modo desarrollo**
-   ```bash
-   npm run dev
-   ```
-   La aplicación estará disponible en `http://localhost:3000`.
+En progreso. La estructura central de la aplicación, el enrutamiento del catálogo de productos y la integración headless están establecidos. El desarrollo activo se centra en refinar la arquitectura y preparar las funcionalidades para su despliegue en producción.
 
-## Configuración
+## Futuras Mejoras
 
-- **Tailwind CSS**: El archivo `tailwind.config.js` contiene la configuración de colores personalizados y extensiones de tipografía.
-- **Next.js**: En `next.config.ts` puedes habilitar la generación de imágenes optimizadas y definir dominios permitidos.
-- **React Query**: El `ReactQueryProvider` envuelve la aplicación para gestionar el caché y la revalidación de datos.
-- **Accesibilidad**: Se han añadido atributos ARIA en componentes críticos como `CartDrawer`, `AuthModal` y `UserDropdown` para mejorar la experiencia de usuarios con lectores de pantalla.
-
-## Scripts útiles
-
-| Script          | Descripción                                                 |
-| --------------- | ----------------------------------------------------------- |
-| `npm run dev`   | Inicia el servidor de desarrollo en modo hot‑reload.        |
-| `npm run build` | Genera la versión de producción optimizada.                 |
-| `npm run start` | Ejecuta la versión construida (`npm run build` primero).    |
-| `npm run lint`  | Ejecuta ESLint para detectar problemas de estilo y errores. |
-| `npm run test`  | Ejecuta los tests (si están configurados).                  |
-
-## Contribución
-
-1. **Fork** el repositorio.
-2. Crea una rama para tu feature o corrección:
-   ```bash
-   git checkout -b mi-feature
-   ```
-3. Realiza tus cambios y asegura que el proyecto sigue compilando sin errores.
-4. Abre un **Pull Request** describiendo los cambios y su motivo.
-
-> **Nota:** Mantén los comentarios del código en español para coherencia con la base del proyecto.
-
-## Licencia
-
-Este proyecto está bajo la licencia **MIT**. Consulta el archivo `LICENSE` para más detalles.
-
-## Contacto
-
-- **Autor**: SierraDev (Camilo Sierra)
-- **Correo**: sierracamilo3@gmail.com
-- **Sitio web**: https://tracystore.com
-
----
-
-_¡Gracias por usar Tracy Lencería! Esperamos que disfrutes desarrollando y extendiendo esta solución de e‑commerce headless._
+- Implementación de autenticación segura de usuarios.
+- Finalización del flujo completo de pago (checkout) e integración de pasarelas de pago.
+- Mejoras en la persistencia del carrito y validación de stock en tiempo real.
+- Introducción de suites exhaustivas de pruebas (testing).

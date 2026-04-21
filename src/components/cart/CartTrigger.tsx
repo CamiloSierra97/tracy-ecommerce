@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useCart } from "@/context/CartContext";
-import Icon from "@/components/ui/Icon";
+import Icon from "@/components/shared/ui/Icon";
 
 export default function CartTrigger() {
   const { openCart, cartCount } = useCart();

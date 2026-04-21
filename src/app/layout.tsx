@@ -1,8 +1,8 @@
 import ReactQueryProvider from "../providers/ReactQueryProvider";
-import TransitionProvider from "@/components/layout/TransitionProvider";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import DynamicLayoutElements from "@/components/layout/DynamicLayoutElements";
+import TransitionProvider from "@/components/shared/layout/TransitionProvider";
+import Header from "@/components/shared/layout/Header";
+import Footer from "@/components/shared/layout/Footer";
+import DynamicLayoutElements from "@/components/shared/layout/DynamicLayoutElements";
 import Script from "next/script";
 import { Metadata, Viewport } from "next";
 import { CartProvider } from "@/context/CartContext";

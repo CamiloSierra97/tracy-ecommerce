@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { formatPrice } from "@/lib/utils/currency";
 import Image from "next/image";
 import Link from "next/link";
-import Icon from "@/components/ui/Icon";
+import Icon from "@/components/shared/ui/Icon";
 
 export default function CartDrawer() {
   const {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
-import Icon from "@/components/ui/Icon";
+import Icon from "@/components/shared/ui/Icon";
 
 export default function CouponInput() {
   const { applyCoupon, coupon, removeCoupon } = useCart();

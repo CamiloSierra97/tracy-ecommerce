@@ -1,6 +1,6 @@
 "use client";
 
-import Toast from "@/components/ui/Toast";
+import Toast from "@/components/shared/ui/Toast";
 import { Product, Coupon } from "@/services/WooCommerceService";
 import { createContext, useContext, useState, ReactNode } from "react";
 import { useCartPersistence } from "@/hooks/useCartPersistence";
