@@ -116,7 +116,7 @@ export default async function ProductPage({ params }: Props) {
       : 0;
 
   // Crear Schema.org con descripción sanitizada
-  const jsonLd: any = {
+  const jsonLd: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,

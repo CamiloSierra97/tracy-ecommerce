@@ -72,9 +72,8 @@ const request = (isQueryParams = false) => {
   const req = https.request(options, (res) => {
     console.log(`📡 Response Status: ${res.statusCode} ${res.statusMessage}`);
 
-    let data = "";
-    res.on("data", (chunk) => {
-      data += chunk;
+    res.on("data", () => {
+      // Consume data to trigger 'end'
     });
     res.on("end", () => {
       if (res.statusCode >= 200 && res.statusCode < 300) {

@@ -333,85 +333,49 @@ const WooCommerceService = {
     order?: "asc" | "desc";
     exclude?: string;
   }): Promise<ProductsPage> => {
-    // Server-side: direct WooCommerce call
-    if (isServer()) {
-      try {
-        const params = new URLSearchParams({
-          page: String(page),
-          per_page: String(per_page),
-        });
-        if (category) params.append("category", category);
-        if (orderby) params.append("orderby", orderby);
-        if (order) params.append("order", order);
-        if (exclude) params.append("exclude", exclude);
+    try {
+      const params = new URLSearchParams({
+        page: String(page),
+        per_page: String(per_page),
+      });
+      if (category) params.append("category", category);
+      if (orderby) params.append("orderby", orderby);
+      if (order) params.append("order", order);
+      if (exclude) params.append("exclude", exclude);
 
-        const response = await wcFetch(
-          `/wp-json/wc/v3/products?${params.toString()}`,
-          { next: { revalidate: 60 } },
+      const response = await wcFetch(
+        `/wp-json/wc/v3/products?${params.toString()}`,
+        { next: { revalidate: 60 } },
+      );
+
+      if (response?.ok) {
+        const data = await response.json();
+        const totalPages = parseInt(
+          response.headers.get("x-wp-totalpages") || "0",
+          10,
         );
-
-        if (response?.ok) {
-          const data = await response.json();
-          const totalPages = parseInt(
-            response.headers.get("x-wp-totalpages") || "0",
-            10,
-          );
-          return { products: data, totalPages };
-        }
-      } catch (error) {
-        console.error("Error fetching products (server):", error);
+        return { products: data, totalPages };
       }
-      return { products: [], totalPages: 0 };
+    } catch (error) {
+      console.error("Error fetching products (server):", error);
     }
-
-    // Client-side: internal API proxy
-    const params = new URLSearchParams({
-      page: String(page),
-      per_page: String(per_page),
-    });
-    if (category) params.append("category", category);
-    if (orderby) params.append("orderby", orderby);
-    if (order) params.append("order", order);
-    if (exclude) params.append("exclude", exclude);
-
-    const response = await fetch(`/api/products?${params.toString()}`);
-    if (!response.ok) {
-      throw new Error(`Error fetching products: ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    const totalPages = parseInt(
-      response.headers.get("x-wp-totalpages") || "0",
-      10,
-    );
-    return { products: data, totalPages };
+    return { products: [], totalPages: 0 };
   },
 
   getProductBySlug: async (slug: string): Promise<Product | null> => {
-    // Server-side
-    if (isServer()) {
-      try {
-        const response = await wcFetch(
-          `/wp-json/wc/v3/products?slug=${encodeURIComponent(slug)}`,
-          { next: { revalidate: 60 } },
-        );
-        if (response?.ok) {
-          const data = await response.json();
-          return data?.[0] ?? null;
-        }
-      } catch (error) {
-        console.error("Error fetching product by slug:", error);
+    try {
+      const response = await wcFetch(
+        `/wp-json/wc/v3/products?slug=${encodeURIComponent(slug)}`,
+        { next: { revalidate: 60 } },
+      );
+      if (response?.ok) {
+        const data = await response.json();
+        return data?.[0] ?? null;
       }
-      return null;
+    } catch (error) {
+      console.error("Error fetching product by slug:", error);
     }
-
-    // Client-side
-    const params = new URLSearchParams({ slug });
-    const response = await fetch(`/api/products?${params.toString()}`);
-    if (!response.ok) return null;
-
-    const data = await response.json();
-    return data?.[0] ?? null;
+    return null;
   },
 
   registerCustomer: async (

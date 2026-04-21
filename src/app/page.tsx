@@ -1,10 +1,9 @@
-import WooCommerceService, {
-  ProductsPage,
-} from "@/services/WooCommerceService";
+import WooCommerceService from "@/services/WooCommerceService";
 import HeroCarousel from "@/components/shared/marketing/HeroCarousel";
 import FeaturedProducts from "@/components/shared/marketing/FeaturedProducts";
-
 import dynamic from "next/dynamic";
+import { PRODUCTS_PER_PAGE } from "@/utils/constants";
+
 const Products = dynamic(() => import("@/components/products/Products"), {
   loading: () => <div className="min-h-screen"></div>,
 });
@@ -15,51 +14,38 @@ const NewsletterSection = dynamic(
   () => import("@/components/shared/marketing/NewsletterSection"),
 );
 
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from "@tanstack/react-query";
-
-import { PRODUCTS_PER_PAGE } from "@/utils/constants";
-
-// ...
-
 export default async function Page() {
-  const queryClient = new QueryClient();
-
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: ["products", 1, undefined],
-    queryFn: async ({ pageParam = 1 }) => {
-      return await WooCommerceService.getProducts({
-        page: pageParam as number,
-        per_page: PRODUCTS_PER_PAGE,
-      });
-    },
-    initialPageParam: 1,
-    getNextPageParam: (lastPage: ProductsPage, allPages: ProductsPage[]) => {
-      const nextPage = allPages.length + 1;
-      return nextPage <= lastPage.totalPages ? nextPage : undefined;
-    },
-  });
+  // Fetch initial data on the server
+  let initialData;
+  try {
+    initialData = await WooCommerceService.getProducts({
+      page: 1,
+      per_page: PRODUCTS_PER_PAGE,
+    });
+  } catch (error) {
+    console.error("Failed to fetch home products:", error);
+  }
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="home-page">
-        <section className="hero-section-wrapper">
-          <HeroCarousel />
-        </section>
+    <div className="home-page">
+      <section className="hero-section-wrapper">
+        <HeroCarousel />
+      </section>
 
-        <FeaturedProducts />
+      <FeaturedProducts />
 
-        <BrandManifesto />
+      <BrandManifesto />
 
-        <section className="page-products">
-          <Products title="Nuestra Colección" basePath="/"></Products>
-        </section>
+      <section className="page-products">
+        <Products 
+          title="Nuestra Colección" 
+          basePath="/" 
+          initialData={initialData}
+          initialPage={1}
+        />
+      </section>
 
-        <NewsletterSection />
-      </div>
-    </HydrationBoundary>
+      <NewsletterSection />
+    </div>
   );
 }

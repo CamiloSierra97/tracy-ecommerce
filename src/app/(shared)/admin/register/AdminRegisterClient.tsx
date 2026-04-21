@@ -3,6 +3,7 @@
 import Icon from "@/components/shared/ui/Icon";
 import UserRegistrationForm from "@/components/shared/admin/UserRegistrationForm";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function AdminRegisterClient() {
   const router = useRouter();
@@ -34,13 +35,13 @@ export default function AdminRegisterClient() {
 
           {/* Footer */}
           <div className="mt-8 pt-6 border-t border-black/10 flex justify-between items-center">
-            <a
+            <Link
               href="/"
               className="text-sm text-black/60 hover:text-burgundy transition-colors inline-flex items-center gap-1"
             >
               <Icon name="icon-arrow-left" size={16} />
               Volver al sitio
-            </a>
+            </Link>
             <button
               onClick={handleLogout}
               className="text-sm text-black/60 hover:text-burgundy transition-colors inline-flex items-center gap-1"

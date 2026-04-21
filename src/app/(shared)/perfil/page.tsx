@@ -2,6 +2,8 @@ import OrderList from "@/components/shared/profile/OrderList";
 import PageHero from "@/components/shared/ui/PageHero";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import Link from "next/link";
+import WooCommerceService, { Order } from "@/services/WooCommerceService";
 
 export const metadata = {
   title: "Mi Cuenta | Tracy",
@@ -11,11 +13,22 @@ export const metadata = {
 export default async function ProfilePage() {
   const session = await auth();
 
-  if (!session) {
+  if (!session || !session.user || !session.user.email) {
     redirect("/acceder?callbackUrl=/perfil");
   }
 
   const user = session.user;
+  
+  // Fetch orders on the server
+  let orders: Order[] = [];
+  try {
+    const customer = await WooCommerceService.getCustomerByEmail(user.email as string);
+    if (customer) {
+      orders = await WooCommerceService.getCustomerOrders(customer.id);
+    }
+  } catch (error) {
+    console.error("Error fetching user orders on server:", error);
+  }
 
   return (
     <div className="page-profile">
@@ -57,19 +70,19 @@ export default async function ProfilePage() {
             </nav>
 
             <div className="mt-8 pt-6 border-t border-gray-100">
-              <a
+              <Link
                 href="/api/auth/signout"
                 className="text-sm text-red-600 hover:text-red-800 font-medium px-4"
               >
                 Cerrar Sesión
-              </a>
+              </Link>
             </div>
           </div>
         </aside>
 
         {/* Área Principal: Lista de Órdenes */}
         <main className="page-profile__main flex-1 min-w-0">
-          <OrderList />
+          <OrderList initialOrders={orders} />
         </main>
       </div>
     </div>

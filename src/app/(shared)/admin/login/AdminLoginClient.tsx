@@ -4,6 +4,7 @@ import Icon from "@/components/shared/ui/Icon";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function AdminLoginClient() {
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ export default function AdminLoginClient() {
       } else {
         setError(data.message || "Credenciales inválidas");
       }
-    } catch (err) {
+    } catch {
       setError("Error al conectar con el servidor");
     } finally {
       setLoading(false);
@@ -145,13 +146,13 @@ export default function AdminLoginClient() {
 
           {/* Footer */}
           <div className="mt-6 text-center">
-            <a
+            <Link
               href="/"
               className="text-sm text-black/60 hover:text-burgundy transition-colors inline-flex items-center gap-1"
             >
               <Icon name="icon-arrow-left" size={16} />
               Volver al sitio
-            </a>
+            </Link>
           </div>
         </div>
       </motion.div>

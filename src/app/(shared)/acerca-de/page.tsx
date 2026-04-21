@@ -34,7 +34,7 @@ export default function AboutPage() {
                 </p>
                 <li>
                   Mujer (Lencería y Ropa Interior): Desde básicos de algodón
-                  hasta nuestra icónica lencería de blonda con "efecto tatuaje".
+                  hasta nuestra icónica lencería de blonda con &quot;efecto tatuaje&quot;.
                 </li>
                 <li>
                   Hombre (Lencería Masculina): Diseños audaces en tull y encaje

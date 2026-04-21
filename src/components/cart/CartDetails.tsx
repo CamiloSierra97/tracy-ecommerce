@@ -181,8 +181,8 @@ export default function CartDetails() {
               ¡Gracias por elegir Tracy!
             </h3>
             <p className="text-gray-700 italic leading-relaxed">
-              "Cada prenda es un homenaje a tu belleza. Esperamos que disfrutes
-              tu compra y te sientas tan increíble como te ves."
+              &quot;Cada prenda es un homenaje a tu belleza. Esperamos que disfrutes
+              tu compra y te sientas tan increíble como te ves.&quot;
             </p>
             <div className="mt-4 flex items-center gap-2 text-burgundy font-medium text-sm">
               <Icon name="icon-truck" size={20} />
